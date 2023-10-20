@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             BackgroundColor="{StaticResource Gray550}"
+             x:Class= "TaxiStartApp.Views.LoginPage"        
+             >
+    
+    <ContentPage.Content>
+        <Grid 
+            RowDefinitions="*,*">
+            <Grid Margin="0,0,0,0"
+                RowDefinitions="*" >
+                <Image
+                    Aspect="AspectFill"
+                    Source="taxi_login.png"/>
+            </Grid>
+            <Grid  Grid.Row="1"
+                   RowDefinitions="*,*,*,*" 
+                   Margin="20">
+                <Label
+                    Margin="30,0"
+                    HorizontalTextAlignment="Center"
+                    FontSize="30"
+                    Text="Добро пожаловать!"
+                    FontAttributes="Bold"
+                    FontFamily="SpaceB"
+                    TextColor="{StaticResource Gray100}"/>
+                <Button
+                    Grid.Row="1"                    
+                    Margin="15,0"
+                    BackgroundColor="{StaticResource Gray910}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    TextColor="Black"
+                    FontFamily="Roboto"
+                    Text="Войти через Google"/>
+                <Button
+                    Grid.Row="2"
+                    Margin="15,0"
+                    BackgroundColor="{StaticResource Gray650}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    TextColor="White"
+                    FontFamily="Roboto"
+                    Command="{Binding TelefonCommand}"
+                    Text="Войти по номеру телефона"/>
+                <Label 
+                    Grid.Row="3"
+                    Margin="20,10,0,0"
+                    FontSize="12"
+                    HorizontalTextAlignment="Center" 
+                    Text="Продолжная, ты соглашаешься с Условиями использования сервиса, Политикой конфиденциальности и подтверждаешь, что тебе исполнилось 18 лет"
+                    TextColor="{StaticResource Gray500}"/>
+            </Grid>
+
+            
+            
+
+            <!--<dxe:TextEdit Text="{Binding UserName}" LabelText="Login" Margin="0" />
+            <dxe:PasswordEdit Text="{Binding Password}" LabelText="Password"  LabelFontSize="Small" Margin="0" Grid.Row="1" />
+            <Button Text="Log In" Command="{Binding LoginCommand}" Margin="0,10,0,0" Grid.Row="2" Style="{StaticResource PrimaryButton}"/>-->
+        </Grid>
+        
+        
+    </ContentPage.Content>
+</ContentPage>

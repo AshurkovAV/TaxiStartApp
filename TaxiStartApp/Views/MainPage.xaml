@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+         xmlns:dxn="clr-namespace:DevExpress.Maui.Navigation;assembly=DevExpress.Maui.Navigation"
+         xmlns:local="clr-namespace:TaxiStartApp.Views"
+         Style="{StaticResource ShellStyle}"
+         xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+         ios:Page.UseSafeArea="true"
+         BackgroundColor="{StaticResource Gray500}"
+         Shell.FlyoutBehavior="Flyout"
+        x:Class= "TaxiStartApp.Views.MainPage">    
+    <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" 
+                          Route= "TaxiStartApp.Views.LoginPage"   />
+    <TabBar>
+        <Tab Title="Профиль" Icon="info">
+            <ShellContent ContentTemplate="{DataTemplate local:ProfilPage}" 
+                          Route= "TaxiStartApp.Views.ProfilPage"
+                          Shell.FlyoutBehavior="Disabled"/>
+        </Tab>
+        <Tab Title ="Таксопарк" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:ContactsPage}" />
+        </Tab>  
+    </TabBar>
+    <TabBar>
+        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"
+                      Route= "TaxiStartApp.Views.LoginPage" />
+    </TabBar>
+
+</Shell>

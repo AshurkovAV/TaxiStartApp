@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TaxiStartApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TaxiStartApp"
+    xmlns:pages="clr-namespace:TaxiStartApp.Views"
+    Shell.FlyoutBehavior="Flyout">    
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"
+        Shell.NavBarIsVisible="False"/>
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:TelefonPage}"
+        Route="TelefonPage"
+        Shell.FlyoutBehavior="Flyout"
+        Shell.FlyoutItemIsVisible="True"
+        Shell.NavBarIsVisible="False"/>
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:VerificationPage}"
+        Route="VerificationPage"
+        Shell.FlyoutBehavior="Flyout"
+        Shell.FlyoutItemIsVisible="True"
+        Shell.NavBarIsVisible="False"/>
+
+    <TabBar FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate pages:MainPage}"
+        Route="MainPage" />
+
+        <ShellContent
+        Title="Profil"
+        ContentTemplate="{DataTemplate pages:ProfilPage}"
+        Route="ProfilPage" />
+
+        <ShellContent
+        Title="Input"
+        ContentTemplate="{DataTemplate pages:InputPage}"
+        Route="InputPage" />
+    </TabBar>   
+
+</Shell>

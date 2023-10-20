@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             BackgroundColor="{StaticResource Gray550}"
+             x:Class= "TaxiStartApp.Views.TelefonPage">
+    
+    <ContentPage.Content>
+        <Grid 
+            RowDefinitions="80,auto,auto">
+            <Grid Margin="20" VerticalOptions="Start">
+                <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding BackCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="Icons"
+                            Glyph="&#xE800;"
+                            Size="20"
+                            Color="{StaticResource Gray200}"/>
+                    </ImageButton.Source>                   
+                </ImageButton>
+            </Grid>
+            <Grid RowDefinitions="auto, *" Grid.Row="1">
+                <Label 
+                   HorizontalTextAlignment="Center" 
+                   FontSize="30"
+                   Padding="10"
+                   Text="Номер телефона"
+                   FontAttributes="Bold"
+                   FontFamily="SpaceB"
+                   TextColor="{StaticResource Gray100}" HorizontalOptions="Center"/>
+                <Grid Grid.Row="1"                   
+                  ColumnDefinitions="Auto,Auto"
+                  RowDefinitions="auto,auto"
+                  HorizontalOptions="Center">
+                    <Label
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Padding="0,7,0,0"
+                    Margin="20,0"
+                    FontSize="30"
+                    Text="+7"
+                    FontAttributes="Bold"
+                    FontFamily="SpaceB"
+                    TextColor="{StaticResource Gray100}" />
+
+                    <Grid Grid.Column="1"
+                      Padding="-20,0,0,0">
+                        <dxe:TextEdit 
+                              VerticalOptions="Start"
+                              HorizontalOptions="End"                                                     
+                              Mask="(000) 000-00 00" 
+                              MaskPlaceholderChar="0"
+                              Keyboard="Numeric"
+                              BorderColor="{StaticResource Gray550}"
+                              FocusedBorderColor="{StaticResource Gray550}"                              
+                              TextFontSize="20"             
+                            Text="{Binding Telefon}"
+                              PlaceholderColor="{StaticResource Gray500}"
+                              TextColor="{StaticResource Gray100}"
+                              TextFontFamily="SpaceB"/>
+                    </Grid>
+                </Grid>
+            </Grid>            
+            <Grid VerticalOptions="End" 
+                  Grid.Row="2" 
+                  RowDefinitions="*" 
+                  Margin="20">
+                <Button                    
+                    Margin="15,0"
+                    BackgroundColor="{StaticResource Gray910}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    TextColor="Black"
+                    FontFamily="Roboto"
+                    Text="Получить код"
+                    Command="{Binding PushCommand}"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

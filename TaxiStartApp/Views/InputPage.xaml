@@ -1,0 +1,17 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}"
+             IconImageSource="info"
+             BackgroundColor="{StaticResource Gray550}"
+             x:Class= "TaxiStartApp.Views.InputPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions=".1*,.1*,.55*,.15*">
+            <Grid ColumnDefinitions="*,*,*" Margin="20">
+            <Button Grid.Row="2" Margin="25,20,25,20"
+                    Text="Learn more"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding OpenWebCommand}"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

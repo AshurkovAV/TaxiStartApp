@@ -1,0 +1,125 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android33.0</TargetFrameworks>
+        
+		<OutputType>Exe</OutputType>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>TaxiStartApp</RootNamespace>
+
+		<!-- Display name -->
+		<ApplicationTitle>TaxiStartApp</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>strartplus.TaxiStartApp</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net7.0-ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
+		<AssemblyVersion>2</AssemblyVersion>
+		<FileVersion>2</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <ApplicationId>strartplus.TaxiStartApp</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <ApplicationId>strartplus.TaxiStartApp</ApplicationId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#393939" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Platforms\Android\google-services.json" />
+	  <None Remove="Resources\Fonts\fontello.ttf" />
+	  <None Remove="Resources\Fonts\SpaceGrotesk-Bold.ttf" />
+	  <None Remove="Resources\Images\blazor_editors_buttons.png" />
+	  <None Remove="Resources\Images\taxi_login.png" />
+	  <None Remove="Resources\Raw\start-797ab-firebase-adminsdk-715ut-40e9483c42.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.Maui.Charts" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.Core" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.1.5" />
+		<PackageReference Include="FirebaseAdmin" Version="2.4.0" />
+		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
+		<TrimmableAssembly Include="DevExpress.Data.v23.1" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="Views\InputPage.xaml.cs">
+	    <DependentUpon>InputPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\VerificationPage.xaml.cs">
+	    <DependentUpon>VerificationPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\TelefonPage.xaml.cs">
+	    <DependentUpon>TelefonPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\ProfilPage.xaml.cs">
+	    <DependentUpon>ProfilPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\ContactsPage.xaml.cs">
+	    <DependentUpon>ContactsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\Colors.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\InputPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\VerificationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TelefonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfilPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ContactsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+</Project>
