@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              BackgroundColor="{StaticResource Gray550}"
-             x:Class= "TaxiStartApp.Views.LoginPage"        
-             >
+             x:Class= "TaxiStartApp.Views.LoginPage">
     
     <ContentPage.Content>
         <Grid 
@@ -49,13 +48,29 @@
                     FontFamily="Roboto"
                     Command="{Binding TelefonCommand}"
                     Text="Войти по номеру телефона"/>
-                <Label 
-                    Grid.Row="3"
-                    Margin="20,10,0,0"
-                    FontSize="12"
-                    HorizontalTextAlignment="Center" 
-                    Text="Продолжная, ты соглашаешься с Условиями использования сервиса, Политикой конфиденциальности и подтверждаешь, что тебе исполнилось 18 лет"
-                    TextColor="{StaticResource Gray500}"/>
+                
+                    <Label x:Name="label"                       
+                           Grid.Row="3"
+                        Margin="20,10,0,0"
+                        FontSize="12"                        
+                        TextColor="{StaticResource Gray500}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Продолжная, ты соглашаешься с " />
+                                <Span Text="Условиями использования сервиса " TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding UslCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" Политикой конфиденциальности" TextDecorations="Underline" >
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding СonfedCommand}"/>
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" и подтверждаешь, что тебе исполнилось 18 лет" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>                
             </Grid>
 
             

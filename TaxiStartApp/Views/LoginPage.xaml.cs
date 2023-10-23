@@ -13,6 +13,7 @@ namespace TaxiStartApp.Views
         {
             InitializeComponent();
             BindingContext = new LoginViewModel();
+            label.HorizontalTextAlignment = TextAlignment.Center;
         }
     }
 }

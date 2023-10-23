@@ -81,6 +81,9 @@
 
 
 	<ItemGroup>
+	  <Compile Update="Views\UslPage.xaml.cs">
+	    <DependentUpon>UslPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\InputPage.xaml.cs">
 	    <DependentUpon>InputPage.xaml</DependentUpon>
 	  </Compile>
@@ -104,6 +107,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\UslPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\InputPage.xaml">

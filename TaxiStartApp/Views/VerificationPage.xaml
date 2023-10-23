@@ -72,8 +72,7 @@
             <Grid VerticalOptions="End" 
                   Grid.Row="2" 
                   Margin="20">
-                <Button       
-                    x:Name="Bt"
+                <Button                           
                     Margin="15,0"
                     IsEnabled="{Binding BtIsEnabled, Mode=TwoWay}"
                     BackgroundColor="{StaticResource Gray550}"

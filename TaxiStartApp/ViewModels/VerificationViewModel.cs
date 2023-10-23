@@ -23,6 +23,11 @@ namespace TaxiStartApp.ViewModels
         {
             BackCommand = new Command(OnBackClicked);
             PushCommand = new Command(OnPushClicked);
+            StartTimer();
+        }
+
+        private void StartTimer()
+        {
             // устанавливаем метод обратного вызова
             TimerCallback tm = new TimerCallback(Count);
             //Создание потока в потоке пользовательского интерфейса
@@ -30,7 +35,6 @@ namespace TaxiStartApp.ViewModels
                 var time = new System.Threading.Timer(tm, _num, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
             });
         }
-
         #region propert
         public string BtText
         {
@@ -63,6 +67,7 @@ namespace TaxiStartApp.ViewModels
         async void OnPushClicked()
         {
             _num = 60;
+            StartTimer();
             BtIsEnabled = false;
         }
         async void OnBackClicked()
@@ -78,8 +83,9 @@ namespace TaxiStartApp.ViewModels
                 MainThread.InvokeOnMainThreadAsync(() => { 
                     BtText = strInvo + _num.ToString() + " сек)";
                     BtIsEnabled = false;
+                    _num--;
                 });
-                _num--;
+                
             }
             else
             {
