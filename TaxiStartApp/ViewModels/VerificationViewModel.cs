@@ -88,19 +88,13 @@ namespace TaxiStartApp.ViewModels
             {
                 string strInvo = "Отправить код повторно (";
                 BtText = strInvo + _num.ToString() + " сек)";
-                BtIsEnabled = false;
-                //MainThread.InvokeOnMainThreadAsync(() => { 
-                                                         
-                //});
+                BtIsEnabled = false;               
                 _num--;
             }
             else
             {
                 BtText = Constant.PushNotification;
-                BtIsEnabled = true;
-                //MainThread.InvokeOnMainThreadAsync(() => {
-                    
-                //});
+                BtIsEnabled = true;                
             }
         }
 
