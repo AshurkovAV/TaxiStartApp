@@ -51,7 +51,7 @@
                   HorizontalOptions="Center">                  
 
                     <Grid Grid.Column="0"
-                      Padding="-20,0,0,0">
+                      Padding="10">
                         <dxe:TextEdit 
                               VerticalOptions="Start"
                               HorizontalOptions="End"                                                     

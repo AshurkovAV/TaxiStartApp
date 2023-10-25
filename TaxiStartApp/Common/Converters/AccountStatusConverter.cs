@@ -13,12 +13,14 @@ namespace TaxiStartApp.Common.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (value != null)
             {
-                return null;
+                if (value?.ToString()?.Length == 10)
+                    return true;
+                else return false;
             }           
 
-            return value;
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

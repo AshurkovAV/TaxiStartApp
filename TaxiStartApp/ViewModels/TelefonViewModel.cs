@@ -17,28 +17,17 @@ namespace TaxiStartApp.ViewModels
             PushCommand = new Command(OnPushClicked);
             BackCommand = new Command(OnBackClicked);
             PropertyChanged +=
-                (_, __) => PushCommand.ChangeCanExecute();
-            _btEnabled = false;
-        }
-        
-        public bool BtEnabled {
-            get => this._btEnabled;
-            set {
-                if (Telefon?.Length == 10)
-                {
-                    _btEnabled = true;
-                }
-                else {
-                    _btEnabled = false;
-                }
-                SetProperty(ref this._btEnabled, value); 
-            }
-        }
+                (_, __) => PushCommand.ChangeCanExecute();           
+        }       
+       
 
         public string Telefon
         {
             get => this.telefon;
-            set => SetProperty(ref this.telefon, value);
+            set {             
+                this.telefon = value;
+                OnPropertyChanged("Telefon");
+            }
         }
 
         public Command PushCommand { get; }

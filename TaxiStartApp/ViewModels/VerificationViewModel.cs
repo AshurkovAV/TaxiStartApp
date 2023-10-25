@@ -18,6 +18,7 @@ namespace TaxiStartApp.ViewModels
         bool _btIsEnabled = false;
         string _btText = "Вход";
         private int _num = 60;
+        private System.Threading.Timer _timer;
 
         public VerificationViewModel()
         {
@@ -34,12 +35,11 @@ namespace TaxiStartApp.ViewModels
 
         private void StartTimer()
         {
-            // устанавливаем метод обратного вызова
-            TimerCallback tm = new TimerCallback(Count);
             //Создание потока в потоке пользовательского интерфейса
-            MainThread.BeginInvokeOnMainThread(() => {
-                var time = new System.Threading.Timer(tm, _num, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
-            });
+            if (MainThread.IsMainThread)
+                MyMainThreadCode();
+            else
+                MainThread.BeginInvokeOnMainThread(MyMainThreadCode);            
         }
         #region propert
         public string BtText
@@ -69,7 +69,6 @@ namespace TaxiStartApp.ViewModels
 
         public Command BackCommand { get; }
         public Command PushCommand { get; }
-
         public Command CommCommand { get; }
 
         async void OnPushClicked()
@@ -85,23 +84,32 @@ namespace TaxiStartApp.ViewModels
 
         private void Count(object obj)
         {
-            if (_num != 0)
+            if (_num > 0)
             {
                 string strInvo = "Отправить код повторно (";
-                MainThread.InvokeOnMainThreadAsync(() => { 
-                    BtText = strInvo + _num.ToString() + " сек)";
-                    BtIsEnabled = false;
-                    _num--;
-                });
-                
+                BtText = strInvo + _num.ToString() + " сек)";
+                BtIsEnabled = false;
+                //MainThread.InvokeOnMainThreadAsync(() => { 
+                                                         
+                //});
+                _num--;
             }
             else
             {
-                MainThread.InvokeOnMainThreadAsync(() => {
-                    BtText = Constant.PushNotification;
-                    BtIsEnabled = true;
-                });
+                BtText = Constant.PushNotification;
+                BtIsEnabled = true;
+                //MainThread.InvokeOnMainThreadAsync(() => {
+                    
+                //});
             }
+        }
+
+        void MyMainThreadCode()
+        {
+            // устанавливаем метод обратного вызова
+            TimerCallback tm = new TimerCallback(Count);
+            if(_timer == null)
+                _timer = new System.Threading.Timer(tm, _num, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
         }
     }
 }

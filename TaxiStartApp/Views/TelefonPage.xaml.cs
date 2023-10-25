@@ -14,5 +14,10 @@ namespace TaxiStartApp.Views
             InitializeComponent();
             BindingContext = new TelefonViewModel();
         }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"{nameof(VerificationPage)}?{nameof(VerificationViewModel.Telefon)}={txName.Text}");
+        }
     }
 }

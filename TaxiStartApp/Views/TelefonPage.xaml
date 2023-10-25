@@ -75,14 +75,16 @@
                 <Button                    
                     Margin="15,0"
                     BackgroundColor="{StaticResource Gray910}"
-                    CornerRadius="30"               
-                    IsEnabled="{Binding BtEnabled, Mode=TwoWay}"
+                    CornerRadius="30"       
+                    BindingContext="{x:Reference txName}"
+                    IsEnabled="{Binding Text, Converter={StaticResource AccountStatusConverter}}"
                     FontAttributes="Bold"
                     FontSize="18"
                     HeightRequest="50"
                     TextColor="Black"
                     FontFamily="Roboto"
                     Text="Получить код"
+                    Clicked="Button_Clicked"
                     Command="{Binding PushCommand}">                   
                 </Button>                
             </Grid>
