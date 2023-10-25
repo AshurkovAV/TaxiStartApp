@@ -7,7 +7,6 @@ namespace TaxiStartApp.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private string _textAlignment;
         public LoginViewModel()
         {
             TelefonCommand = new Command(OnTelefonClicked);

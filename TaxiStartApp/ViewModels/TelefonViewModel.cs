@@ -10,6 +10,7 @@ namespace TaxiStartApp.ViewModels
     public class TelefonViewModel : BaseViewModel
     {
         string telefon;
+        bool _btEnabled;
 
         public TelefonViewModel()
         {
@@ -17,6 +18,21 @@ namespace TaxiStartApp.ViewModels
             BackCommand = new Command(OnBackClicked);
             PropertyChanged +=
                 (_, __) => PushCommand.ChangeCanExecute();
+            _btEnabled = false;
+        }
+        
+        public bool BtEnabled {
+            get => this._btEnabled;
+            set {
+                if (Telefon?.Length == 10)
+                {
+                    _btEnabled = true;
+                }
+                else {
+                    _btEnabled = false;
+                }
+                SetProperty(ref this._btEnabled, value); 
+            }
         }
 
         public string Telefon

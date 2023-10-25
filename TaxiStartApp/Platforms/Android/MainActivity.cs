@@ -9,7 +9,8 @@ namespace TaxiStartApp
 {
     [Activity(Theme = "@style/Maui.SplashTheme", 
         ScreenOrientation = ScreenOrientation.Portrait,        
-        MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
+        MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
     public class MainActivity : MauiAppCompatActivity
     {
         internal static readonly string Channel_ID = "TestChanel";

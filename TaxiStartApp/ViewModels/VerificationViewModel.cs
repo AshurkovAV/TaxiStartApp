@@ -23,7 +23,13 @@ namespace TaxiStartApp.ViewModels
         {
             BackCommand = new Command(OnBackClicked);
             PushCommand = new Command(OnPushClicked);
+            CommCommand = new Command(OnCommClicked);
             StartTimer();
+        }
+
+        private async void OnCommClicked(object obj)
+        {
+            var s = 0;
         }
 
         private void StartTimer()
@@ -63,6 +69,8 @@ namespace TaxiStartApp.ViewModels
 
         public Command BackCommand { get; }
         public Command PushCommand { get; }
+
+        public Command CommCommand { get; }
 
         async void OnPushClicked()
         {

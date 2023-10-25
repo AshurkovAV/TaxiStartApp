@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              BackgroundColor="{StaticResource Gray550}"
-             x:Class= "TaxiStartApp.Views.TelefonPage">
-    
+             x:Class= "TaxiStartApp.Views.TelefonPage"
+             xmlns:converters="clr-namespace:TaxiStartApp.Common.Converters">
+    <ContentPage.Resources>
+        <converters:AccountStatusConverter x:Key="AccountStatusConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid 
             RowDefinitions="80,auto,auto">
@@ -46,15 +49,18 @@
                     <Grid Grid.Column="1"
                       Padding="-20,0,0,0">
                         <dxe:TextEdit 
-                              VerticalOptions="Start"
-                              HorizontalOptions="End"                                                     
-                              Mask="(000) 000-00 00" 
+                              x:Name="txName"
+                              VerticalOptions="Start"                              
+                              Mask="000 000-00 00" 
                               MaskPlaceholderChar="0"
+                              CursorPosition="0"
                               Keyboard="Numeric"
                               BorderColor="{StaticResource Gray550}"
                               FocusedBorderColor="{StaticResource Gray550}"                              
                               TextFontSize="20"             
-                            Text="{Binding Telefon}"
+                              Text="{Binding Telefon}"
+                              ClearIconVisibility="Never"
+                              CursorColor="{StaticResource Gray100}"
                               PlaceholderColor="{StaticResource Gray500}"
                               TextColor="{StaticResource Gray100}"
                               TextFontFamily="SpaceB"/>
@@ -64,18 +70,21 @@
             <Grid VerticalOptions="End" 
                   Grid.Row="2" 
                   RowDefinitions="*" 
+                  
                   Margin="20">
                 <Button                    
                     Margin="15,0"
                     BackgroundColor="{StaticResource Gray910}"
-                    CornerRadius="30"
+                    CornerRadius="30"               
+                    IsEnabled="{Binding BtEnabled, Mode=TwoWay}"
                     FontAttributes="Bold"
                     FontSize="18"
                     HeightRequest="50"
                     TextColor="Black"
                     FontFamily="Roboto"
                     Text="Получить код"
-                    Command="{Binding PushCommand}"/>
+                    Command="{Binding PushCommand}">                   
+                </Button>                
             </Grid>
         </Grid>
     </ContentPage.Content>
