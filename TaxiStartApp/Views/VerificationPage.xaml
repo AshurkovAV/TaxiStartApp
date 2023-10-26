@@ -61,7 +61,7 @@
                               Keyboard="Numeric"                            
                               Text="{Binding Kod, Mode=OneWay}"
                               Completed="TextEdit_Completed"
-                              CursorPosition="0"
+                              CursorPosition="0"                            
                               CursorColor="{StaticResource Gray100}"
                               BorderColor="{StaticResource Gray550}"
                               FocusedBorderColor="{StaticResource Gray550}"                              

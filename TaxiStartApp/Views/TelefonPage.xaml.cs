@@ -11,8 +11,7 @@ namespace TaxiStartApp.Views
     {
         public TelefonPage()
         {
-            InitializeComponent();
-            BindingContext = new TelefonViewModel();
+            InitializeComponent();           
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
