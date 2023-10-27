@@ -1,0 +1,35 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}"
+             IconImageSource="info"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource Gray550}"
+             x:Class= "TaxiStartApp.Views.CheckProfilPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="200,Auto">
+            <Button
+                Grid.Row="0"                    
+                Margin="15,0"
+                BackgroundColor="{StaticResource Gray910}"
+                CornerRadius="30"
+                FontAttributes="Bold"
+                FontSize="18"
+                HeightRequest="50"
+                TextColor="Black"
+                FontFamily="Roboto"                
+                Command="{Binding DriverCommand}"
+                Text="Войти как водитель"/>
+            <Button
+                Grid.Row="2"
+                Margin="15,0"
+                BackgroundColor="{StaticResource Gray650}"
+                CornerRadius="30"
+                FontAttributes="Bold"
+                FontSize="18"
+                HeightRequest="50"
+                TextColor="White"
+                FontFamily="Roboto"                                    
+                Text="Войти как таксопарк"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

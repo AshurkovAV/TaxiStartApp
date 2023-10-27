@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using TaxiStartApp.Models;
 
-namespace TaxiStartApp.ViewModels
+namespace TaxiStartApp.ViewModels.old
 {
     public class ItemsViewModel : BaseViewModel
     {
@@ -28,10 +28,10 @@ namespace TaxiStartApp.ViewModels
 
         public Item SelectedItem
         {
-            get => this._selectedItem;
+            get => _selectedItem;
             set
             {
-                SetProperty(ref this._selectedItem, value);
+                SetProperty(ref _selectedItem, value);
                 OnItemSelected(value);
             }
         }

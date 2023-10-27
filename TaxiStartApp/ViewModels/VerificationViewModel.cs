@@ -17,6 +17,7 @@ namespace TaxiStartApp.ViewModels
         int? _kod;
         bool _btIsEnabled = false;
         string _btText = "Вход";
+        string _errorText = string.Empty;
         private int _num = 60;
         private System.Threading.Timer _timer;
 
@@ -30,7 +31,17 @@ namespace TaxiStartApp.ViewModels
 
         private async void OnCommClicked(object obj)
         {
-            var s = 0;
+            if (Kod?.ToString().Length == 4)
+            {
+                if (Kod == 3939)
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(CheckProfilPage)}");
+                }
+                else
+                {
+                    ErrorText = Constant.PushErrorText;
+                }
+            }
         }
 
         private void StartTimer()
@@ -41,7 +52,21 @@ namespace TaxiStartApp.ViewModels
             else
                 MainThread.BeginInvokeOnMainThread(MyMainThreadCode);            
         }
+        void MyMainThreadCode()
+        {
+            // устанавливаем метод обратного вызова
+            TimerCallback tm = new TimerCallback(Count);
+            if (_timer == null)
+                _timer = new System.Threading.Timer(tm, _num, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
+        }
         #region propert
+
+        public string ErrorText
+        {
+            get { return this._errorText; }
+            set { SetProperty(ref this._errorText, value); }
+        }
+        
         public string BtText
         {
             get { return this._btText; }
@@ -98,12 +123,6 @@ namespace TaxiStartApp.ViewModels
             }
         }
 
-        void MyMainThreadCode()
-        {
-            // устанавливаем метод обратного вызова
-            TimerCallback tm = new TimerCallback(Count);
-            if(_timer == null)
-                _timer = new System.Threading.Timer(tm, _num, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1));
-        }
+        
     }
 }

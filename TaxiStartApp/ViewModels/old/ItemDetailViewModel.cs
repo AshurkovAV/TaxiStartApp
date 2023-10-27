@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace TaxiStartApp.ViewModels
+namespace TaxiStartApp.ViewModels.old
 {
     public class ItemDetailViewModel : BaseViewModel, IQueryAttributable
     {
@@ -14,14 +14,14 @@ namespace TaxiStartApp.ViewModels
 
         public string Text
         {
-            get => this.text;
-            set => SetProperty(ref this.text, value);
+            get => text;
+            set => SetProperty(ref text, value);
         }
 
         public string Description
         {
-            get => this.description;
-            set => SetProperty(ref this.description, value);
+            get => description;
+            set => SetProperty(ref description, value);
         }
 
         public async Task LoadItemId(string itemId)

@@ -1,15 +1,14 @@
 ﻿using TaxiStartApp.ViewModels;
-using TaxiStartApp.ViewModels.old;
 
 namespace TaxiStartApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AboutPage : ContentPage
+    public partial class CheckProfilPage : ContentPage
     {
-        public AboutPage()
+        public CheckProfilPage()
         {
             InitializeComponent();
-            BindingContext = new AboutViewModel();
-        }
+            BindingContext = new CheckProfilViewModel();
+        }        
     }
 }

@@ -8,9 +8,7 @@
          ios:Page.UseSafeArea="true"
          BackgroundColor="{StaticResource Gray500}"
          Shell.FlyoutBehavior="Flyout"
-        x:Class= "TaxiStartApp.Views.MainPage">    
-    <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" 
-                          Route= "TaxiStartApp.Views.LoginPage"   />
+        x:Class= "TaxiStartApp.Views.MainPage">       
     <TabBar>
         <Tab Title="Профиль" Icon="info">
             <ShellContent ContentTemplate="{DataTemplate local:ProfilPage}" 

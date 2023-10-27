@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace TaxiStartApp.ViewModels
+namespace TaxiStartApp.ViewModels.old
 {
     public class AboutViewModel : BaseViewModel
     {

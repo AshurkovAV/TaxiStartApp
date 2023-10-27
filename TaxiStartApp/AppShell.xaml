@@ -24,20 +24,26 @@
         Shell.FlyoutBehavior="Flyout"
         Shell.FlyoutItemIsVisible="True"
         Shell.NavBarIsVisible="False"/>
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:CheckProfilPage}"
+        Route="CheckProfilPage"
+        Shell.FlyoutBehavior="Flyout"
+        Shell.FlyoutItemIsVisible="True"
+        Shell.NavBarIsVisible="False"/>
 
     <TabBar FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-        Title="Home"
+        Title="Меню"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
 
         <ShellContent
-        Title="Profil"
+        Title="Карта"
         ContentTemplate="{DataTemplate pages:ProfilPage}"
         Route="ProfilPage" />
 
         <ShellContent
-        Title="Input"
+        Title="Подписка"
         ContentTemplate="{DataTemplate pages:InputPage}"
         Route="InputPage" />
     </TabBar>   

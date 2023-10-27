@@ -12,5 +12,9 @@ namespace TaxiStartApp.Common
         /// Запросить повторно
         /// </summary>
         public static string PushNotification = "Запросить повторно";
+        /// <summary>
+        /// Не верный код
+        /// </summary>
+        public static string PushErrorText    = "Не верный код";
     }
 }
