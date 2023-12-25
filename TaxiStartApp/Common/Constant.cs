@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace TaxiStartApp.Common
 {
@@ -16,5 +12,16 @@ namespace TaxiStartApp.Common
         /// Не верный код
         /// </summary>
         public static string PushErrorText    = "Не верный код";
+
+        public static string UrlService()
+        {
+           return "http://91.240.209.20:8884/AttachedMo/startplus";           
+        }
+
+        /// <summary>
+        /// Ключ для бота 
+        /// @HabUnloadBot
+        /// </summary>
+        public static string KeyReestr { get; set; } = "6956643460:AAGEsTrMb2MB-RBwSWCPmHIcMjHecyrsz1Q";
     }
 }

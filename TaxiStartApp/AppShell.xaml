@@ -31,7 +31,10 @@
         Shell.FlyoutItemIsVisible="True"
         Shell.NavBarIsVisible="False"/>
 
-    <TabBar FlyoutDisplayOptions="AsMultipleItems">
+    <TabBar 
+        Shell.FlyoutBehavior="Flyout"
+        Shell.FlyoutItemIsVisible="True"
+        Shell.NavBarIsVisible="False">
         <ShellContent
         Title="Меню"
         ContentTemplate="{DataTemplate pages:MainPage}"
@@ -46,6 +49,9 @@
         Title="Подписка"
         ContentTemplate="{DataTemplate pages:InputPage}"
         Route="InputPage" />
+
+        <ShellContent Title="Таксопарк" 
+                      ContentTemplate="{DataTemplate pages:ContactsPage}" />
     </TabBar>   
 
 </Shell>

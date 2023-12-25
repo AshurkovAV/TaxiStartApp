@@ -1,8 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using System;
-using System.Linq;
-using TaxiStartApp.ViewModels;
+﻿using TaxiStartApp.ViewModels;
 
 namespace TaxiStartApp.Views
 {
@@ -17,6 +13,12 @@ namespace TaxiStartApp.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync($"{nameof(VerificationPage)}?{nameof(VerificationViewModel.Telefon)}={txName.Text}");
+        }
+
+        private async void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            //txName.Text = string.Empty;
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");            
         }
     }
 }

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundColor="{StaticResource Gray550}"
              x:Class= "TaxiStartApp.Views.TelefonPage"
              xmlns:converters="clr-namespace:TaxiStartApp.Common.Converters">
@@ -12,7 +13,7 @@
         <Grid 
             RowDefinitions="80,auto,auto">
             <Grid Margin="20" VerticalOptions="Start">
-                <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding BackCommand}">
+                <ImageButton HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
                     <ImageButton.Source>
                         <FontImageSource
                             FontFamily="Icons"
@@ -47,13 +48,19 @@
                     TextColor="{StaticResource Gray100}" />
 
                     <Grid Grid.Column="1"
-                      Padding="-20,0,0,0">
+                      Padding="0,0,0,0">
+                        <!--<Entry Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <toolkit:MaskedBehavior Mask="XXXX XXXX XXXX XXXX" />
+                            </Entry.Behaviors>
+                        </Entry>-->
                         <dxe:TextEdit 
                               x:Name="txName"
                               VerticalOptions="Start"                              
-                              Mask="000 000-00 00" 
+                              Mask="000 000 00-00" 
                               MaskPlaceholderChar="0"
-                              CursorPosition="0"
+                              CursorPosition="1"  
+                              
                               Keyboard="Numeric"
                               BorderColor="{StaticResource Gray550}"
                               FocusedBorderColor="{StaticResource Gray550}"                              

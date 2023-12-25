@@ -4,6 +4,8 @@ using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
+using TaxiStartApp.Common;
+using TaxiStartApp.Common.Bot;
 
 namespace TaxiStartApp
 {
@@ -38,6 +40,7 @@ namespace TaxiStartApp
             //    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             //});
 
+            BotInfo.BotInfoTo($"Приложение запущено {DateTime.Now} \n" + InfoDevice.GetInfo());
             return builder.Build();
         }
     }
