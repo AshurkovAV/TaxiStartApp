@@ -1,6 +1,6 @@
 ﻿namespace TaxiStartApp.Common
 {
-    internal class InfoDevice
+    public class InfoDevice
     {
         /// <summary>
         /// Сведения о девайсе 

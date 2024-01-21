@@ -17,9 +17,9 @@ namespace TaxiStartApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)
-                (SystemUiFlags.ImmersiveSticky | SystemUiFlags.LightNavigationBar |
-                 SystemUiFlags.Fullscreen | SystemUiFlags.Immersive);
+            //this.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)
+            //    (SystemUiFlags.ImmersiveSticky | SystemUiFlags.LightNavigationBar |
+            //     SystemUiFlags.Fullscreen | SystemUiFlags.Immersive);
 
             CreateNotificationChannel();
         }

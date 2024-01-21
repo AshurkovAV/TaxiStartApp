@@ -7,7 +7,6 @@ namespace TaxiStartApp.ViewModels.old
     {
         Item _selectedItem;
 
-
         public ItemsViewModel()
         {
             Title = "Browse";
@@ -16,7 +15,6 @@ namespace TaxiStartApp.ViewModels.old
             ItemTapped = new Command<Item>(OnItemSelected);
             AddItemCommand = new Command(OnAddItem);
         }
-
 
         public ObservableCollection<Item> Items { get; }
 

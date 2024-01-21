@@ -1,8 +1,5 @@
-﻿using System.Globalization;
-using System.Reflection;
-using System.Web;
+﻿using System.Web;
 using TaxiStartApp.ViewModels;
-using TaxiStartApp.Views;
 
 namespace TaxiStartApp.Services
 {

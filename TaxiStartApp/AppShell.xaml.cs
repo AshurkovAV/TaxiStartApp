@@ -15,12 +15,14 @@ public partial class AppShell : Shell
 		{
 			_token = Preferences.Get("DeviceToken", "");
 		}
-        ReadFireBaseAdminSdk();
+        //ReadFireBaseAdminSdk();
 
 
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-		Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         Routing.RegisterRoute(nameof(TelefonPage), typeof(TelefonPage));
+        Routing.RegisterRoute(nameof(ContactsPage), typeof(ContactsPage));
+        
         Routing.RegisterRoute(nameof(VerificationPage), typeof(VerificationPage));
     }
 

@@ -5,13 +5,16 @@
              BackgroundColor="{StaticResource Gray550}"
              x:Class= "TaxiStartApp.Views.InputPage">
     <ContentPage.Content>
-        <Grid RowDefinitions=".1*,.1*,.55*,.15*">
-            <Grid ColumnDefinitions="*,*,*" Margin="20">
-            <Button Grid.Row="2" Margin="25,20,25,20"
-                    Text="Learn more"
-                    Style="{StaticResource PrimaryButton}"
-                    Command="{Binding OpenWebCommand}"/>
-            </Grid>
+        <Grid RowDefinitions="Auto,*">
+            <ScrollView Grid.Row="1"
+                        Margin="5">
+                <VerticalStackLayout>
+                    <CollectionView ItemsSource="{Binding ItemsMenu}">
+
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -89,7 +89,7 @@
 	  <Compile Update="Views\UslPage.xaml.cs">
 	    <DependentUpon>UslPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\old\InputPage.xaml.cs">
+	  <Compile Update="Views\InputPage.xaml.cs">
 	    <DependentUpon>InputPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\VerificationPage.xaml.cs">
@@ -120,7 +120,7 @@
 	  <MauiXaml Update="Views\UslPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\old\InputPage.xaml">
+	  <MauiXaml Update="Views\InputPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\VerificationPage.xaml">

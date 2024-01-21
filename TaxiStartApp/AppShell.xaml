@@ -35,23 +35,22 @@
         Shell.FlyoutBehavior="Flyout"
         Shell.FlyoutItemIsVisible="True"
         Shell.NavBarIsVisible="False">
+
         <ShellContent
         Title="Меню"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
-
         <ShellContent
         Title="Карта"
         ContentTemplate="{DataTemplate pages:ProfilPage}"
-        Route="ProfilPage" />
-
+        Route="ProfilPage" />        
         <ShellContent
         Title="Подписка"
         ContentTemplate="{DataTemplate pages:InputPage}"
         Route="InputPage" />
-
         <ShellContent Title="Таксопарк" 
-                      ContentTemplate="{DataTemplate pages:ContactsPage}" />
+                      ContentTemplate="{DataTemplate pages:ContactsPage}"
+                      Route="ContactsPage"/>
     </TabBar>   
 
 </Shell>

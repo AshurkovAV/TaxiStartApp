@@ -1,27 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-         xmlns:dxn="clr-namespace:DevExpress.Maui.Navigation;assembly=DevExpress.Maui.Navigation"
          xmlns:local="clr-namespace:TaxiStartApp.Views"
          Style="{StaticResource ShellStyle}"
-         xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-         ios:Page.UseSafeArea="true"
-         BackgroundColor="{StaticResource Gray500}"
-         Shell.FlyoutBehavior="Flyout"
-        x:Class= "TaxiStartApp.Views.MainPage">       
-    <TabBar>
-        <Tab Title="Профиль" Icon="info">
-            <ShellContent ContentTemplate="{DataTemplate local:ProfilPage}" 
-                          Route= "TaxiStartApp.Views.ProfilPage"
-                          Shell.FlyoutBehavior="Disabled"/>
-        </Tab>
-        <Tab Title ="Таксопарк" Icon="browse">
-            <ShellContent ContentTemplate="{DataTemplate local:ContactsPage}" />
-        </Tab>  
-    </TabBar>
-    <TabBar>
-        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"
-                      Route= "TaxiStartApp.Views.LoginPage" />
-    </TabBar>
+         BackgroundColor="{StaticResource Gray550}"
+         Title="{Binding Title}"
+         IconImageSource="info"
+         x:Class= "TaxiStartApp.Views.MainPage">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*">
+            <ScrollView Grid.Row="1"
+                        Margin="5">
+                <VerticalStackLayout>
+                    <CollectionView ItemsSource="{Binding}">
 
-</Shell>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+            <CollectionView x:Name="ItemsListView" 
+                            Margin="10"
+                            Grid.ColumnSpan="2" 
+                        ItemsSource="{Binding Items, Mode=TwoWay}"
+                        SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="20,10,20,10"  Padding="0"
+                               CornerRadius="20"
+                               HeightRequest="125"
+                               InputTransparent="True"
+                               IsClippedToBounds="True"
+                               HasShadow="True" Visual="Material"
+                                 >
+                            <StackLayout Margin="12" IsEnabled="{Binding ColorItem, Mode=TwoWay}">
+
+                                <Label Text="{Binding Text, Mode=TwoWay}" FontAttributes="Bold" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}"  FontSize="16" />
+                                <Label Text="{Binding SvcName, Mode=TwoWay}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                                <Label Text="{Binding Description, Mode=TwoWay}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                                <Label Text="{Binding Executed, Mode=TwoWay}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="11" />
+                                <Label Text="{Binding IterationName, Mode=TwoWay}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="11" />
+                                <BoxView   VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="1" WidthRequest="50"  Color="#5b5d68"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                          
+                                                          CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+       
+    </ContentPage.Content>
+
+
+</ContentPage>

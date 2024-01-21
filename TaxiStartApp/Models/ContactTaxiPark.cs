@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaxiStartApp.Models
+﻿namespace TaxiStartApp.Models
 {
-    public class Contact
+    public class ContactTaxiPark
     {
         string name;
         public string Name
@@ -23,7 +17,7 @@ namespace TaxiStartApp.Models
             }
         }
 
-        public Contact(string name, string phone)
+        public ContactTaxiPark(string name, string phone)
         {
             Name = name;
             Phone = phone;

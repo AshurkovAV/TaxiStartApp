@@ -12,9 +12,8 @@ namespace TaxiStartApp.Common.Bot
             Bot.Rec rec = new Bot.Rec
             {
                 token = Constant.KeyReestr,
-                messeng = $"{str} {DateTime.Now} \n" +
-                          $"Тест \n" +
-                          str_
+                messeng = $"{str} {DateTime.Now} \n"                         
+                          
             };
             HttpClientTo(JsonConvert.SerializeObject(rec));
         }
