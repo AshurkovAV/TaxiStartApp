@@ -9,6 +9,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>TaxiStartApp</RootNamespace>
 
+    
 		<!-- Display name -->
 		<ApplicationTitle>TaxiStartApp</ApplicationTitle>
 
@@ -35,12 +36,16 @@
 	  <ApplicationId>strartplus.TaxiStartApp</ApplicationId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->		
 		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="#505a64" />			
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#E1E1E1" BaseSize="256,256" />
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#E1E1E1" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -58,7 +63,14 @@
 	  <None Remove="Resources\Fonts\fontello.ttf" />
 	  <None Remove="Resources\Fonts\SpaceGrotesk-Bold.ttf" />
 	  <None Remove="Resources\Images\blazor_editors_buttons.png" />
+	  <None Remove="Resources\Images\Connectivity.png" />
+	  <None Remove="Resources\Images\pay.png" />
+	  <None Remove="Resources\Images\profil.png" />
+	  <None Remove="Resources\Images\promo.png" />
+	  <None Remove="Resources\Images\secure.png" />
+	  <None Remove="Resources\Images\sub.png" />
 	  <None Remove="Resources\Images\taxi_login.png" />
+	  <None Remove="Resources\Images\vosh.png" />
 	  <None Remove="Resources\Raw\start-797ab-firebase-adminsdk-715ut-40e9483c42.json" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
@@ -77,12 +89,16 @@
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.1.5" />
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.1.5" />
 		<PackageReference Include="FirebaseAdmin" Version="2.4.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
 		<TrimmableAssembly Include="DevExpress.Data.v23.1" />
 	</ItemGroup>
 
 
 	<ItemGroup>
+	  <Compile Update="Views\ProfilPage.xaml.cs">
+	    <DependentUpon>ProfilPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\CheckProfilPage.xaml.cs">
 	    <DependentUpon>CheckProfilPage.xaml</DependentUpon>
 	  </Compile>
@@ -98,8 +114,8 @@
 	  <Compile Update="Views\TelefonPage.xaml.cs">
 	    <DependentUpon>TelefonPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\ProfilPage.xaml.cs">
-	    <DependentUpon>ProfilPage.xaml</DependentUpon>
+	  <Compile Update="Views\MapPage.xaml.cs">
+	    <DependentUpon>MapPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\ContactsPage.xaml.cs">
 	    <DependentUpon>ContactsPage.xaml</DependentUpon>
@@ -112,6 +128,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfilPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\CheckProfilPage.xaml">
@@ -129,11 +148,27 @@
 	  <MauiXaml Update="Views\TelefonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ProfilPage.xaml">
+	  <MauiXaml Update="Views\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ContactsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Menu\pay.png" />
+	  <MauiImage Include="Resources\Images\Menu\profil.png" />
+	  <MauiImage Include="Resources\Images\Menu\promo.png" />
+	  <MauiImage Include="Resources\Images\Menu\scheduler.svg" />
+	  <MauiImage Include="Resources\Images\Menu\secure.png" />
+	  <MauiImage Include="Resources\Images\Menu\sub.png" />
+	  <MauiImage Include="Resources\Images\Menu\vosh.png" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\JobTaxiService\JobTaxi.Entity\JobTaxi.Entity.csproj" />
 	</ItemGroup>
 </Project>

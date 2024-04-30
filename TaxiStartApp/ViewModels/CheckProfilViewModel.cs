@@ -13,7 +13,7 @@ namespace TaxiStartApp.ViewModels
         public Command DriverCommand { get; }
         async void OnDriverClicked()
         {
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            await Shell.Current.GoToAsync($"//{nameof(MapPage)}");
         }
         
     }

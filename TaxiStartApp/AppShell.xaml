@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TaxiStartApp"
-    xmlns:pages="clr-namespace:TaxiStartApp.Views"
-    Shell.FlyoutBehavior="Flyout">    
+    xmlns:pages="clr-namespace:TaxiStartApp.Views"    
+    Shell.FlyoutBehavior="Flyout">
+   
     <ShellContent
         ContentTemplate="{DataTemplate pages:LoginPage}"
         Route="LoginPage"
@@ -37,13 +38,13 @@
         Shell.NavBarIsVisible="False">
 
         <ShellContent
+        Title="Карта"
+        ContentTemplate="{DataTemplate pages:MapPage}"
+        Route="MapPage" />
+        <ShellContent
         Title="Меню"
         ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage" />
-        <ShellContent
-        Title="Карта"
-        ContentTemplate="{DataTemplate pages:ProfilPage}"
-        Route="ProfilPage" />        
+        Route="MainPage" />              
         <ShellContent
         Title="Подписка"
         ContentTemplate="{DataTemplate pages:InputPage}"
@@ -51,6 +52,7 @@
         <ShellContent Title="Таксопарк" 
                       ContentTemplate="{DataTemplate pages:ContactsPage}"
                       Route="ContactsPage"/>
-    </TabBar>   
+    </TabBar>
+    
 
 </Shell>

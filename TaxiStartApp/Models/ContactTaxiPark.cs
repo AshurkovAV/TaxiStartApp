@@ -2,27 +2,21 @@
 {
     public class ContactTaxiPark
     {
-        string name;
-        public string Name
+        public ContactTaxiPark(int id, string title, string authorName, DateTime? publicationDate, string imagePath, string url)
         {
-            get => this.name;
-            set
-            {
-                this.name = value;
-                if (Photo == null)
-                {
-                    string resourceName = value.Replace(" ", "").ToLower() + ".jpg";
-                    Photo = ImageSource.FromFile(resourceName);
-                }
-            }
+            Id = id;
+            Title = title;
+            AuthorName = authorName;
+            PublicationDate = publicationDate;
+            ImagePath = imagePath;
+            Url = url;
         }
-
-        public ContactTaxiPark(string name, string phone)
-        {
-            Name = name;
-            Phone = phone;
-        }
-        public ImageSource Photo { get; set; }
-        public string Phone { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string AuthorName { get; set; }
+        public DateTime? PublicationDate { get; set; }
+        public string ImagePath { get; set; }
+        public string Url { get; set; }
+        public string AvatarPath => AuthorName?.ToLower() + ".jpg";
     }
 }

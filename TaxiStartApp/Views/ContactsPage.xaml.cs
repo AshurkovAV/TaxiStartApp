@@ -7,8 +7,7 @@ namespace TaxiStartApp.Views
     {
         public ContactsPage()
         {
-            InitializeComponent();
-            //BindingContext = new ContactsViewModel();
+            InitializeComponent();            
         }
     }
 }

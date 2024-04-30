@@ -1,20 +1,55 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding Title}"
              IconImageSource="info"
              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource Gray550}"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+    xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+    xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:local="clr-namespace:TaxiStartApp.Views"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" ios:Page.UseSafeArea="true" 
              x:Class= "TaxiStartApp.Views.ProfilPage">
-    <ContentPage.Content>
-        <Grid RowDefinitions="Auto,*">
-            <ScrollView Grid.Row="1"
-                        Margin="5">
-                <VerticalStackLayout>
-                    <CollectionView ItemsSource="{Binding ItemsMenu}">
-                        
-                    </CollectionView>
-                </VerticalStackLayout>
-            </ScrollView>
-           
-        </Grid>
-    </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Apply" Clicked="ToolbarItem_Clicked" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Behaviors>
+        <!--<toolkit:StatusBarBehavior StatusBarColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Black}}" StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}"/>-->
+    </ContentPage.Behaviors>
+    <ContentPage.BindingContext>
+        <!--<local:MainViewModel/>-->
+    </ContentPage.BindingContext>
+    <!--<ContentPage.Resources>
+        <Style TargetType="dx:DXButton">
+            <Setter Property="BackgroundColor" Value="#00E6E1E6"/>
+            <Setter Property="PressedBackgroundColor" Value="#E6E1E6"/>
+            <Setter Property="TextColor" Value="#1C1B1E"/>
+            <Setter Property="PressedTextColor" Value="#1C1B1E"/>
+            <Setter Property="IconColor" Value="#1C1B1E"/>
+            <Setter Property="PressedIconColor" Value="#1C1B1E"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="HeightRequest" Value="56"/>
+        </Style>
+    </ContentPage.Resources>-->
+    <Grid>
+        <ScrollView>
+            <!--<dx:DXStackLayout Orientation="Vertical" BackgroundColor="{AppThemeBinding Light={StaticResource Gray50}, Dark={StaticResource Black}}">-->
+                <Grid HeightRequest="140" WidthRequest="140" Margin="0,30,0,10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ImageTapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label TextColor="#6750a4" Text="Upload Avatar" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <!--<dx:DXBorder CornerRadius="70" >-->
+                        <Image x:Name="preview" Source="{Binding EditedItem.PhotoPath}" WidthRequest="140" HeightRequest="140"/>
+                    <!--</dx:DXBorder>-->
+                    <!--<dx:DXBorder x:Name="editControl" BorderColor="White" BorderThickness="2" BackgroundColor="#e8def8" WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End" VerticalOptions="End">-->
+                        <Image Source="pencil" WidthRequest="24" HeightRequest="24"/>
+                    <!--</dx:DXBorder>-->
+                </Grid>              
+               
+            <!--</dx:DXStackLayout>-->
+        </ScrollView>
+    </Grid>
 </ContentPage>
+   

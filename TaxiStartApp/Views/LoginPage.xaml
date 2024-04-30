@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"                          
              BackgroundColor="{StaticResource Gray550}"
-             x:Class= "TaxiStartApp.Views.LoginPage">
+             x:Class= "TaxiStartApp.Views.LoginPage"
+             Shell.TabBarIsVisible="False">
     
     <ContentPage.Content>
         <Grid 
@@ -33,9 +36,90 @@
                     FontAttributes="Bold"
                     FontSize="18"
                     HeightRequest="50"
+                    Clicked="Button_Clicked"                    
                     TextColor="Black"
                     FontFamily="Roboto"
-                    Text="Войти через Google"/>
+                    Text="Войти через Яндекс ID"/>
+                <dxc:BottomSheet x:Name="bottomSheetConnection"
+                         CornerRadius="70"
+                         State="FullExpanded"
+                         IsVisible="False"
+                         BackgroundColor="White"
+                         HalfExpandedRatio="0.4"
+                         AllowedState ="HalfExpanded"        
+                         AllowDismiss="False"
+                         ShowGrabber="True"
+                         IsModal="True">
+                    <VerticalStackLayout Padding="4,0,4,4" >
+                        <Grid RowDefinitions="*,30,150">
+                            <Image Grid.Row="0"                                   
+                                   Aspect="Center"
+                                   Source="connectivity.png"/>
+                            <Label Grid.Row="1" x:Name="labelConnection" 
+                                   HorizontalOptions="Center" 
+                                   Text="Проблемы соединения"
+                                   FontSize="24"
+                                   TextColor="Black"
+                                   FontAttributes="Bold"/>
+                            <Button Grid.Row="2"  
+                                    Margin="5,40"
+                                    BackgroundColor="{StaticResource Gray910}"
+                                    CornerRadius="30"
+                                    HorizontalOptions="Center"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    Clicked="Button_Clicked_1"
+                                    HeightRequest="50"
+                                    TextColor="Black"
+                                    FontFamily="Roboto"
+                                    Text="Попробывать еще раз"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </dxc:BottomSheet>
+                <VerticalStackLayout>                    
+                        <VerticalStackLayout.GestureRecognizers>
+                            <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_Swiped"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                    
+                    <dxc:BottomSheet x:Name="bottomSheet"
+                         CornerRadius="70"
+                         BackgroundColor="White"
+                         HalfExpandedRatio="0.5"
+                         AllowDismiss="True"
+                         ShowGrabber="True"
+                         IsModal="True">                        
+                            <!--#region BottomSheetContent-->
+                            <VerticalStackLayout Padding="4,0,4,4" >                            
+                            <WebView x:Name="web" Navigated="web_Navigated"  HeightRequest="300"  />
+                            <ActivityIndicator x:Name="activator" IsRunning="False" Color="{StaticResource Gray910}" />
+                            <!--<WebView.Source>
+                                <HtmlWebViewSource>
+                                    <HtmlWebViewSource.Html>
+                                        <![CDATA[
+               <html>
+<body>
+
+</body>
+</html>                  
+                ]]>
+                                    </HtmlWebViewSource.Html>
+                                </HtmlWebViewSource>
+                            </WebView.Source>-->
+
+                            <!--<Button                    
+                    Margin="15,0"                                
+                    BackgroundColor="{StaticResource Gray910}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"                    
+                    TextColor="Black"
+                    FontFamily="Roboto"
+                    Text="Назад"/>-->
+                            </VerticalStackLayout>
+                            <!--#endregion-->
+                        </dxc:BottomSheet>                    
+                </VerticalStackLayout>
                 <Button
                     Grid.Row="2"
                     Margin="15,0"

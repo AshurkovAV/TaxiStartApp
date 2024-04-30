@@ -1,9 +1,6 @@
 ﻿using DevExpress.Maui;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls.Compatibility;
-using Microsoft.Maui.Controls.Compatibility.Hosting;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
+using DevExpress.Maui.Controls;
+using DevExpress.Maui.Controls.Internal;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Bot;
 
@@ -17,6 +14,9 @@ namespace TaxiStartApp
             builder
                 .UseMauiApp<App>()                
                 .UseDevExpress(useLocalization: true)
+                .ConfigureMauiHandlers(handlers => {
+                    handlers.AddHandler<BottomSheet, BottomSheetHandler>();
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -27,20 +27,13 @@ namespace TaxiStartApp
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                     fonts.AddFont("fontello.ttf", "Icons");
-                });
+                }); //add this;
             DevExpress.Maui.Charts.Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();
             DevExpress.Maui.Editors.Initializer.Init();
 
-            //var services = builder.Services;
-            //services.AddAuthentication().AddGoogle(googleOptions =>
-            //{
-            //    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-            //    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-            //});
-
-            BotInfo.BotInfoTo($"Приложение запущено {DateTime.Now} \n" + InfoDevice.GetInfo());
+            BotInfo.BotInfoTo($"Приложение запущено {DateTime.Now} \n" + InfoDevice.GetInfo() + "\n");  
             return builder.Build();
         }
     }
