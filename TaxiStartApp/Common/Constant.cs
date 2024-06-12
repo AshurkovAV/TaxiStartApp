@@ -1,6 +1,4 @@
-﻿
-
-using TaxiStartApp.Common.OAuth;
+﻿using TaxiStartApp.Common.OAuth;
 using TaxiStartApp.Dto;
 
 namespace TaxiStartApp.Common
@@ -24,6 +22,12 @@ namespace TaxiStartApp.Common
         {
            return "http://91.240.209.20:8884/AttachedMo/startplus";           
         }
+
+        public static string UrlGeneralService {  get; set; } = "https://api.xn--80aaaaadxhwt3bixfhni.xn--p1ai";
+        //return "http://192.168.10.7:8555";
+
+        public static int ShareParkId { get; set; }
+        public static string ShareParkGuid { get; set; }
 
         /// <summary>
         /// Ключ для бота 

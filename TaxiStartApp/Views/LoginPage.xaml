@@ -41,7 +41,7 @@
                     FontFamily="Roboto"
                     Text="Войти через Яндекс ID"/>
                 <dxc:BottomSheet x:Name="bottomSheetConnection"
-                         CornerRadius="70"
+                         CornerRadius="40"
                          State="FullExpanded"
                          IsVisible="False"
                          BackgroundColor="White"
@@ -82,9 +82,9 @@
                         </VerticalStackLayout.GestureRecognizers>
                     
                     <dxc:BottomSheet x:Name="bottomSheet"
-                         CornerRadius="70"
+                         CornerRadius="40"
                          BackgroundColor="White"
-                         HalfExpandedRatio="0.5"
+                         HalfExpandedRatio="0.4"
                          AllowDismiss="True"
                          ShowGrabber="True"
                          IsModal="True">                        

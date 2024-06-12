@@ -1,8 +1,4 @@
-﻿using FirebaseAdmin.Messaging;
-using Microsoft.Maui.Controls;
-using Plugin.LocalNotification;
-using System;
-using TaxiStartApp.Views;
+﻿using TaxiStartApp.Views;
 
 namespace TaxiStartApp.ViewModels
 {

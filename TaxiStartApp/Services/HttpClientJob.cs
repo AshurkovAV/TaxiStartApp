@@ -1,4 +1,5 @@
 ﻿using Java.Net;
+using JobTaxi.Entity.Dto;
 using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -9,7 +10,21 @@ namespace TaxiStartApp.Services
 {
     public class HttpClientJob
     {
-        private string _url = "http://api.xn--80aaaaadxhwt3bixfhni.xn--p1ai/park";
+        private string _url = Constant.UrlGeneralService + "/park";
+        private string _urlid = Constant.UrlGeneralService + "/park/id";
+        private string _urlcount = Constant.UrlGeneralService + "/park/count";
+        private string _urltruncated = Constant.UrlGeneralService + "/park/truncated?";
+        private string _cars = Constant.UrlGeneralService + "/car?";
+        private string _carsNav = Constant.UrlGeneralService + "/car/nav?";
+        private string _urlcountCar = Constant.UrlGeneralService + "/car/count?";
+        private string _urlDriversConstraint = Constant.UrlGeneralService + "/park/DriversConstraint?";
+        private string _urlWorkConstraint = Constant.UrlGeneralService + "/park/WorkCondition?";
+
+        //private string _url          = "http://192.168.10.7:8555/park";
+        //private string _urlid        = "http://192.168.10.7:8555/park/id";
+        //private string _urlcount     = "http://192.168.10.7:8555/park/count";
+        //private string _urltruncated = "http://192.168.10.7:8555/park/truncated?";
+        //private string _cars         = "http://192.168.10.7:8555/car?";
         public HttpClientJob() { }
 
         public async Task<IEnumerable<Park>> GetParksAsync()
@@ -24,6 +39,134 @@ namespace TaxiStartApp.Services
             catch(Exception wex) {
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new List<Park>(); }
+        }
+
+        public async Task<IEnumerable<ParkTruncated>> GetParksTruncatedAsync(int rows, int page)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urltruncated + $"rows={rows}&page={page}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<ParkTruncated>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<ParkTruncated>();
+            }
+        }
+
+        public async Task<IEnumerable<Car>> GetCarsAsync(int parkId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_cars + $"parkid={parkId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<Car>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<Car>();
+            }
+        }
+
+        public async Task<IEnumerable<Car>> GetCarsRowPageAsync(int parkId, int rows, int page)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_carsNav + $"parkid={parkId}&rows={rows}&page={page}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<Car>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<Car>();
+            }
+        }
+
+        public async Task<int> GetParksCountAsync()
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlcount);
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<int>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return 0;
+            }
+        }
+
+        public async Task<int> GetCarsCountAsync(int parkId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlcountCar + $"parkid={parkId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<int>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return 0;
+            }
+        }
+
+        public async Task<IEnumerable<int>> GetIdParksAsync()
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlid);
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<int>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<int>();
+            }
+        }
+
+        public async Task<IEnumerable<DriversConstraintTruncated>> GetParksDriversConstraintAsync(string parkGuid)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlDriversConstraint + $"parkGuid={parkGuid}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<DriversConstraintTruncated>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<DriversConstraintTruncated>();
+            }
+        }
+
+        public async Task<IEnumerable<WorkConditionTruncated>> GetParksWorkConditionTruncatedAsync(string parkGuid)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlWorkConstraint + $"parkGuid={parkGuid}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<WorkConditionTruncated>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<WorkConditionTruncated>();
+            }
         }
     }
 }

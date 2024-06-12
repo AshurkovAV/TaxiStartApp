@@ -8,6 +8,7 @@
     Shell.FlyoutBehavior="Flyout">
    
     <ShellContent
+        x:Name="loginpage"
         ContentTemplate="{DataTemplate pages:LoginPage}"
         Route="LoginPage"
         Shell.FlyoutBehavior="Disabled"
@@ -31,27 +32,49 @@
         Shell.FlyoutBehavior="Flyout"
         Shell.FlyoutItemIsVisible="True"
         Shell.NavBarIsVisible="False"/>
+    <ShellContent
+    ContentTemplate="{DataTemplate pages:ProfilPage}"
+    Route="ProfilPage"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutItemIsVisible="True" 
+    Shell.NavBarIsVisible="False">
+        
+    </ShellContent>
+    <ShellContent
+    ContentTemplate="{DataTemplate pages:EditBioPage}"
+    Route="EditBioPage" 
+    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutItemIsVisible="False" 
+        NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"/>
 
-    <TabBar 
+
+
+    <TabBar x:Name="mainpage"
+            
         Shell.FlyoutBehavior="Flyout"
         Shell.FlyoutItemIsVisible="True"
-        Shell.NavBarIsVisible="False">
-
+        Shell.NavBarIsVisible="False">        
         <ShellContent
-        Title="Карта"
-        ContentTemplate="{DataTemplate pages:MapPage}"
-        Route="MapPage" />
+            Title="Карта"
+            ContentTemplate="{DataTemplate pages:MapPage}"            
+            Route="MapPage" />
         <ShellContent
-        Title="Меню"
-        ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage" />              
+            Title="Меню"
+            ContentTemplate="{DataTemplate pages:MainPage}"
+            Route="MainPage" />
         <ShellContent
-        Title="Подписка"
-        ContentTemplate="{DataTemplate pages:InputPage}"
-        Route="InputPage" />
-        <ShellContent Title="Таксопарк" 
-                      ContentTemplate="{DataTemplate pages:ContactsPage}"
-                      Route="ContactsPage"/>
+            Title="Избраное"
+            ContentTemplate="{DataTemplate pages:InputPage}"
+            Route="InputPage" />
+        <!--<ShellContent
+    Title="Избраное"
+    ContentTemplate="{DataTemplate pages:InputPage}"
+    Route="InputPage" />-->
+        <ShellContent 
+            Title="Таксопарк" 
+            ContentTemplate="{DataTemplate pages:ContactsPage}"
+            Route="ContactsPage"/>
     </TabBar>
     
 

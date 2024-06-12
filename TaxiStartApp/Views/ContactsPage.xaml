@@ -1,90 +1,163 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding Title}"
+             BackgroundColor="{StaticResource Gray550}"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:local="clr-namespace:TaxiStartApp.Models"
-             x:Class= "TaxiStartApp.Views.ContactsPage">    
-        <ContentPage.BindingContext>
-        <local:TaxiParkViewModel/>
-        </ContentPage.BindingContext>
-    <dxcv:DXCollectionView ItemsSource="{Binding TaxiParkData}"
-                            IsRefreshing="{Binding IsLoading, Mode=TwoWay}"
-                           SelectionMode="Multiple"
-                           SelectedItems="{Binding SelectedContacts}"
+             xmlns:local1="clr-namespace:TaxiStartApp.Models.Park"
+             xmlns:coon="clr-namespace:TaxiStartApp.Common.Converters"
+             x:Class= "TaxiStartApp.Views.ContactsPage">
+    <ContentPage.Resources>
+        <coon:GlyphStatusConverter x:Key="movieOnFavoriteListAccountMovieStatesToGlyph" />        
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*">
+        <Grid ColumnDefinitions="360,*">            
+            <Border 
+                    VerticalOptions="Center" 
+                    StrokeThickness="0" Stroke="Transparent" Background="Transparent">
+                <dxe:TextEdit EndIcon="search" PlaceholderText="Поиск, ключевые слова" TextFontSize="14" 
+                              ClearIconColor="{StaticResource Gray300}" 
+                              TextVerticalAlignment="Center" 
+                              BackgroundColor="{AppThemeBinding Light=White, Dark=#322F37}" 
+                              BorderThickness="1" BorderColor="{AppThemeBinding Light=#DCD8E0, Dark=#938F99}" BoxPadding="20,6,10,6" 
+                              PlaceholderColor="{AppThemeBinding Light={StaticResource Gray300}, Dark=#938F99}" 
+                              EndIconColor="{AppThemeBinding Light={StaticResource Gray300}, Dark=#CAC4D0}" 
+                              FocusedBorderColor="Transparent" CornerRadius="16" HeightRequest="35" Margin="15,10,15,10" 
+                              TextColor="{AppThemeBinding Light={StaticResource Gray950}, Dark=#E6E1E5}"/>
+            </Border>
+            
+            <Grid Grid.Column="1" VerticalOptions="Center" Background="Transparent">               
+                    <Grid  VerticalOptions="Center">
+                        <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}">
+                            <ImageButton.Source>
+                                <FontImageSource
+                                FontFamily="Filter"
+                                Glyph="&#xf0b0;"
+                                Size="25"
+                                Color="{StaticResource Gray100}"/>
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </Grid>                
+            </Grid>
+        </Grid>
+        <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding TaxiParkData}"
+                           IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
+                           IndicatorColor="#FFC71F"                           
+                           SelectionMode="Single"                           
                            IsLoadMoreEnabled="True" 
-                           LoadMoreCommand="{Binding LoadMoreCommand}" 
-                           TapCommand="{Binding OpenBlogCommand}"
-                       Margin="{OnIdiom Phone='16,0,0,0', Tablet='71,0,0,0'}">
-        <!--Define the item template.-->
-        <dxcv:DXCollectionView.ItemTemplate>
-            <DataTemplate x:DataType="{x:Type local:ContactTaxiPark}">
-                <VerticalStackLayout Margin="0,8,0,8">
-                    <Border StrokeShape="RoundRectangle 20,20,20,20" Margin="16,0,16,10">
-                        <Image Source="{Binding ImagePath}" Aspect="AspectFill" HeightRequest="200"/>
-                    </Border>
-                    <Label Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray100}}" FontSize="18" MaxLines="3" LineBreakMode="WordWrap" Margin="16,0,16,10"/>
-                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" Margin="16,0,16,0">
-                        <Image Source="{Binding AvatarPath}" WidthRequest="24" HeightRequest="24">
-                            <Image.Clip>
-                                <EllipseGeometry RadiusX="12" RadiusY="12" Center="12,12"/>
-                            </Image.Clip>
-                        </Image>
-                        <Label Text="{Binding AuthorName}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" Margin="5,0,0,0" Grid.Column="1"/>
-                        <Label Text="{Binding PublicationDate, StringFormat=' &#8226; {0:m}'}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" VerticalOptions="Center" Grid.Column="2"/>
-                        <dxc:SimpleButton BackgroundColor="Transparent" Grid.Column="3" Margin="10,0,0,0" Padding="4,0,4,0" WidthRequest="28" VerticalOptions="Center"
-                                              CommandParameter="{Binding}"
-                                              Command="{Binding Source={RelativeSource Mode=FindAncestorBindingContext, AncestorType={x:Type local:TaxiParkViewModel}}, Path=ShareCommand}">
-                            <Image Source="share" HeightRequest="20"/>
-                        </dxc:SimpleButton>
-                    </Grid>
-                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" HeightRequest="2" StrokeThickness="0" Margin="0,10,0,0"/>
-                </VerticalStackLayout>
-            </DataTemplate>
-            <!--<DataTemplate>
-                <Grid Padding="10, 8, 18, 7">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Margin="0" Padding="0" ColumnSpacing="0" RowSpacing="0">
-                        <Frame BackgroundColor="White"
-                                   Padding="0" Margin="0"
-                                   HeightRequest="48"
-                                   WidthRequest="48"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"
-                                   HasShadow="False"   
-                                   CornerRadius="24">
-                            <Frame.IsClippedToBounds>
-                                <OnPlatform x:TypeArguments="x:Boolean">
-                                    <On Platform="iOS">true</On>
-                                    <On Platform="Android">false</On>
-                                </OnPlatform>
-                            </Frame.IsClippedToBounds>
-                            <Image Source="{Binding Photo}"/>
-                        </Frame>
-                        <Ellipse Margin="0"
-                                 Fill="Transparent"
-                                 Stroke="LightGray" 
-                                 StrokeThickness="1"
-                                 HeightRequest="50"
-                                 WidthRequest="50"
-                                 VerticalOptions="Center"
-                                 HorizontalOptions="Center">
-                        </Ellipse>
-                    </Grid>
-                    <StackLayout Grid.Column="1"
-                             Padding="18,1,18,7"
-                             Orientation="Vertical">
-                        <Label Text="{Binding Name}"
-                           Margin="0,2"
-                           TextColor="#55575c"/>
-                        <Label Text="{Binding Phone}"
-                               TextColor="#959aa0"/>
-                    </StackLayout>
-                </Grid>
-            </DataTemplate>-->
-        </dxcv:DXCollectionView.ItemTemplate>
-    </dxcv:DXCollectionView>
+                           LoadMoreCommand="{Binding LoadMoreCommand}"  
+                               TapCommand="{Binding OpenBlogCommand}"
+                       Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
+            <!--Define the item template.-->
+            <dxcv:DXCollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type local1:ContactTaxiPark}">                    
+                        <Border StrokeShape="RoundRectangle 20"
+                                Margin="5"  
+                                BackgroundColor="{StaticResource Gray650}">
+                        <VerticalStackLayout Margin="0,0,0,0">
+                            <!--<Border StrokeShape="RoundRectangle 20,20,20,20" Margin="0,0,0,10">
+                                <dxc:DXImage Source="{Binding CarAvatar}" Aspect="AspectFill" HeightRequest="150"/>
+                            </Border>-->
+                            <Grid ColumnDefinitions="Auto,*,Auto" >                               
+                                    <Label Grid.Column="0"
+                                           Margin="16,25,16,5"
+                                           FontAttributes="Bold" Text="{Binding ParkTrun.ParkName}" 
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                           FontSize="18" 
+                                           MaxLines="3" LineBreakMode="WordWrap"/>
+
+                                <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible
+                                                , Mode=OneWay}"
+                                        Margin="0,25,16,0" >
+                                        <ImageButton x:Name="but" Padding="1" Clicked="ImageButton_Clicked"  Command="{Binding LikeCommand}">
+                                            <ImageButton.Source>
+                                                <FontImageSource x:Name="ImageSour"
+                                                    FontFamily="Filter"
+                                                    Glyph="&#xe802;"                                                    
+                                                    Size="25"
+                                                    Color="{StaticResource Gray100}"/>
+                                            </ImageButton.Source>
+                                        </ImageButton>
+                                    </Grid>
+                                <Grid Grid.Column="2" 
+                                      IsVisible="{Binding Grid2Visible,
+                                                  Mode=OneWay}"
+                                      Margin="0,25,16,0" >
+                                    <ImageButton  Padding="1" Command="{Binding LikeEmpCommand}">
+                                        <ImageButton.Source>
+                                            <FontImageSource 
+                                                FontFamily="Filter"
+                                                Glyph="&#xe803;"
+                                                Size="25"
+                                                Color="#ce2029"/>
+                                        </ImageButton.Source>
+                                    </ImageButton>
+                                </Grid>
+
+
+                            </Grid>
+                            
+                            <Label Grid.Column="1"
+                                   Text="{Binding ParkTrun.ParkPhone}" 
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                   FontSize="18" 
+                                   MaxLines="3" 
+                                   LineBreakMode="WordWrap" 
+                                   Margin="16,0,16,10"/>
+                            
+                            <Grid ColumnDefinitions="Auto" Margin="16,0,16,5">
+                                <Label Grid.Column="0" Text="{Binding ParkTrun.ParkAddress}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />                                                                        
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                <Label Grid.Column="0" Text="Количество свободных машин " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                <Border Grid.Column="1"
+                                                BackgroundColor="#8F000000"
+                                                HorizontalOptions="Start"                                                
+                                                VerticalOptions="End"        
+                                                StrokeShape="RoundRectangle 15">
+                                    <Label Text="{Binding ParkTrun.CountCars, StringFormat='{0:N0}'}" 
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"
+                                                   Padding="12,4"/>
+                                </Border>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="16,0,16,10">
+                                <Label  Grid.Column="0" Text="Опубликовано " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                <Label  Grid.Column="1" Text="{Binding ParkTrun.CreatedAt, StringFormat=' &#8226; {0:m}'}" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                <dxc:SimpleButton BackgroundColor="Transparent"
+                                                  Grid.Column="2" 
+                                                  Margin="10,0,0,0" 
+                                                  Padding="4,0,4,0" 
+                                                  WidthRequest="28" 
+                                                  VerticalOptions="Center"
+                                                  CommandParameter="{Binding}"
+                                                  Command="{Binding Source={RelativeSource Mode=FindAncestorBindingContext, AncestorType={x:Type local:TaxiParkViewModel}}, Path=ShareCommand}">
+
+                                    <Image Source="share" HeightRequest="20"/>
+                                </dxc:SimpleButton>
+                            </Grid>
+                            <Button                                
+                                Margin="15,15,15,10"
+                                BackgroundColor="{StaticResource Gray910}"
+                                CornerRadius="30"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HeightRequest="40"
+                                TextColor="Black"
+                                FontFamily="Roboto"
+                                Text="Откликнуться"/>
+                            <!--<Border 
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" 
+                            HeightRequest="2" 
+                            StrokeThickness="0" Margin="0,10,10,0"/>-->
+                        </VerticalStackLayout>
+                    </Border>                    
+                </DataTemplate>
+
+            </dxcv:DXCollectionView.ItemTemplate>
+        </dxcv:DXCollectionView>
+    </Grid>
 </ContentPage>

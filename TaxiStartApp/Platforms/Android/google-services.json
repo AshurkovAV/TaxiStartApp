@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "333572269050",
-    "project_id": "start-797ab",
-    "storage_bucket": "start-797ab.appspot.com"
+    "project_number": "329914828222",
+    "project_id": "startplus46-33ad5",
+    "storage_bucket": "startplus46-33ad5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:333572269050:android:ac40f15303d3f357877a43",
+        "mobilesdk_app_id": "1:329914828222:android:daa527b00d1710123b25ef",
         "android_client_info": {
           "package_name": "strartplus.TaxiStartApp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD5JdiGTTLT23AvSvLtc3UC-80gnHXsWCc"
+          "current_key": "AIzaSyB7nBR4y2hSrA1wxk12FHBJUZ7JX_LqlKg"
         }
       ],
       "services": {

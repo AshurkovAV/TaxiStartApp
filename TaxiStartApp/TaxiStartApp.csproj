@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android33.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android34.0</TargetFrameworks>
         
 		<OutputType>Exe</OutputType>
 		<UseMaui>true</UseMaui>
@@ -25,6 +25,7 @@
 		<UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
 		<AssemblyVersion>2</AssemblyVersion>
 		<FileVersion>2</FileVersion>
+		<AndroidSigningKeyStore>debug.keystore</AndroidSigningKeyStore>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
@@ -38,6 +39,17 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android33.0|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	  <AndroidSigningStorePass></AndroidSigningStorePass>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	  <AndroidSigningStorePass></AndroidSigningStorePass>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -56,38 +68,50 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Data\Employees.json" />
+</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Platforms\Android\google-services.json" />
 	  <None Remove="Resources\AppIcon\appicon.png" />
 	  <None Remove="Resources\Fonts\fontello.ttf" />
+	  <None Remove="Resources\Fonts\fontelloFlll.ttf" />
 	  <None Remove="Resources\Fonts\SpaceGrotesk-Bold.ttf" />
+	  <None Remove="Resources\Images\blacklist.svg" />
 	  <None Remove="Resources\Images\blazor_editors_buttons.png" />
+	  <None Remove="Resources\Images\check_24px.svg" />
 	  <None Remove="Resources\Images\Connectivity.png" />
+	  <None Remove="Resources\Images\delete.svg" />
+	  <None Remove="Resources\Images\gallery.svg" />
+	  <None Remove="Resources\Images\globe.svg" />
+	  <None Remove="Resources\Images\group.svg" />
+	  <None Remove="Resources\Images\jennievalintine.png" />
 	  <None Remove="Resources\Images\pay.png" />
+	  <None Remove="Resources\Images\pencil.svg" />
+	  <None Remove="Resources\Images\priv.svg" />
 	  <None Remove="Resources\Images\profil.png" />
 	  <None Remove="Resources\Images\promo.png" />
 	  <None Remove="Resources\Images\secure.png" />
+	  <None Remove="Resources\Images\share.svg" />
+	  <None Remove="Resources\Images\sound.svg" />
 	  <None Remove="Resources\Images\sub.png" />
+	  <None Remove="Resources\Images\take_photo.svg" />
+	  <None Remove="Resources\Images\taxi_fone.png" />
 	  <None Remove="Resources\Images\taxi_login.png" />
+	  <None Remove="Resources\Images\vibrate.svg" />
 	  <None Remove="Resources\Images\vosh.png" />
 	  <None Remove="Resources\Raw\start-797ab-firebase-adminsdk-715ut-40e9483c42.json" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
-	</ItemGroup>
-
 
 	<ItemGroup>
-		<PackageReference Include="DevExpress.Maui.Charts" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.CollectionView" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.Core" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.Controls" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.Editors" Version="23.1.5" />
-		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.1.5" />
+		<PackageReference Include="DevExpress.Maui.Charts" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.CollectionView" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Core" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.5" />
+		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.2.5" />
 		<PackageReference Include="FirebaseAdmin" Version="2.4.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
@@ -96,6 +120,12 @@
 
 
 	<ItemGroup>
+	  <Compile Update="Views\EditContactPage.xaml.cs">
+	    <DependentUpon>EditContactPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\EditBioPage.xaml.cs">
+	    <DependentUpon>EditBioPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ProfilPage.xaml.cs">
 	    <DependentUpon>ProfilPage.xaml</DependentUpon>
 	  </Compile>
@@ -127,13 +157,25 @@
 	  <MauiXaml Update="AppShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Common\Component\SButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditContactPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditBioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfilPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\CheckProfilPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UslPage.xaml">

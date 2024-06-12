@@ -1,53 +1,46 @@
-﻿using DevExpress.Maui.Controls;
-using System.Net.Mail;
-using TaxiStartApp.ViewModels;
+﻿using TaxiStartApp.ViewModels.Profil;
 
 namespace TaxiStartApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilPage : ContentPage
     {
+        private SettingsViewModel dataModel;
         public ProfilPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            this.dataModel = new SettingsViewModel();
+            BindingContext = this.dataModel;
         }
-        private void ValidateCustomerProperties(object sender, DevExpress.Maui.DataForm.DataFormPropertyValidationEventArgs e)
+        protected override async void OnAppearing()
         {
-            if (e.PropertyName == "Email" && e.NewValue != null)
-            {
-                MailAddress res;
-                if (!MailAddress.TryCreate((string)e.NewValue, out res))
-                {
-                    e.HasError = true;
-                    e.ErrorText = "Invalid email";
-                }
-            }
-        }
+            activator.IsRunning = true;
+            base.OnAppearing();
+            await this.dataModel.LoadDataAsync();
+            activator.IsRunning = false;
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        }
+        protected override bool OnBackButtonPressed()
         {
-            //dataForm.Commit();
+            // Do something here 
+            Shell.Current.GoToAsync($"///MainPage");           
+            return true;
         }
 
         private void ImageTapped(object sender, EventArgs e)
         {
-           // bottomSheet.State = BottomSheetState.HalfExpanded;
+            //bottomSheet.State = BottomSheetState.HalfExpanded;
         }
 
         private async void DeletePhotoClicked(object sender, EventArgs args)
-        {
-            await Dispatcher.DispatchAsync(() => {
-                //bottomSheet.State = BottomSheetState.Hidden;
-                //editControl.IsVisible = false;
-                preview.Source = null;
-            });
+        {            
         }
 
         private async void SelectPhotoClicked(object sender, EventArgs args)
         {
             var photo = await MediaPicker.PickPhotoAsync();
             await ProcessResult(photo);
-           // editControl.IsVisible = true;
+            //editControl.IsVisible = true;
         }
 
         private async void TakePhotoClicked(object sender, EventArgs args)
@@ -57,13 +50,13 @@ namespace TaxiStartApp.Views
 
             var photo = await MediaPicker.Default.CapturePhotoAsync();
             await ProcessResult(photo);
-           // editControl.IsVisible = true;
+            //editControl.IsVisible = true;
         }
 
         private async Task ProcessResult(FileResult result)
         {
             await Dispatcher.DispatchAsync(() => {
-              //  bottomSheet.State = BottomSheetState.Hidden;
+             // bottomSheet.State = BottomSheetState.Hidden;
             });
 
 
@@ -78,15 +71,15 @@ namespace TaxiStartApp.Views
                 var stream = await result.OpenReadAsync();
                 imageSource = ImageSource.FromStream(() => stream);
             }
-          //  var editorPage = new ImageEditView(imageSource);
-          //  await Navigation.PushAsync(editorPage);
+            //var editorPage = new ImageEditView(imageSource);
+            //await Navigation.PushAsync(editorPage);
 
-           // var cropResult = await editorPage.WaitForResultAsync();
+            //var cropResult = await editorPage.WaitForResultAsync();
             //if (cropResult != null)
             //    preview.Source = cropResult;
 
-          //  editorPage.Handler.DisconnectHandler();
-        //}
+            //editorPage.Handler.DisconnectHandler();
+        }        
     }
-}
+
 }

@@ -11,7 +11,7 @@ namespace TaxiStartApp.Common.OAuth
     public class YandexOAuth
     {
         private WebNavigatedEventArgs _e;
-        private string _urlYandexOauth = "https://api.xn--80aaaaadxhwt3bixfhni.xn--p1ai/YandexOauth/token?";
+        private string _urlYandexOauth = Constant.UrlGeneralService + "/YandexOauth/token?";
         public YandexOAuth(WebNavigatedEventArgs e) 
         {
             _e = e;

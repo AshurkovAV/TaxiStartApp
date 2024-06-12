@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TaxiStartApp.Views.EditContactPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+    xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+    xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+    xmlns:helpers="clr-namespace:TaxiStartApp.Common.Converters.Helpers"
+    xmlns:local="clr-namespace:TaxiStartApp.Models.Park"
+    xmlns:local1="clr-namespace:JobTaxi.Entity.Models;assembly=JobTaxi.Entity"
+    xmlns:comp="clr-namespace:TaxiStartApp.Common.Component"
+    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="{StaticResource Gray550}"
+    >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="dxc:ShimmerView" x:Key="ShimmerEffect">
+                <Setter Property="WaveWidth" Value="0.7"/>
+                <Setter Property="WaveOpacity" Value="0.8"/>
+                <Setter Property="WaveDuration" Value="0:0:0.8"/>
+            </Style>
+
+            <Style TargetType="Border" x:Key="ShimmerElementAction">
+                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
+                <Setter Property="WidthRequest" Value="390"/>
+                <Setter Property="HeightRequest" Value="200"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+            </Style>
+            <Style TargetType="Border" x:Key="ShimmerElementCard">
+                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
+                <Setter Property="WidthRequest" Value="250"/>
+                <Setter Property="HeightRequest" Value="150"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+            </Style>
+            <Style TargetType="Ellipse" x:Key="ShimmerElementAvatar">
+                <Setter Property="Fill" Value="{dx:ThemeColor SurfaceVariant}"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="HeightRequest" Value="60"/>
+            </Style>
+            <Style TargetType="Border" x:Key="ShimmerElementRow">
+                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
+                <Setter Property="HeightRequest" Value="24"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+            </Style>
+
+            <Style TargetType="Border" x:Key="ElementAction">
+                <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
+                <Setter Property="WidthRequest" Value="100"/>
+                <Setter Property="HeightRequest" Value="90"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextAction">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=#101010, Dark=#FFFFFF}"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <Style TargetType="dx:DXBorder" x:Key="ElementCard">
+                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="WidthRequest" Value="240"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextCardTitle">
+                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextCardCaption">
+                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="TextHeader">
+                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurface}"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextUserName">
+                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurface}"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TextUserCaption">
+                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+        </ResourceDictionary>
+        <Style TargetType="dxe:FormItemBase" ApplyToDerivedTypes="True" x:Key="baseStyle">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}"/>
+            <Setter Property="ImageColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}" />
+            <Setter Property="Padding" Value="0,8" />
+            <Setter Property="ShowSeparator" Value="False" />
+            <Setter Property="ImageWidth" Value="36" />
+            <Setter Property="ImageMargin" Value="0,0,10,0" />
+            <Setter Property="ImageHeight" Value="36" />
+            <Setter Property="Margin" Value="-1,0,-1,0" />
+        </Style>
+        <Style TargetType="dxe:FormItem" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="Margin" Value="0,0,0,0" />
+        </Style>
+        <Style TargetType="dxe:FormSwitchItem" BasedOn="{StaticResource baseStyle}">
+        </Style>
+        <Style TargetType="dxe:FormListPickerItem" BasedOn="{StaticResource baseStyle}">
+            <Setter Property="ArrowColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}"/>
+        </Style>
+        <Style TargetType="dxe:FormGroupItem">
+            <Setter Property="HeaderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}"/>
+            <Setter Property="HeaderFontAttributes" Value="Bold" />
+            <Setter Property="HeaderMargin" Value="0,0,0,5" />
+            <Setter Property="Padding" Value="0,25,0,15" />
+            <Setter Property="HeaderFontSize" Value="15" />
+            <Setter Property="ItemSpacing" Value="0" />
+        </Style>
+    </ContentPage.Resources>
+    
+        <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+            <Grid Grid.Column="0"  Margin="20" VerticalOptions="Start">
+                <ImageButton HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource
+                                FontFamily="Icons"
+                                Glyph="&#xE800;"
+                                Size="20"
+                                Color="{StaticResource Gray200}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+            <Grid Grid.Column="1" HorizontalOptions="End">
+                <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}"  Margin="20" >
+                    <ImageButton x:Name="but" Padding="1"  Command="{Binding LikeCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource x:Name="ImageSour"
+                                                 FontFamily="Filter"
+                                                 Glyph="&#xe802;"                                                    
+                                                 Size="25"
+                                                 Color="{StaticResource Gray100}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+                <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible, Mode=OneWay}" Margin="20" >
+                    <ImageButton  Padding="1" Command="{Binding LikeEmpCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource 
+                                    FontFamily="Filter"
+                                    Glyph="&#xe803;"
+                                    Size="25"
+                                    Color="#ce2029"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+            </Grid>
+        </Grid>
+        
+            <ScrollView Grid.Row="1">
+            <Grid RowDefinitions="Auto,*,Auto">
+                <Grid Grid.Row="0">
+                    
+                            <dx:DXStackLayout  Orientation="Vertical" Padding="20,-20" ItemSpacing="10">
+                                <dxe:FormGroupItem Header="Таксопарк">
+                                    <dxe:FormItem AllowTap="True" TextColor="White"
+                                                  TextFontFamily="Roboto" 
+                                                  TextFontSize="18"
+                                                  DetailColor="Gray"
+                                                  Text="{Binding ParkName, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
+                                    <dxe:FormItem AllowTap="True" TextColor="White"
+                                                  TextFontFamily="Roboto" 
+                                                  TextFontSize="18"
+                                                  DetailColor="Gray"
+                                                  Text="{Binding ParkPhone, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
+                                </dxe:FormGroupItem>
+                            </dx:DXStackLayout>
+                        
+                </Grid>
+
+                <dxcv:DXCollectionView VerticalOptions="Start"
+                                       Grid.Row="1" ItemsSource="{Binding CarsData}"
+                                       IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
+                                       IndicatorColor="#FFC71F"                           
+                                       SelectionMode="Single"
+                                       IsLoadMoreEnabled="True" 
+                                       LoadMoreCommand="{Binding LoadMoreCommand}"  
+                                       IsScrollBarVisible="False"
+                                       HeightRequest="210" 
+                                       Orientation="Horizontal"
+                Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
+                  
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type local:Cars}">
+                            <Border StrokeShape="RoundRectangle 20"
+                                    Margin="5"  
+                                    BackgroundColor="{StaticResource Gray650}">
+                                <VerticalStackLayout Margin="0,0,0,0">                                    
+                                    <Grid ColumnDefinitions="Auto,*,Auto" >
+                                        <Label Grid.Column="0"
+                                               Margin="16,25,16,5"
+                                               FontAttributes="Bold" Text="{Binding CarName}" 
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                               FontSize="18" 
+                                               MaxLines="3" LineBreakMode="WordWrap"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="Модель " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding Model}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="Цвет " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding Color}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="Год выпуска " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding Year}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="Рег. номер " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding Number}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="Аренда в сутки " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Border Grid.Column="1"
+                                                BackgroundColor="#8F000000"
+                                                HorizontalOptions="Start"                                                
+                                                VerticalOptions="End"        
+                                                StrokeShape="RoundRectangle 15">
+                                            <Label Text="{Binding PriceForDay, StringFormat='₽ {0:N0}'}" 
+                                                   FontAttributes="Bold"
+                                                   TextColor="White"
+                                                   Padding="12,4"/>
+                                        </Border>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+
+                    </dxcv:DXCollectionView.ItemTemplate>
+                </dxcv:DXCollectionView>
+
+                <Grid Grid.Row="2" VerticalOptions="Start" >
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <Grid Grid.Row="0" Margin="20" ColumnDefinitions="Auto, Auto"  >
+                            <ImageButton Grid.Column="0" HorizontalOptions="Start" 
+                                     VerticalOptions="Center" Command="{Binding LocationCommand}">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        FontFamily="Filter"
+                                        Glyph="&#xe804;"
+                                        Size="25"
+                                        Color="{StaticResource Gray910}"/>
+                                </ImageButton.Source>
+                            </ImageButton>
+                            <Grid Grid.Column="1" Margin="10,0,0,0" ColumnDefinitions="Auto,Auto">
+                                <dxe:FormItem  Grid.Column="0"
+                                          AllowTap="True" TextColor="White"
+                                          TextFontFamily="Roboto" 
+                                          TextFontSize="18"
+                                          DetailColor="Gray"
+                                          Text="{Binding AddressLatitude, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
+                                <dxe:FormItem Grid.Column="1" Margin="10,0,0,0"
+                                    AllowTap="True" TextColor="White"
+                                    TextFontFamily="Roboto" 
+                                    TextFontSize="18"
+                                    DetailColor="Gray"
+                                    Text="{Binding AddressLongitude, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="5">
+                            <Border StrokeShape="RoundRectangle 20"
+                                    BackgroundColor="{StaticResource Gray650}">
+                                <VerticalStackLayout Margin="-10" HeightRequest="200" >
+                                    
+                                            <WebView >
+                                        <WebView.Source>
+                                            <HtmlWebViewSource>
+                                                <HtmlWebViewSource.Html>
+                                                    <![CDATA[
+              
+                                    <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     <script src="https://api-maps.yandex.ru/2.1/?apikey=795e75fd-b231-4712-972b-3fae53bcd3e1&lang=ru_RU" type="text/javascript">
+                    </script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        function init(){
+            var myMap = new ymaps.Map("map", {
+                center: [55.863459, 37.702032],
+                zoom: 10
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="map" style="width: 390px; height: 200px"></div>
+</body>
+
+</html>
+                ]]>
+                                                </HtmlWebViewSource.Html>
+                                            </HtmlWebViewSource>
+                                        </WebView.Source>
+                                    </WebView>                                       
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="10,0,0,0" >
+                            <Grid RowDefinitions="Auto,Auto,Auto, Auto, Auto, Auto, Auto">
+                                <Label Grid.Row="0" Text="Условие работы" FontFamily="Roboto"
+                                   TextColor="White" 
+                                   HorizontalOptions="Center"
+                                   FontSize="18"  Margin="20" />
+                                <Grid Grid.Row="1" RowDefinitions="Auto,Auto">
+                                    <Label  Grid.Row="0"
+                                       Text="Ограничение для водителей" 
+                                       FontFamily="Roboto"
+                                       TextColor="White" 
+                                       FontSize="17"  Margin="20" />
+
+                                    <dxcv:DXCollectionView                                     
+                                    Grid.Row="1"
+                                    VerticalOptions="Start"
+                                    ItemsSource="{Binding CollecDriversConstraint}"
+                                    IsRefreshing="{Binding IsLoadingDrive, Mode=TwoWay}"  
+                                    IndicatorColor="#FFC71F"                           
+                                    SelectionMode="Single"
+                                    IsLoadMoreEnabled="True" 
+                                    LoadMoreCommand="{Binding LoadDriveCommand}"  
+                                    IsScrollBarVisible="False"
+                                    HeightRequest="50" 
+                                    Orientation="Horizontal"
+                                    Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
+                                        <dxcv:DXCollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="{x:Type local:ParkDriversCon}">
+                                                <Border StrokeShape="RoundRectangle 20"
+                                                    Margin="5"  
+                                                    BackgroundColor="{StaticResource Gray650}">
+                                                    <VerticalStackLayout Margin="0,0,0,0">
+                                                        <Grid Margin="16,5,16,5">
+                                                            <Label VerticalOptions="Center"
+                                                               Text="{Binding DriverName}" 
+                                                               FontAttributes="Bold"
+                                                               TextColor="White"
+                                                               Padding="12,4"/>
+                                                        </Grid>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+
+                                        </dxcv:DXCollectionView.ItemTemplate>
+                                    </dxcv:DXCollectionView>
+                                </Grid>
+                                <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Условия работы" 
+                                            FontFamily="Roboto"
+                                            TextColor="White" 
+                                            FontSize="17"  Margin="20" />
+                                    <dxcv:DXCollectionView               
+                                        Grid.Row="1"
+                                        VerticalOptions="Start"
+                                        ItemsSource="{Binding CollecWorkConstraint}"
+                                        IsRefreshing="{Binding IsLoadingWork, Mode=TwoWay}"  
+                                        IndicatorColor="#FFC71F"                           
+                                        SelectionMode="Single"
+                                        IsLoadMoreEnabled="True" 
+                                        LoadMoreCommand="{Binding LoadWorkCommand}"  
+                                        IsScrollBarVisible="False"
+                                        HeightRequest="50" 
+                                        Orientation="Horizontal"
+                                        Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
+                                        <dxcv:DXCollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="{x:Type local:ParkWorkCon}">
+                                                <Border StrokeShape="RoundRectangle 20"
+                                                        Margin="5"  
+                                                        BackgroundColor="{StaticResource Gray650}">
+                                                    <VerticalStackLayout Margin="0,0,0,0">
+                                                        <Grid Margin="16,0,16,5">
+                                                            <Label VerticalOptions="Center"
+                                                                   Text="{Binding WorkName}" 
+                                                                   FontAttributes="Bold"
+                                                                   TextColor="White"
+                                                                   Padding="12,4"/>
+                                                        </Grid>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+
+                                        </dxcv:DXCollectionView.ItemTemplate>
+                                    </dxcv:DXCollectionView>
+                                </Grid>
+                                <Grid Grid.Row="3" RowDefinitions="Auto, Auto" > 
+                                    <Label  Grid.Row="0"
+                                            Text="Процент парка" 
+                                            FontFamily="Roboto"
+                                            TextColor="White" 
+                                            FontSize="17"  Margin="20" />
+                                    <Border Grid.Row="1"
+                                            BackgroundColor="#8F000000"
+                                            HorizontalOptions="Start"                                                
+                                            VerticalOptions="End"        
+                                            StrokeShape="RoundRectangle 15">
+                                        <Label Text="{Binding ParkPercent, StringFormat='{0:N0}  %'}" 
+                                               Margin="16,0,16,0"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               Padding="12,4"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="4" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Самозанятый" 
+                                            FontFamily="Roboto"
+                                            TextColor="White" 
+                                            FontSize="17"  Margin="20" />
+                                    <Border Grid.Row="1"
+                                            BackgroundColor="#8F000000"
+                                            HorizontalOptions="Start"                                                
+                                            VerticalOptions="End"        
+                                            StrokeShape="RoundRectangle 15">
+                                        <Label Text="{Binding SelfEmployed}" 
+                                               Margin="16,0,16,0"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               Padding="12,4"/>
+                                    </Border>
+
+                                </Grid>
+                                <Grid Grid.Row="5" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Расчет суммы за вывод денег" 
+                                            FontFamily="Roboto"
+                                            TextColor="White" 
+                                            FontSize="17"  Margin="20" />
+                                    <Border Grid.Row="1"
+                                            BackgroundColor="#8F000000"
+                                            HorizontalOptions="Start"                                                
+                                            VerticalOptions="End"        
+                                            StrokeShape="RoundRectangle 15">
+                                        <Label Text="{Binding WithdrawMoneyName}" 
+                                               Margin="16,0,16,0"
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               Padding="12,4"/>
+                                    </Border>
+                                    
+
+                                </Grid>
+                                <Grid Grid.Row="6" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Вывод денег: значение" 
+                                            FontFamily="Roboto"
+                                            TextColor="White" 
+                                            FontSize="17"  Margin="20" />
+
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        
+                    </Grid>
+                </Grid>
+            </Grid>
+            
+        </ScrollView>
+        
+        <Button Grid.Row="2"          
+            Margin="15,15,15,10"
+            BackgroundColor="{StaticResource Gray910}"
+            CornerRadius="30"
+            FontAttributes="Bold"
+            FontSize="18"
+            HeightRequest="40"
+            TextColor="Black"
+            FontFamily="Roboto"
+                Pressed="Button_Pressed"
+Released="Button_Released"
+            Text="Откликнуться"/>
+        </Grid>
+    
+</ContentPage>

@@ -1,18 +1,24 @@
 ﻿using TaxiStartApp.ViewModels;
+using TaxiStartApp.ViewModels.Shimmer;
 
 namespace TaxiStartApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InputPage : ContentPage
     {
-        private readonly ObservableCollection<string> _itemsMenu;
+        private ShimmerViewModel dataModel;
         public InputPage()
         {
             InitializeComponent();
-            _itemsMenu = new ObservableCollection<string> { "Профиль", "Подписка", "Оплата"};
-            //BindingContext = new AboutViewModel();
+            this.dataModel = new ShimmerViewModel();
+            BindingContext = this.dataModel;
+        }               
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await this.dataModel.LoadDataAsync();
         }
 
-        public ObservableCollection<string> ItemsMenu { get { return _itemsMenu; } }
     }
 }

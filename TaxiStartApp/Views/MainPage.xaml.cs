@@ -2,22 +2,32 @@
 
 namespace TaxiStartApp.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        private readonly ObservableCollection<string> _itemsMenu;
-        public ObservableCollection<Item> Items { get; }
+        bool loaded = false;
         public MainPage()
         {
-            InitializeComponent();
-            //BindingContext = new MainViewModel();
-            Items = new ObservableCollection<Item> 
-            { 
-                new Item { Text = "Профиль" },
-                new Item { Text = "Подписка" },
-                new Item { Text = "Оплата" }
-            };  
+            InitializeComponent();              
+        }
+        protected internal void DisplayStack()
+        {
+            //NavigationPage navPage = (AppShell)Application.Current.MainPage;
+            ////stackLabel.Text = "";
+            //foreach (Page p in navPage.Navigation.NavigationStack)
+            //{
+            //    //stackLabel.Text += p.Title + "\n";
+            //}
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (loaded == false)
+            {
+                DisplayStack();
+                loaded = true;
+            }
         }
 
-        public ObservableCollection<string> ItemsMenu { get { return _itemsMenu; } }
     }
 }

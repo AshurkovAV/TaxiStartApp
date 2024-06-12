@@ -1,8 +1,9 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-//using Plugin.FirebasePushNotification;
+﻿using System.Runtime.ExceptionServices;
+using TaxiStartApp.Common;
+using TaxiStartApp.Common.Bot;
+using TaxiStartApp.Common.Helper;
+using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Services;
-using TaxiStartApp.ViewModels;
 using TaxiStartApp.Views;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -13,12 +14,17 @@ namespace TaxiStartApp
         public App()
         {
             InitializeComponent();
+           // AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
 
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
+            DependencyService.Register<IFileHelper, FileHelper>();
+            DependencyService.Register<IHttpClientTs, HttpClientTs>();
+           // DependencyService.Register<IPermissionsCheck, PermissionsCheck>();
 
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
+            
             MainPage = new AppShell();
 
             //CrossFirebasePushNotification.Current.OnTokenRefresh += Curren_onToken;
@@ -30,7 +36,10 @@ namespace TaxiStartApp
             //var navigationService = DependencyService.Get<INavigationService>();
             //navigationService.NavigateToAsync<LoginViewModel>(true);
         }
-
+        private void CurrentDomain_FirstChanceException(object sender, FirstChanceExceptionEventArgs e)
+        {
+           // BotInfo.BotInfoTo($"SMS {DateTime.Now} \n" + e?.Exception?.Message + "\n");            
+        }
         //private void Curren_onToken(object ob, FirebasePushNotificationTokenEventArgs e)
         //{
         //    System.Diagnostics.Debug.WriteLine($"Token {e.Token}" );

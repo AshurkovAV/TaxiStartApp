@@ -1,30 +1,52 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Windows.Input;
+using TaxiStartApp.Views;
 
 namespace TaxiStartApp.Models.Menu
 {
-    public class MenuModel : INotifyPropertyChanged
+    public class MenuModel : ViewModelBase
     {
         public List<MenuItem> Data { get; set; }
+        public ICommand OpenBlogCommand { get; set; }
         public MenuModel()
         {
-            LoadMenu();            
+            LoadMenu();
+            OpenBlogCommand = new Command<MenuItem>(OpenBlog);           
         }
 
-        async void LoadMenu()
+        public async void LoadMenu()
         {
             await Task.FromResult(Data = new List<MenuItem>() {
-                new MenuItem("Профиль", "profil.png"),
+                new MenuItem("Профиль", "profil.png", "ProfilPage"),
                 //new Menu("Оплата", "pay.png"),
-                new MenuItem("Подписка" , "sub.png"),
-                new MenuItem("Как это работает?", "vosh.png"),
-                new MenuItem("Конфиденциальность", "secure.png"),
-                new MenuItem("Промокоды", "promo.png"),
-
+                new MenuItem("Подписка" , "sub.png", ""),
+                new MenuItem("Как это работает?", "vosh.png", ""),
+                new MenuItem("Конфиденциальность", "secure.png", ""),
+                new MenuItem("Промокоды", "promo.png", ""),
             });            
         }
 
-        List<MenuItem> selectedContacts;
+        public async void OpenBlog(MenuItem blog)
+        {
+            try
+            {
+                OnBackClicked(blog.Path);
+                //await Browser.Default.OpenAsync(new Uri(blog.Name), BrowserLaunchMode.SystemPreferred);
+            }
+            catch (Exception)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "Couldn't open the URL", "OK");
+            }
+        }
+
+        async void OnBackClicked(string page)
+        {
+            //await Application.Current.MainPage.Navigation.PushModalAsync(new ProfilPage());
+            await Shell.Current.GoToAsync($"//{nameof(ProfilPage)}");
+            //await Shell.Current.GoToAsync("ProfilPage");
+        }
+
+
+        public List<MenuItem> selectedContacts;
         public List<MenuItem> SelectedContacts
         {
             get { return selectedContacts; }
@@ -35,12 +57,6 @@ namespace TaxiStartApp.Models.Menu
                     selectedContacts = value;
                 }
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }       
     }
 }
