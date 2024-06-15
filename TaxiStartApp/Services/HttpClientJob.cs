@@ -19,6 +19,8 @@ namespace TaxiStartApp.Services
         private string _urlcountCar = Constant.UrlGeneralService + "/car/count?";
         private string _urlDriversConstraint = Constant.UrlGeneralService + "/park/DriversConstraint?";
         private string _urlWorkConstraint = Constant.UrlGeneralService + "/park/WorkCondition?";
+        private string _urlDriverCreate = Constant.UrlGeneralService + "/driver/create";
+        private string _urlOfferCreate = Constant.UrlGeneralService + "/offer/create";
 
         //private string _url          = "http://192.168.10.7:8555/park";
         //private string _urlid        = "http://192.168.10.7:8555/park/id";
@@ -167,6 +169,60 @@ namespace TaxiStartApp.Services
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new List<WorkConditionTruncated>();
             }
+        }
+
+        public async Task<string> CreateDriver(DriverDto driverDto)
+        {
+            WebRequest request = WebRequest.Create(_urlDriverCreate);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(driverDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
+        }
+
+        public async Task<string> CreateOffer(OfferDto offer)
+        {
+            WebRequest request = WebRequest.Create(_urlOfferCreate);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(offer);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
         }
     }
 }

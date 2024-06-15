@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using JobTaxi.Entity.Dto;
+using JobTaxi.Entity.Models;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace TaxiStartApp.Common
 {
@@ -67,6 +70,33 @@ namespace TaxiStartApp.Common
                 return new Tuple<Stream, HttpStatusCode>(null, HttpStatusCode.RequestTimeout);
             }
 
+        }
+
+        public async Task<string> CreateDriver(DriverDto driverDto)
+        {
+            WebRequest request = WebRequest.Create(_url);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(driverDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();            
+            response.Close();
+
+            return dataStream;
         }
     }
 }

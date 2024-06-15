@@ -91,6 +91,24 @@
                 <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
                 <Setter Property="FontSize" Value="14"/>
             </Style>
+            <Style TargetType="Border" x:Key="BorderDetalAction">
+                <Setter Property="BackgroundColor" Value="#8F000000"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="End"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+            </Style>
+            <Style TargetType="Label" x:Key="LabelTopDetalAction">
+                <Setter Property="FontFamily" Value="Roboto"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="17"/>
+                <Setter Property="Margin" Value="20"/>                
+            </Style>
+            <Style TargetType="Label" x:Key="LabelEndDetalAction">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>                
+                <Setter Property="Margin" Value="16,0,16,0"/>
+                <Setter Property="Padding" Value="12,4"/>
+            </Style>
         </ResourceDictionary>
         <Style TargetType="dxe:FormItemBase" ApplyToDerivedTypes="True" x:Key="baseStyle">
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}"/>
@@ -121,32 +139,45 @@
     </ContentPage.Resources>
     
         <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="*,250,*">
             <Grid Grid.Column="0"  Margin="20" VerticalOptions="Start">
-                <ImageButton HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
+                <ImageButton  HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
                     <ImageButton.Source>
                         <FontImageSource
                                 FontFamily="Icons"
-                                Glyph="&#xE800;"
-                                Size="20"
+                                Glyph="&#xe803;"
+                                Size="25"
                                 Color="{StaticResource Gray200}"/>
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>
-            <Grid Grid.Column="1" HorizontalOptions="End">
+            <Grid Grid.Column="1"  HorizontalOptions="End">
+                <Grid Grid.Column="1"  Margin="20" HorizontalOptions="End" >
+                    <ImageButton Command="{Binding ShareCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource
+                                FontFamily="Icons"
+                                Glyph="&#xe800;"
+                                Size="25"
+                                Color="{StaticResource Gray200}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" HorizontalOptions="End">
                 <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}"  Margin="20" >
-                    <ImageButton x:Name="but" Padding="1"  Command="{Binding LikeCommand}">
+                    <ImageButton x:Name="but" Command="{Binding LikeCommand}">
                         <ImageButton.Source>
                             <FontImageSource x:Name="ImageSour"
                                                  FontFamily="Filter"
                                                  Glyph="&#xe802;"                                                    
                                                  Size="25"
-                                                 Color="{StaticResource Gray100}"/>
+                                                 Color="{StaticResource Gray200}"/>
                         </ImageButton.Source>
                     </ImageButton>
                 </Grid>
                 <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible, Mode=OneWay}" Margin="20" >
-                    <ImageButton  Padding="1" Command="{Binding LikeEmpCommand}">
+                    <ImageButton  Command="{Binding LikeEmpCommand}">
                         <ImageButton.Source>
                             <FontImageSource 
                                     FontFamily="Filter"
@@ -314,8 +345,8 @@
 
                         </Grid>
                         <Grid Grid.Row="2" Margin="10,0,0,0" >
-                            <Grid RowDefinitions="Auto,Auto,Auto, Auto, Auto, Auto, Auto">
-                                <Label Grid.Row="0" Text="Условие работы" FontFamily="Roboto"
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                                <Label Grid.Row="0" Text="Условие парка" FontFamily="Roboto"
                                    TextColor="White" 
                                    HorizontalOptions="Center"
                                    FontSize="18"  Margin="20" />
@@ -442,10 +473,7 @@
                                             TextColor="White" 
                                             FontSize="17"  Margin="20" />
                                     <Border Grid.Row="1"
-                                            BackgroundColor="#8F000000"
-                                            HorizontalOptions="Start"                                                
-                                            VerticalOptions="End"        
-                                            StrokeShape="RoundRectangle 15">
+                                            Style="{StaticResource BorderDetalAction}">
                                         <Label Text="{Binding WithdrawMoneyName}" 
                                                Margin="16,0,16,0"
                                                FontAttributes="Bold"
@@ -458,10 +486,132 @@
                                 <Grid Grid.Row="6" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Вывод денег: значение" 
-                                            FontFamily="Roboto"
-                                            TextColor="White" 
-                                            FontSize="17"  Margin="20" />
-
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding WithdrawMoney}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="7" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Штрафы" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Penalties}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="8" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Депозит" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Deposit}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="9" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Возврат депозита" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding DepositRet}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="10" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Путевые" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Waybills}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="11" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Осмотр" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Inspection}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="12" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Страховка"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Insurance}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="13" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Мин. срок аренды"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding MinRentalPeriod}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="14" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Радиус работы"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding WorkRadius}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="15" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Время списания аренды"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding rentalWriteOffTime}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="16" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Заправка через таксометр"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding GasThrowTaxometr}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="17" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Первый день"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding FirstDayName}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="18" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Выкуп"
+                                            Style="{StaticResource LabelTopDetalAction}"/>                                    
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <Label Text="{Binding Ransom}" 
+                                               Style="{StaticResource LabelEndDetalAction}"/>
+                                    </Border>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -473,17 +623,19 @@
         </ScrollView>
         
         <Button Grid.Row="2"          
-            Margin="15,15,15,10"
-            BackgroundColor="{StaticResource Gray910}"
-            CornerRadius="30"
-            FontAttributes="Bold"
-            FontSize="18"
-            HeightRequest="40"
-            TextColor="Black"
-            FontFamily="Roboto"
+                Margin="15,15,15,10"
+                BackgroundColor="{StaticResource Gray910}"
+                CornerRadius="30"
+                IsEnabled="False"
+                FontAttributes="Bold"
+                FontSize="18"
+                HeightRequest="40"
+                TextColor="Black"
+                FontFamily="Roboto"
+                Command="{Binding ButtonRespondCommand}"
                 Pressed="Button_Pressed"
-Released="Button_Released"
-            Text="Откликнуться"/>
+                Released="Button_Released"
+                Text="Откликнуться"/>
         </Grid>
     
 </ContentPage>

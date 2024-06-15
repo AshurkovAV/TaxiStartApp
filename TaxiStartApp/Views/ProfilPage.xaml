@@ -128,11 +128,10 @@
                     <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding BackCommand}">
                         <ImageButton.Source>
                             <FontImageSource
-                            FontFamily="Icons"
-                            Glyph="&#xE800;"
-                            Size="20"
-                            Color="{StaticResource Gray200}"/>
-                        </ImageButton.Source>
+                                FontFamily="Icons"
+                                Glyph="&#xe803;"
+                                Size="20"
+                                Color="{StaticResource Gray200}"/></ImageButton.Source>
                     </ImageButton>
                 </Grid>
 

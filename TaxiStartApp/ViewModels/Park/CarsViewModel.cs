@@ -1,9 +1,11 @@
-﻿using JobTaxi.Entity.Models;
-using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using TaxiStartApp.Common;
 using TaxiStartApp.Common.Data.Park;
+using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Models;
 using TaxiStartApp.Models.Park;
+using TaxiStartApp.Services;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TaxiStartApp.ViewModels.Park
 {
@@ -14,15 +16,42 @@ namespace TaxiStartApp.ViewModels.Park
         bool isLoadingWork;
         int lastLoadedIndex = 1;
         int sourceSize = 0;
-        int loadBatchSize = 2;
+        int loadBatchSize = 3;
         int lastLoadedDriveIndex = 1;
         int lastLoadedWorkIndex = 1;
         int sourceDriveSize = 0;
-        int sourceWorkSize = 0;        
-        public ICommand LoadDriveCommand { get; set; }
-        public ICommand LoadWorkCommand { get; set; }
-        public ICommand LoadMoreCommand { get; set; }
+        int sourceWorkSize = 0;
+        private ICommand _loadMoreCommand;
+        private ICommand _loadWorkCommand;
+        private ICommand _loadDriveCommand;        
+        
+        public ICommand ShareCommand { get; set; }
+        public ICommand LoadDriveCommand {
+            get => _loadDriveCommand;
+            set
+            {
+                _loadDriveCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+        public ICommand LoadWorkCommand {
+            get => _loadWorkCommand;
+            set
+            {
+                _loadWorkCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+        public ICommand LoadMoreCommand {
+            get => _loadMoreCommand;
+            set
+            {
+                _loadMoreCommand = value;
+                RaisePropertyChanged();
+            }
+        }
         public ICommand OpenBlogCommand { get; set; }
+        public ICommand ButtonRespondCommand { get; set; }
         private List<Cars> _carsData;
         private List<ParkDriversCon> _collecDriversConstraint;
         private List<ParkWorkCon> _collecWorkConstraint;
@@ -52,27 +81,32 @@ namespace TaxiStartApp.ViewModels.Park
             }
         }
         public CarsViewModel()
-        {      
+        {
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
             LoadDriveCommand = new Command(LoadDrive, CanLoadDriveMore);
             LoadWorkCommand = new Command(LoadWork, CanLoadWorkMore);
+
             OpenBlogCommand = new Command<Cars>(OpenBlog);
             LikeCommand = new Command(Like1);
             LikeEmpCommand = new Command(Like2);
+            ShareCommand = new Command(ShareLink);
+            ButtonRespondCommand = new Command(ButtonRespond);
         }
-
+        Task taskA;
         public async Task LoadAll()
-        {            
+        {
+            lastLoadedIndex = 1;
+            lastLoadedDriveIndex = 1;
+            lastLoadedWorkIndex = 1;
+            sourceSize = Common.Constant.ShareParkCountCar;
+            sourceDriveSize = Common.Constant.ShareParkCountDrive;
+            sourceWorkSize = Common.Constant.ShareParkCountWork;
             await Task.Run(async () =>
             {
                 CarsData = new List<Cars>();
                 CollecDriversConstraint = new List<ParkDriversCon>();
                 CollecWorkConstraint = new List<ParkWorkCon>();
 
-                sourceSize = DataCarsStorage.GetTotalCount(Common.Constant.ShareParkId);
-                sourceDriveSize = DataDriversConstrainStorage.GetTotalCount(Common.Constant.ShareParkGuid);
-                sourceWorkSize = DataWorkConstrainStorage.GetTotalCount(Common.Constant.ShareParkGuid);
-               
                 // LoadDataAsync(Common.Constant.ShareParkId);
                 // LoadDataDriveAsync();
                 //LoadDataWorkAsync();               
@@ -82,57 +116,63 @@ namespace TaxiStartApp.ViewModels.Park
         public async Task LoadCars(int parkId)
         {
             IsLoading = true;
-            IEnumerable<Cars> newCars = null;
-            await Task.Run(() =>
-            {                                
+            
+            await Task.Run(async() =>
+            {
+                IEnumerable<Cars> newCars = null;
                 DataCarsStorage._startIndex = lastLoadedIndex;
                 DataCarsStorage._batchSize = loadBatchSize;
                 newCars = DataCarsStorage.GetBlogs(parkId);
+                CarsData.AddRange(newCars);
+                lastLoadedIndex += 1;
             });
-            CarsData.AddRange(newCars);
+            
             IsLoading = false;
         }
         public async Task LoadDriveContrain(bool? t = null)
         {
             IsLoadingDrive = true;
-            IEnumerable<ParkDriversCon> newDriveCars = null;            
-            await Task.Run(() =>
+                    
+            await Task.Run(async () =>
             {
+                IEnumerable<ParkDriversCon> newDriveCars = null;
                 newDriveCars = DataDriversConstrainStorage.GetBlogs(Common.Constant.ShareParkGuid);
+                CollecDriversConstraint.AddRange(newDriveCars);
+                lastLoadedDriveIndex += 1;
             });
-            CollecDriversConstraint.AddRange(newDriveCars);
+            
             IsLoadingDrive = false;
         }
 
         public async Task LoadWorkContrain()
         {
             IsLoadingWork = true;
-            IEnumerable<ParkWorkCon> newWorkCars = null;
-            await Task.Run(() =>
+            
+            await Task.Run(async () =>
             {
+                IEnumerable<ParkWorkCon> newWorkCars = null;
                 newWorkCars = DataWorkConstrainStorage.GetBlogs(Common.Constant.ShareParkGuid);
-                
-            });
-            CollecWorkConstraint.AddRange(newWorkCars);          
+                CollecWorkConstraint.AddRange(newWorkCars);
+                lastLoadedWorkIndex += 1;
+            });           
             
             IsLoadingWork = false;
         }
+
+        public void LoadMore()
+        {
+            LoadCars(Common.Constant.ShareParkId);            
+        }
         public void LoadWork()
         {
-            LoadWorkContrain();
-            lastLoadedWorkIndex += 1;
+            LoadWorkContrain();            
         }
 
         public void LoadDrive()
         {
-            LoadDriveContrain(true);
-            lastLoadedDriveIndex += 1;
+            LoadDriveContrain(true);            
         }
-        public void LoadMore()
-        {
-            LoadCars(Common.Constant.ShareParkId);
-            lastLoadedIndex += 1;
-        }
+        
         public bool CanLoadMore()
         {
             return CarsData?.Count < sourceSize;
@@ -143,12 +183,39 @@ namespace TaxiStartApp.ViewModels.Park
         }
         public bool CanLoadWorkMore()
         {
-            return CollecWorkConstraint?.Count < sourceWorkSize;
+            return CollecWorkConstraint?.Count < sourceWorkSize;           
         }
+        public async void ButtonRespond()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+            var driver = dataService.CreateDrivers(new JobTaxi.Entity.Dto.DriverDto
+            {
+                Fam = Constant.yandexProfil.lastName,
+                Im = Constant.yandexProfil.firstName,
+                Phone = Constant.yandexProfil.defaultPhone,                
+            }) ;
+            var offer = dataService.CreateOffer(new JobTaxi.Entity.Dto.OfferDto
+            {
+                DriverId = driver.Id,
+                ParkId = Constant.ShareParkId
+            });
+            Shell.Current.DisplayAlert("Заявка успешно отправлена", "", "OK");
+        }
+        
         public async void OpenBlog(Cars blog)
         {
             await Shell.Current.GoToAsync("EditContactPage");
         }
+        public async void ShareLink()
+        {
+            await Share.Default.RequestAsync(new ShareTextRequest
+            {
+                Uri = Constant.UrlGeneralSite + 
+                $"/showparks/showpark.php?id={Constant.ShareParkId}&token=ACC85CA3-8A1B-470E-8FD0-2F0A7DB6F6A7",
+                Title = "Share Text " + ParkName
+            });
+        }
+        
         public bool IsLoading
         {
             get => isLoading;
@@ -232,6 +299,19 @@ namespace TaxiStartApp.ViewModels.Park
             ParkPercent = settings.ParkTrun.ParkPercent;
             SelfEmployed = settings.ParkTrun.SelfEmployed == true ? "Да":"Нет";
             WithdrawMoneyName = settings.ParkTrun.WithdrawMoneyName;
+            WithdrawMoney = settings.ParkTrun.WithdrawMoney;
+            Penalties = settings.ParkTrun.Penalties;
+            Deposit = settings.ParkTrun.Deposit;
+            DepositRet = settings.ParkTrun.DepositRet;
+            Waybills = settings.ParkTrun.Waybills;
+            Inspection = settings.ParkTrun.Inspection;
+            Insurance = settings.ParkTrun.Insurance == true ? "Да" : "Нет"; ;
+            MinRentalPeriod = settings.ParkTrun.MinRentalPeriod;
+            WorkRadius = settings.ParkTrun.WorkRadius;
+            rentalWriteOffTime = settings.ParkTrun.rentalWriteOffTime;
+            GasThrowTaxometr = settings.ParkTrun.GasThrowTaxometr == true ? "Да" : "Нет";
+            FirstDayName = settings.ParkTrun.FirstDayName;
+            Ransom = settings.ParkTrun.Ransom == true ? "Да" : "Нет"; 
         }
 
         private string selfEmployed; 
@@ -253,20 +333,123 @@ namespace TaxiStartApp.ViewModels.Park
                 RaisePropertyChanged();
             }
         }//Расчет суммы за вывод денег *
-        public double WithdrawMoney { get; set; }//Вывод денег: значение *
-        public string? Penalties { get; set; } //Штрафы
-
-        public string Deposit { get; set; } //Депозит *
-        public string DepositRet { get; set; } //Возврат депозита *
-        public string Waybills { get; set; } //Путевые *
-        public string Inspection { get; set; } //Осмотр *
-        public bool Insurance { get; set; } //Страховка *
-        public string MinRentalPeriod { get; set; } //Мин. срок аренды *
-        public string WorkRadius { get; set; } //Радиус работы * *
-        public string rentalWriteOffTime { get; set; } //Время списания аренды * *
-        public bool GasThrowTaxometr { get; set; } //Заправка через таксометр * *
-        public string? FirstDayName { get; set; }//Первый день *
-        public bool Ransom { get; set; }//Выкуп
+        private double withdrawMoney;
+        public double WithdrawMoney {
+            get => withdrawMoney;
+            set
+            {
+                withdrawMoney = value;
+                RaisePropertyChanged();
+            }
+        }//Вывод денег: значение *
+        private string? _penalties;
+        public string? Penalties {
+            get => _penalties;
+            set
+            {
+                _penalties = value;
+                RaisePropertyChanged();
+            }
+        } //Штрафы
+        private string _deposit;
+        public string Deposit {
+            get => _deposit;
+            set
+            {
+                _deposit = value;
+                RaisePropertyChanged();
+            }
+        } //Депозит *
+        private string _depositRet;
+        public string DepositRet {
+            get => _depositRet;
+            set
+            {
+                _depositRet = value;
+                RaisePropertyChanged();
+            }
+        } //Возврат депозита *
+        private string _waybills;
+        public string Waybills {
+            get => _waybills;
+            set
+            {
+                _waybills = value;
+                RaisePropertyChanged();
+            }
+        } //Путевые *
+        private string _inspection;
+        public string Inspection {
+            get => _inspection;
+            set
+            {
+                _inspection = value;
+                RaisePropertyChanged();
+            }
+        } //Осмотр *
+        private string _insurance;
+        public string Insurance {
+            get => _insurance;
+            set
+            {
+                _insurance = value;
+                RaisePropertyChanged();
+            }
+        } //Страховка *
+        private string _minRentalPeriod;
+        public string MinRentalPeriod {
+            get => _minRentalPeriod;
+            set
+            {
+                _minRentalPeriod = value;
+                RaisePropertyChanged();
+            }
+        } //Мин. срок аренды *
+        private string _workRadius;
+        public string WorkRadius {
+            get => _workRadius;
+            set
+            {
+                _workRadius = value;
+                RaisePropertyChanged();
+            }
+        } //Радиус работы * *
+        private string _rentalWriteOffTime;
+        public string rentalWriteOffTime {
+            get => _rentalWriteOffTime;
+            set
+            {
+                _rentalWriteOffTime = value;
+                RaisePropertyChanged();
+            }
+        } //Время списания аренды * *
+        private string _gasThrowTaxometr;
+        public string GasThrowTaxometr {
+            get => _gasThrowTaxometr;
+            set
+            {
+                _gasThrowTaxometr = value;
+                RaisePropertyChanged();
+            }
+        } //Заправка через таксометр * *
+        private string? _firstDayName;
+        public string? FirstDayName {
+            get => _firstDayName;
+            set
+            {
+                _firstDayName = value;
+                RaisePropertyChanged();
+            }
+        }//Первый день *
+        private string _ransom;
+        public string Ransom {
+            get => _ransom;
+            set
+            {
+                _ransom = value;
+                RaisePropertyChanged();
+            }
+        }//Выкуп
 
 
         private double parkPercent;

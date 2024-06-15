@@ -100,6 +100,9 @@ namespace TaxiStartApp.Models
                 };
             Common.Constant.ShareParkId = blog.Id;
             Common.Constant.ShareParkGuid = blog.ParkGuid;
+            Common.Constant.ShareParkCountDrive = blog.ParkTrun.CountDrive;
+            Common.Constant.ShareParkCountWork = blog.ParkTrun.CountWork;
+            Common.Constant.ShareParkCountCar = blog.ParkTrun.CountCars;
             await Shell.Current.GoToAsync("EditContactPage", parameters);
         }
 

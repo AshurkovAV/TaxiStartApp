@@ -20,7 +20,8 @@ namespace TaxiStartApp
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IFileHelper, FileHelper>();
             DependencyService.Register<IHttpClientTs, HttpClientTs>();
-           // DependencyService.Register<IPermissionsCheck, PermissionsCheck>();
+            DependencyService.Register<IDataService, DataService>();
+            // DependencyService.Register<IPermissionsCheck, PermissionsCheck>();
 
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));

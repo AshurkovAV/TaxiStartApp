@@ -24,10 +24,15 @@ namespace TaxiStartApp.Common
         }
 
         public static string UrlGeneralService {  get; set; } = "https://api.xn--80aaaaadxhwt3bixfhni.xn--p1ai";
-        //return "http://192.168.10.7:8555";
+        //return "http://192.168.10.7:8555"; 
 
+        public static string UrlGeneralSite { get; set; } = "https://таксиработааренда.рф";
+        //http://192.168.10.7:8556
         public static int ShareParkId { get; set; }
         public static string ShareParkGuid { get; set; }
+        public static int ShareParkCountDrive { get; set; }
+        public static int ShareParkCountWork { get; set; }
+        public static int ShareParkCountCar { get; set; }
 
         /// <summary>
         /// Ключ для бота 
