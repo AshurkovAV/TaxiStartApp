@@ -130,8 +130,9 @@
                             <FontImageSource
                                 FontFamily="Icons"
                                 Glyph="&#xe803;"
-                                Size="20"
-                                Color="{StaticResource Gray200}"/></ImageButton.Source>
+                                Size="25"
+                                Color="{StaticResource Gray200}"/>
+                        </ImageButton.Source>
                     </ImageButton>
                 </Grid>
 

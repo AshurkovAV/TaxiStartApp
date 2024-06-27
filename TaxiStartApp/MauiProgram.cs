@@ -29,7 +29,7 @@ namespace TaxiStartApp
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                     fonts.AddFont("fontello.ttf", "Icons");
-                    fonts.AddFont("fontelloFlll.ttf", "Filter");
+                    fonts.AddFont("fontello3.ttf", "Filter");
                 }); 
 
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);

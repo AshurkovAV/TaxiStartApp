@@ -14,8 +14,8 @@ namespace TaxiStartApp
         public App()
         {
             InitializeComponent();
-           // AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            AppDomain.CurrentDomain.UnhandledException += CurEx;
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IFileHelper, FileHelper>();
@@ -37,6 +37,14 @@ namespace TaxiStartApp
             //var navigationService = DependencyService.Get<INavigationService>();
             //navigationService.NavigateToAsync<LoginViewModel>(true);
         }
+
+        private void CurEx(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            Console.WriteLine("MyHandler caught : " + e.Message);
+            BotInfo.BotInfoTo($"SMS {DateTime.Now} \n" + e?.Message + "\n");
+        }
+        
         private void CurrentDomain_FirstChanceException(object sender, FirstChanceExceptionEventArgs e)
         {
            // BotInfo.BotInfoTo($"SMS {DateTime.Now} \n" + e?.Exception?.Message + "\n");            

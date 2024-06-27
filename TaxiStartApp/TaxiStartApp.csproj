@@ -74,7 +74,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\appicon.png" />
 	  <None Remove="Resources\Fonts\fontello.ttf" />
-	  <None Remove="Resources\Fonts\fontelloFlll.ttf" />
+	  <None Remove="Resources\Fonts\fontello3.ttf" />
 	  <None Remove="Resources\Fonts\SpaceGrotesk-Bold.ttf" />
 	  <None Remove="Resources\Images\blacklist.svg" />
 	  <None Remove="Resources\Images\blazor_editors_buttons.png" />
@@ -126,11 +126,17 @@
 	  <Compile Update="Views\EditBioPage.xaml.cs">
 	    <DependentUpon>EditBioPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\FilterPage.xaml.cs">
+	    <DependentUpon>FilterPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ProfilPage.xaml.cs">
 	    <DependentUpon>ProfilPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\CheckProfilPage.xaml.cs">
 	    <DependentUpon>CheckProfilPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\SelectedPage.xaml.cs">
+	    <DependentUpon>SelectedPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\UslPage.xaml.cs">
 	    <DependentUpon>UslPage.xaml</DependentUpon>
@@ -169,13 +175,16 @@
 	  <MauiXaml Update="Views\EditBioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\FilterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfilPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\CheckProfilPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TestPage.xaml">
+	  <MauiXaml Update="Views\SelectedPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UslPage.xaml">
@@ -212,5 +221,10 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\JobTaxiService\JobTaxi.Entity\JobTaxi.Entity.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="Common\Async\" />
 	</ItemGroup>
 </Project>

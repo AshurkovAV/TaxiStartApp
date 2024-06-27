@@ -14,6 +14,7 @@ namespace TaxiStartApp.Services
         private string _urlid = Constant.UrlGeneralService + "/park/id";
         private string _urlcount = Constant.UrlGeneralService + "/park/count";
         private string _urltruncated = Constant.UrlGeneralService + "/park/truncated?";
+        private string _urltruncatedUser = Constant.UrlGeneralService + "/park/truncated/user?";
         private string _cars = Constant.UrlGeneralService + "/car?";
         private string _carsNav = Constant.UrlGeneralService + "/car/nav?";
         private string _urlcountCar = Constant.UrlGeneralService + "/car/count?";
@@ -21,6 +22,12 @@ namespace TaxiStartApp.Services
         private string _urlWorkConstraint = Constant.UrlGeneralService + "/park/WorkCondition?";
         private string _urlDriverCreate = Constant.UrlGeneralService + "/driver/create";
         private string _urlOfferCreate = Constant.UrlGeneralService + "/offer/create";
+        private string _selectParkCount = Constant.UrlGeneralService + "/selectpark/count?";
+        private string _urlSelectParkCreate = Constant.UrlGeneralService + "/selectpark/create";
+        private string _urlSelectParkDelete = Constant.UrlGeneralService + "/selectpark/delete";
+        private string _urlSelectPark = Constant.UrlGeneralService + "/selectpark/sp?";
+        private string _urlNsiDriversConstraint = Constant.UrlGeneralService + "/nsi/DriversConstraint";
+        private string _urlNsiWorkConstraint = Constant.UrlGeneralService + "/nsi/WorkCondition";
 
         //private string _url          = "http://192.168.10.7:8555/park";
         //private string _urlid        = "http://192.168.10.7:8555/park/id";
@@ -56,6 +63,38 @@ namespace TaxiStartApp.Services
             {
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new List<ParkTruncated>();
+            }
+        }
+
+        public async Task<IEnumerable<ParkTruncated>> GetParksTruncatedAsync(int rows, int page, int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urltruncatedUser + $"rows={rows}&page={page}&userid={userId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<ParkTruncated>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<ParkTruncated>();
+            }
+        }
+
+        public async Task<int> GetSelectParkCountAsync(int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_selectParkCount + $"userid={userId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<int>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return 0;
             }
         }
 
@@ -155,6 +194,38 @@ namespace TaxiStartApp.Services
             }
         }
 
+        public async Task<IEnumerable<DriversConstraint>> GetNsiDriversConstraint()
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlNsiDriversConstraint);
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<DriversConstraint>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<DriversConstraint>();
+            }
+        }
+
+        public async Task<IEnumerable<WorkCondition>> GetNsiWorkConstraint()
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlNsiWorkConstraint);
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<WorkCondition>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<WorkCondition>();
+            }
+        }
+
         public async Task<IEnumerable<WorkConditionTruncated>> GetParksWorkConditionTruncatedAsync(string parkGuid)
         {
             try
@@ -223,6 +294,76 @@ namespace TaxiStartApp.Services
             response.Close();
 
             return dataStream;
+        }
+
+        public async Task<string> CreateSelectPark(SelectParkDto selectParkDto)
+        {
+            WebRequest request = WebRequest.Create(_urlSelectParkCreate);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(selectParkDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
+        }
+
+        public async Task<string> DeleteSelectPark(SelectParkDto selectParkDto)
+        {
+            WebRequest request = WebRequest.Create(_urlSelectParkDelete);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(selectParkDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
+        }
+
+        public async Task<SelectParkDto> GetSelectParks(int selectparkid, int userid)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlSelectPark + $"selectParkId={selectparkid}&userId={userid}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<SelectParkDto>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new SelectParkDto();
+            }
         }
     }
 }

@@ -1,16 +1,20 @@
-﻿using System.Reflection.Metadata;
+﻿using Android.Widget;
+using System.Reflection.Metadata;
 using System.Windows.Input;
 using TaxiStartApp.Common.Data.Park;
 using TaxiStartApp.Models.Park;
+using TaxiStartApp.Services;
 
 namespace TaxiStartApp.Models
 {
     public class TaxiParkViewModel : ViewModelBase
     {
         bool isLoading;
+        bool isRespond;
         int lastLoadedIndex = 1;
         int sourceSize = 0;
         int loadBatchSize = 3;
+        private IDataService _dataService;
         private List<ContactTaxiPark> _taxiParkData;
         public List<ContactTaxiPark> TaxiParkData
         {
@@ -21,27 +25,73 @@ namespace TaxiStartApp.Models
                 RaisePropertyChanged();
             }
         }
-        public ICommand LoadMoreCommand { get; set; }
+        public int SourceSize {
+            get => sourceSize;
+            set
+            {
+                sourceSize = value;
+                RaisePropertyChanged();
+            }
+        }
+        public ICommand _loadMoreCommand;
+        public ICommand LoadMoreCommand {
+            get => _loadMoreCommand;
+            set
+            {
+                _loadMoreCommand = value;
+                RaisePropertyChanged();
+            }
+        }
         public ICommand ShareCommand { get; set; }
-        public ICommand OpenBlogCommand { get; set; }  
+        public ICommand OpenBlogCommand { get; set; }
+        public ICommand FilterCommand { get; set; }
+        public ICommand LikeCommand { get; set; }
+        public ICommand LikeEmpCommand { get; set; }
+        ICommand pullToRefreshCommand = null;
+        public ICommand PullToRefreshCommand
+        {
+            get { return pullToRefreshCommand; }
+            set
+            {
+                if (pullToRefreshCommand != value)
+                {
+                    pullToRefreshCommand = value;
+                    RaisePropertyChanged("PullToRefreshCommand");
+                }
+            }
+        }
+        
+
 
         public TaxiParkViewModel()
         {
             IsLoading = true;
+            TaxiParkData = new List<ContactTaxiPark>();
             LoadDataAsync();
-            LoadMoreCommand = new Command(LoadMore, CanLoadMore);
+            _dataService = DependencyService.Get<IDataService>();
             ShareCommand = new Command<ContactTaxiPark>(ShareBlog);
             OpenBlogCommand = new Command<ContactTaxiPark>(OpenBlog);
-            
+            FilterCommand = new Command(Filter);
+            LoadMoreCommand = new Command(LoadMore, CanLoadMore);
+            PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
         }
-        public async Task LoadDataAsync()
+        void ExecutePullToRefreshCommand()
         {
-            await Task.Run(() =>
-            {                
-                sourceSize = DataStorage.GetTotalCount();
+            Task.Run(() => {
+                SourceSize = DataStorage.GetTotalCount();
+                lastLoadedIndex = 1;
                 TaxiParkData = new List<ContactTaxiPark>();
-                LoadTaxiPark();
+                IsLoading = false;
+               // LoadTaxi();
             });
+        }
+        public void LoadDataAsync()
+        {           
+            Task.Run(() =>
+            {
+                SourceSize = DataStorage.GetTotalCount();
+                IsLoading = false;
+            });            
         }
 
         public bool IsLoading
@@ -49,31 +99,53 @@ namespace TaxiStartApp.Models
             get => isLoading;
             set
             {
-                isLoading = value;
-                RaisePropertyChanged();
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    RaisePropertyChanged("IsLoading");
+                }              
             }
         }
         public async void LoadTaxiPark()
-        {
-            IEnumerable<ContactTaxiPark> newContactTaxiPark = null;
+        {            
             await Task.Run(() =>
-            {   
-                DataStorage._startIndex = lastLoadedIndex;
-                DataStorage._batchSize = loadBatchSize;
-                newContactTaxiPark = DataStorage.GetBlogs();
-                
-            });
-            TaxiParkData.AddRange(newContactTaxiPark);
-            IsLoading = false;                       
+            {
+                LoadTaxi();
+            });            
+                                   
         }        
         public void LoadMore()
         {
             LoadTaxiPark();
-            lastLoadedIndex += 1;
         }
         public bool CanLoadMore()
         {
-            return TaxiParkData?.Count < sourceSize;
+            return TaxiParkData.Count < SourceSize;                        
+        }
+
+        public void LoadTaxi()
+        {
+            IEnumerable<ContactTaxiPark> newContactTaxiPark = null;
+            DataStorage._startIndex = lastLoadedIndex;
+            DataStorage._batchSize = loadBatchSize;
+            newContactTaxiPark = DataStorage.GetBlogs();
+            foreach (var item in newContactTaxiPark)
+            {
+                var selectpr = DataStorage.GetSelectParkDto(item.Id, Common.Constant.yandexProfil.id);
+                if (selectpr != null && selectpr?.ParkId != 0)
+                {
+                    item.Grid1Visible = false;
+                    item.Grid2Visible = true;
+                }
+                else
+                {
+                    item.Grid1Visible = true;
+                    item.Grid2Visible = false;
+                }
+            }
+            TaxiParkData.AddRange(newContactTaxiPark);
+            lastLoadedIndex += 1;
+            IsLoading = false;
         }
         public async void ShareBlog(ContactTaxiPark blog)
         {
@@ -91,8 +163,17 @@ namespace TaxiStartApp.Models
                 this.filterGlyph = value;
                 RaisePropertyChanged();
             }
-        }       
-
+        }
+        
+        public bool IsRespond
+        {
+            get => isRespond;
+            set
+            {
+                isRespond = value;
+                RaisePropertyChanged();
+            }
+        }
         public async void OpenBlog(ContactTaxiPark blog)
         {
             Dictionary<string, object> parameters = new() {
@@ -104,6 +185,10 @@ namespace TaxiStartApp.Models
             Common.Constant.ShareParkCountWork = blog.ParkTrun.CountWork;
             Common.Constant.ShareParkCountCar = blog.ParkTrun.CountCars;
             await Shell.Current.GoToAsync("EditContactPage", parameters);
+        }
+        public async void Filter()
+        {           
+            await Shell.Current.GoToAsync("FilterPage");
         }
 
         List<ContactTaxiPark> selectedContacts;
@@ -117,7 +202,29 @@ namespace TaxiStartApp.Models
                     selectedContacts = value;
                 }
             }
-        }       
+        }
+        private bool grid1Visible = true;
+        private bool grid2Visible = false;
+        public bool Grid1Visible
+        {
+            get => grid1Visible;
+            set
+            {
+                grid1Visible = value;
+                RaisePropertyChanged();
+            }
+        }
+        public bool Grid2Visible
+        {
+            get => grid2Visible;
+            set
+            {
+                grid2Visible = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        
     }
 
 

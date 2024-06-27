@@ -17,6 +17,7 @@ namespace TaxiStartApp
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Window.SetNavigationBarColor(Android.Graphics.Color.ParseColor("#000000"));
             //this.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)
             //    (SystemUiFlags.ImmersiveSticky | SystemUiFlags.LightNavigationBar |
             //     SystemUiFlags.Fullscreen | SystemUiFlags.Immersive);

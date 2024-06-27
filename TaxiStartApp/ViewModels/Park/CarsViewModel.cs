@@ -12,6 +12,8 @@ namespace TaxiStartApp.ViewModels.Park
     public class CarsViewModel : ViewModelBase, IQueryAttributable
     {
         bool isLoading;
+        bool isRespond;
+        
         bool isLoadingDrive;
         bool isLoadingWork;
         int lastLoadedIndex = 1;
@@ -23,8 +25,9 @@ namespace TaxiStartApp.ViewModels.Park
         int sourceWorkSize = 0;
         private ICommand _loadMoreCommand;
         private ICommand _loadWorkCommand;
-        private ICommand _loadDriveCommand;        
-        
+        private ICommand _loadDriveCommand;
+        private IDataService _dataService;
+
         public ICommand ShareCommand { get; set; }
         public ICommand LoadDriveCommand {
             get => _loadDriveCommand;
@@ -85,7 +88,7 @@ namespace TaxiStartApp.ViewModels.Park
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
             LoadDriveCommand = new Command(LoadDrive, CanLoadDriveMore);
             LoadWorkCommand = new Command(LoadWork, CanLoadWorkMore);
-
+            _dataService = DependencyService.Get<IDataService>();
             OpenBlogCommand = new Command<Cars>(OpenBlog);
             LikeCommand = new Command(Like1);
             LikeEmpCommand = new Command(Like2);
@@ -106,10 +109,18 @@ namespace TaxiStartApp.ViewModels.Park
                 CarsData = new List<Cars>();
                 CollecDriversConstraint = new List<ParkDriversCon>();
                 CollecWorkConstraint = new List<ParkWorkCon>();
+                var selectpr = DataStorage.GetSelectParkDto(Common.Constant.ShareParkId, Common.Constant.yandexProfil.id);
+                if (selectpr != null && selectpr?.ParkId != 0)
+                {
+                    Grid1Visible = false;
+                    Grid2Visible = true;
+                }
+                else
+                {
+                    Grid1Visible = true;
+                    Grid2Visible = false;
+                }
 
-                // LoadDataAsync(Common.Constant.ShareParkId);
-                // LoadDataDriveAsync();
-                //LoadDataWorkAsync();               
             });            
         }        
 
@@ -187,19 +198,15 @@ namespace TaxiStartApp.ViewModels.Park
         }
         public async void ButtonRespond()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var driver = dataService.CreateDrivers(new JobTaxi.Entity.Dto.DriverDto
+            IsRespond = true;
+            var driver = _dataService.RespondToRequest();
+            if (driver == true) 
             {
-                Fam = Constant.yandexProfil.lastName,
-                Im = Constant.yandexProfil.firstName,
-                Phone = Constant.yandexProfil.defaultPhone,                
-            }) ;
-            var offer = dataService.CreateOffer(new JobTaxi.Entity.Dto.OfferDto
-            {
-                DriverId = driver.Id,
-                ParkId = Constant.ShareParkId
-            });
-            Shell.Current.DisplayAlert("Заявка успешно отправлена", "", "OK");
+                IsRespond = false;
+                await Shell.Current.DisplayAlert("Заявка успешно отправлена", "", "OK"); 
+            }
+            else { IsRespond = false; }
+            
         }
         
         public async void OpenBlog(Cars blog)
@@ -214,6 +221,15 @@ namespace TaxiStartApp.ViewModels.Park
                 $"/showparks/showpark.php?id={Constant.ShareParkId}&token=ACC85CA3-8A1B-470E-8FD0-2F0A7DB6F6A7",
                 Title = "Share Text " + ParkName
             });
+        }
+        public bool IsRespond
+        {
+            get => isRespond;
+            set
+            {
+                isRespond = value;
+                RaisePropertyChanged();
+            }
         }
         
         public bool IsLoading
@@ -488,11 +504,25 @@ namespace TaxiStartApp.ViewModels.Park
 
         public async void Like1()
         {
-            if (Grid1Visible == true) { Grid1Visible = false; Grid2Visible = true; }
+            if (Grid1Visible == true) { 
+                Grid1Visible = false; Grid2Visible = true;
+                
+                var driver = _dataService.CreateSelectPark(new JobTaxi.Entity.Dto.SelectParkDto
+                {
+                    ParkId = Constant.ShareParkId,
+                    UserId = Constant.yandexProfil.id
+                });
+            }
         }
         public async void Like2()
         {
-            if (Grid2Visible == true) { Grid2Visible = false; Grid1Visible = true; }
+            if (Grid2Visible == true) {
+                var driver = _dataService.DeleteSelectPark(new JobTaxi.Entity.Dto.SelectParkDto
+                {
+                    ParkId = Constant.ShareParkId,
+                    UserId = Constant.yandexProfil.id
+                });
+                Grid2Visible = false; Grid1Visible = true; }
         }
     }
 }

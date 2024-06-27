@@ -4,7 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TaxiStartApp"
-    xmlns:pages="clr-namespace:TaxiStartApp.Views"    
+    xmlns:pages="clr-namespace:TaxiStartApp.Views"   
+    BackgroundColor="Black"
+    TitleColor="White"
+    UnselectedColor="White"
     Shell.FlyoutBehavior="Flyout">
    
     <ShellContent
@@ -41,40 +44,71 @@
         
     </ShellContent>
     <ShellContent
-    ContentTemplate="{DataTemplate pages:EditBioPage}"
-    Route="EditBioPage" 
-    Shell.FlyoutBehavior="Flyout"
-    Shell.FlyoutItemIsVisible="False" 
+        ContentTemplate="{DataTemplate pages:EditBioPage}"
+        Route="EditBioPage" 
+        Shell.FlyoutBehavior="Flyout"
+        Shell.FlyoutItemIsVisible="False" 
         NavigationPage.HasNavigationBar="False"
-    Shell.NavBarIsVisible="False"/>
+        Shell.NavBarIsVisible="False"/>
 
 
 
-    <TabBar x:Name="mainpage"
-            
+    <TabBar x:Name="mainpage"            
         Shell.FlyoutBehavior="Flyout"
         Shell.FlyoutItemIsVisible="True"
-        Shell.NavBarIsVisible="False">        
-        <ShellContent
-            Title="Карта"
-            ContentTemplate="{DataTemplate pages:MapPage}"            
-            Route="MapPage" />
-        <ShellContent
-            Title="Меню"
-            ContentTemplate="{DataTemplate pages:MainPage}"
-            Route="MainPage" />
-        <ShellContent
-            Title="Избраное"
-            ContentTemplate="{DataTemplate pages:InputPage}"
-            Route="InputPage" />
-        <!--<ShellContent
-    Title="Избраное"
-    ContentTemplate="{DataTemplate pages:InputPage}"
-    Route="InputPage" />-->
-        <ShellContent 
-            Title="Таксопарк" 
-            ContentTemplate="{DataTemplate pages:ContactsPage}"
-            Route="ContactsPage"/>
+        Shell.NavBarIsVisible="False">
+        <Tab Title="Карты" >
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="Filter"
+                    Glyph="&#xe804;"
+                    Size="25"
+                    Color="White"/>
+            </Tab.Icon>
+            <ShellContent               
+                Title="Карта"            
+                ContentTemplate="{DataTemplate pages:MapPage}"            
+                Route="MapPage" />
+        </Tab>
+        <Tab Title="Меню" >
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="Filter"
+                    Glyph="&#xf0c9;"
+                    Size="25"
+                    Color="White"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Меню"
+                ContentTemplate="{DataTemplate pages:MainPage}"
+                Route="MainPage" />
+        </Tab>
+        <Tab Title="Избраное" >
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="Filter"
+                    Glyph="&#xe805;"
+                    Size="25"
+                    Color="White"/>
+            </Tab.Icon>
+            <ShellContent
+                Title="Избраное"
+                ContentTemplate="{DataTemplate pages:SelectedPage}"
+                Route="SelectedPage" />
+        </Tab>       
+        <Tab Title="Таксопарк" >
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="Filter"
+                    Glyph="&#xf207;"
+                    Size="25"
+                    Color="White"/>
+            </Tab.Icon>
+            <ShellContent 
+                Title="Таксопарк" 
+                ContentTemplate="{DataTemplate pages:ContactsPage}"
+                Route="ContactsPage"/>
+        </Tab>
     </TabBar>
     
 

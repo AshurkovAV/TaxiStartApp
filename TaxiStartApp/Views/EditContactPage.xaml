@@ -92,7 +92,7 @@
                 <Setter Property="FontSize" Value="14"/>
             </Style>
             <Style TargetType="Border" x:Key="BorderDetalAction">
-                <Setter Property="BackgroundColor" Value="#8F000000"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Gray650}"/>
                 <Setter Property="HorizontalOptions" Value="Start"/>
                 <Setter Property="VerticalOptions" Value="End"/>
                 <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
@@ -137,8 +137,8 @@
             <Setter Property="ItemSpacing" Value="0" />
         </Style>
     </ContentPage.Resources>
-    
-        <Grid RowDefinitions="Auto,*,Auto">
+
+    <Grid RowDefinitions="Auto,*,Auto">
         <Grid Grid.Row="0" ColumnDefinitions="*,250,*">
             <Grid Grid.Column="0"  Margin="20" VerticalOptions="Start">
                 <ImageButton  HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
@@ -189,26 +189,25 @@
                 </Grid>
             </Grid>
         </Grid>
-        
-            <ScrollView Grid.Row="1">
+
+        <ScrollView Grid.Row="1">
             <Grid RowDefinitions="Auto,*,Auto">
                 <Grid Grid.Row="0">
-                    
-                            <dx:DXStackLayout  Orientation="Vertical" Padding="20,-20" ItemSpacing="10">
-                                <dxe:FormGroupItem Header="Таксопарк">
-                                    <dxe:FormItem AllowTap="True" TextColor="White"
+                    <dx:DXStackLayout  Orientation="Vertical" Padding="20,-20" ItemSpacing="10">
+                        <dxe:FormGroupItem Header="Таксопарк">
+                            <dxe:FormItem AllowTap="True" TextColor="White"
                                                   TextFontFamily="Roboto" 
                                                   TextFontSize="18"
                                                   DetailColor="Gray"
                                                   Text="{Binding ParkName, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
-                                    <dxe:FormItem AllowTap="True" TextColor="White"
+                            <dxe:FormItem AllowTap="True" TextColor="White"
                                                   TextFontFamily="Roboto" 
                                                   TextFontSize="18"
                                                   DetailColor="Gray"
                                                   Text="{Binding ParkPhone, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
-                                </dxe:FormGroupItem>
-                            </dx:DXStackLayout>
-                        
+                        </dxe:FormGroupItem>
+                    </dx:DXStackLayout>
+
                 </Grid>
 
                 <dxcv:DXCollectionView VerticalOptions="Start"
@@ -222,13 +221,13 @@
                                        HeightRequest="210" 
                                        Orientation="Horizontal"
                 Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
-                  
+
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type local:Cars}">
                             <Border StrokeShape="RoundRectangle 20"
                                     Margin="5"  
                                     BackgroundColor="{StaticResource Gray650}">
-                                <VerticalStackLayout Margin="0,0,0,0">                                    
+                                <VerticalStackLayout Margin="0,0,0,0">
                                     <Grid ColumnDefinitions="Auto,*,Auto" >
                                         <Label Grid.Column="0"
                                                Margin="16,25,16,5"
@@ -306,8 +305,8 @@
                             <Border StrokeShape="RoundRectangle 20"
                                     BackgroundColor="{StaticResource Gray650}">
                                 <VerticalStackLayout Margin="-10" HeightRequest="200" >
-                                    
-                                            <WebView >
+
+                                    <WebView >
                                         <WebView.Source>
                                             <HtmlWebViewSource>
                                                 <HtmlWebViewSource.Html>
@@ -339,7 +338,7 @@
                                                 </HtmlWebViewSource.Html>
                                             </HtmlWebViewSource>
                                         </WebView.Source>
-                                    </WebView>                                       
+                                    </WebView>
                                 </VerticalStackLayout>
                             </Border>
 
@@ -429,58 +428,37 @@
                                         </dxcv:DXCollectionView.ItemTemplate>
                                     </dxcv:DXCollectionView>
                                 </Grid>
-                                <Grid Grid.Row="3" RowDefinitions="Auto, Auto" > 
+                                <Grid Grid.Row="3" RowDefinitions="Auto, Auto" >
                                     <Label  Grid.Row="0"
                                             Text="Процент парка" 
-                                            FontFamily="Roboto"
-                                            TextColor="White" 
-                                            FontSize="17"  Margin="20" />
+                                            Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
-                                            BackgroundColor="#8F000000"
-                                            HorizontalOptions="Start"                                                
-                                            VerticalOptions="End"        
-                                            StrokeShape="RoundRectangle 15">
+                                            Style="{StaticResource BorderDetalAction}">
                                         <Label Text="{Binding ParkPercent, StringFormat='{0:N0}  %'}" 
-                                               Margin="16,0,16,0"
-                                               FontAttributes="Bold"
-                                               TextColor="White"
-                                               Padding="12,4"/>
+                                               Style="{StaticResource LabelEndDetalAction}"/>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="4" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
-                                            Text="Самозанятый" 
-                                            FontFamily="Roboto"
-                                            TextColor="White" 
-                                            FontSize="17"  Margin="20" />
+                                            Text="Самозанятый"                                            
+                                            Style="{StaticResource LabelTopDetalAction}" />
                                     <Border Grid.Row="1"
-                                            BackgroundColor="#8F000000"
-                                            HorizontalOptions="Start"                                                
-                                            VerticalOptions="End"        
-                                            StrokeShape="RoundRectangle 15">
+                                            Style="{StaticResource BorderDetalAction}">
                                         <Label Text="{Binding SelfEmployed}" 
-                                               Margin="16,0,16,0"
-                                               FontAttributes="Bold"
-                                               TextColor="White"
-                                               Padding="12,4"/>
+                                               Style="{StaticResource LabelEndDetalAction}"/>
                                     </Border>
 
                                 </Grid>
                                 <Grid Grid.Row="5" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Расчет суммы за вывод денег" 
-                                            FontFamily="Roboto"
-                                            TextColor="White" 
-                                            FontSize="17"  Margin="20" />
+                                            Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
                                             Style="{StaticResource BorderDetalAction}">
                                         <Label Text="{Binding WithdrawMoneyName}" 
-                                               Margin="16,0,16,0"
-                                               FontAttributes="Bold"
-                                               TextColor="White"
-                                               Padding="12,4"/>
+                                               Style="{StaticResource LabelEndDetalAction}"/>
                                     </Border>
-                                    
+
 
                                 </Grid>
                                 <Grid Grid.Row="6" RowDefinitions="Auto, Auto">
@@ -606,7 +584,7 @@
                                 <Grid Grid.Row="18" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Выкуп"
-                                            Style="{StaticResource LabelTopDetalAction}"/>                                    
+                                            Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
                                             Style="{StaticResource BorderDetalAction}">
                                         <Label Text="{Binding Ransom}" 
@@ -615,18 +593,17 @@
                                 </Grid>
                             </Grid>
                         </Grid>
-                        
+
                     </Grid>
                 </Grid>
             </Grid>
-            
+
         </ScrollView>
-        
-        <Button Grid.Row="2"          
+        <ActivityIndicator IsRunning="{Binding IsRespond, Mode=OneWay}" Color="{StaticResource Gray910}" />
+        <Button Grid.Row="2"         
                 Margin="15,15,15,10"
                 BackgroundColor="{StaticResource Gray910}"
-                CornerRadius="30"
-                IsEnabled="False"
+                CornerRadius="30"                
                 FontAttributes="Bold"
                 FontSize="18"
                 HeightRequest="40"
@@ -636,6 +613,6 @@
                 Pressed="Button_Pressed"
                 Released="Button_Released"
                 Text="Откликнуться"/>
-        </Grid>
-    
+    </Grid>
+
 </ContentPage>

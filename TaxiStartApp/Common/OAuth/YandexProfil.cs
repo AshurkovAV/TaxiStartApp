@@ -35,7 +35,7 @@ namespace TaxiStartApp.Common.OAuth
             
         }
 
-        public string id { get; set; }
+        public int id { get; set; }
         public string idYandex { get; set; }
         public string login { get; set; }
         public string clientId { get; set; }

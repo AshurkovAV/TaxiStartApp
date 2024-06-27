@@ -4,11 +4,11 @@ using TaxiStartApp.Models.Nsi;
 
 namespace TaxiStartApp.Common.Converters.Helpers
 {
-    public class BlacklistCollectionConverter : IValueConverter
+    public class WorkCollectionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IList<DriversCon> contacts)
+            if (value is IList<WorkCon> contacts)
             {
                 return string.Join("; ", contacts.Select(x => x.Name));
             }

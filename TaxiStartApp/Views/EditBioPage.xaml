@@ -25,20 +25,28 @@
                 </ImageButton.Source>
             </ImageButton>
         </Grid>
-        <Grid Grid.Row="1">
-        <dx:DXStackLayout Orientation="Vertical">
-            <dxe:MultilineEdit Loaded="bioEditor_Loaded" 
-                               
+        <Grid Grid.Row="1" RowDefinitions="80, Auto">
+            <Grid Grid.Row="0">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <dxe:MultilineEdit Loaded="bioEditor_Loaded" 
                                CursorColor="{StaticResource Gray910}"
                                BackgroundColor="Transparent" 
                                FocusedBorderColor="{StaticResource Gray910}"
                                x:Name="bioEditor"                                                               
                                TextColor="{StaticResource Gray100}"
-                               Margin="5" BoxMode="Filled"                               
+                               Margin="5" 
+                               BoxMode="Filled"                               
                                HelpText="{x:Static helpers:BioHelper.detailText}" 
                                HelpTextColor="Gray" MaxCharacterCount="100" />
-        </dx:DXStackLayout>
-        <dxe:DateEdit DisplayFormat="ddd d MMM"/>
+                </dx:DXStackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <dxe:DateEdit DisplayFormat="ddd d MMM yyyy" 
+                                  FocusedBorderColor="{StaticResource Gray910}"
+                                  CursorColor="{StaticResource Gray910}"/>
+                </dx:DXStackLayout>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

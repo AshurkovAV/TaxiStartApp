@@ -14,7 +14,7 @@
         <coon:GlyphStatusConverter x:Key="movieOnFavoriteListAccountMovieStatesToGlyph" />        
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*">
-        <Grid ColumnDefinitions="360,*">            
+        <Grid ColumnDefinitions="360,Auto">            
             <Border 
                     VerticalOptions="Center" 
                     StrokeThickness="0" Stroke="Transparent" Background="Transparent">
@@ -31,7 +31,22 @@
             
             <Grid Grid.Column="1" VerticalOptions="Center" Background="Transparent">               
                     <Grid  VerticalOptions="Center">
-                        <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}">
+                    <dxc:SimpleButton 
+                        Padding="0,-3,5,0"
+                        HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}"
+                        BackgroundColor="Transparent"
+                        WidthRequest="40">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource
+                                    FontFamily="Filter"
+                                    Glyph="&#xf0b0;"
+                                    Size="25"
+                                    Color="{StaticResource Gray100}"/>
+                            </Image.Source>
+                        </Image>
+                    </dxc:SimpleButton>
+                    <!--<ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}">
                             <ImageButton.Source>
                                 <FontImageSource
                                 FontFamily="Filter"
@@ -39,16 +54,18 @@
                                 Size="25"
                                 Color="{StaticResource Gray100}"/>
                             </ImageButton.Source>
-                        </ImageButton>
+                        </ImageButton>-->
                     </Grid>                
             </Grid>
         </Grid>
         <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding TaxiParkData}"
                            IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
-                           IndicatorColor="#FFC71F"                           
-                           SelectionMode="Single"                           
-                           IsLoadMoreEnabled="True" 
-                           LoadMoreCommand="{Binding LoadMoreCommand}"  
+                               IsPullToRefreshEnabled="True"
+                               PullToRefreshCommand="{Binding PullToRefreshCommand}"
+                               IndicatorColor="#FFC71F"                           
+                               SelectionMode="Single"                           
+                               IsLoadMoreEnabled="True" 
+                               LoadMoreCommand="{Binding LoadMoreCommand}"  
                                TapCommand="{Binding OpenBlogCommand}"
                        Margin="{OnIdiom Phone='0,0,0,0', Tablet='71,0,0,0'}">
             <!--Define the item template.-->
@@ -69,10 +86,24 @@
                                            FontSize="18" 
                                            MaxLines="3" LineBreakMode="WordWrap"/>
 
-                                <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible
-                                                , Mode=OneWay}"
-                                        Margin="0,25,16,0" >
-                                        <ImageButton x:Name="but" Padding="1" Clicked="ImageButton_Clicked"  Command="{Binding LikeCommand}">
+                                <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}" Margin="0,25,16,0" >
+                                    <dxc:SimpleButton 
+                                        Padding="1"
+                                        BackgroundColor="Transparent" 
+                                        WidthRequest="40"
+                                        VerticalOptions="Center"
+                                        Command="{Binding LikeCommand, Mode=OneWay}">
+                                        <Image>
+                                            <Image.Source>
+                                                <FontImageSource
+                                                    FontFamily="Filter"
+                                                    Glyph="&#xe802;"
+                                                    Size="25"
+                                                    Color="{StaticResource Gray200}"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </dxc:SimpleButton>
+                                    <!--<ImageButton Padding="1" Command="{Binding LikeCommand, Mode=OneWay}">
                                             <ImageButton.Source>
                                                 <FontImageSource x:Name="ImageSour"
                                                     FontFamily="Filter"
@@ -80,13 +111,27 @@
                                                     Size="25"
                                                     Color="{StaticResource Gray100}"/>
                                             </ImageButton.Source>
-                                        </ImageButton>
+                                        </ImageButton>-->
                                     </Grid>
-                                <Grid Grid.Column="2" 
-                                      IsVisible="{Binding Grid2Visible,
-                                                  Mode=OneWay}"
-                                      Margin="0,25,16,0" >
-                                    <ImageButton  Padding="1" Command="{Binding LikeEmpCommand}">
+                                <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible,Mode=OneWay}" Margin="0,25,16,0" >
+                                    <dxc:SimpleButton 
+                                        Padding="1"
+                                        BackgroundColor="Transparent" 
+                                        WidthRequest="40"
+                                        VerticalOptions="Center"
+                                        Command="{Binding LikeEmpCommand, Mode=OneWay}">
+                                        <Image>
+                                            <Image.Source>
+                                                <FontImageSource 
+                                                    FontFamily="Filter"
+                                                    Glyph="&#xe803;"
+                                                    Size="25"
+                                                    Color="#ce2029"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </dxc:SimpleButton>
+
+                                    <!--<ImageButton  Padding="1" Command="{Binding LikeEmpCommand, Mode=OneWay}">
                                         <ImageButton.Source>
                                             <FontImageSource 
                                                 FontFamily="Filter"
@@ -94,7 +139,7 @@
                                                 Size="25"
                                                 Color="#ce2029"/>
                                         </ImageButton.Source>
-                                    </ImageButton>
+                                    </ImageButton>-->
                                 </Grid>
 
 
@@ -139,7 +184,18 @@
                                     <Image Source="share" HeightRequest="20"/>
                                 </dxc:SimpleButton>
                             </Grid>
-                            <Button                                
+                            <dxc:SimpleButton 
+                                Margin="15,0,15,5"
+                                BackgroundColor="{StaticResource Gray910}"
+                                CornerRadius="30"
+                                FontAttributes="Bold"
+                                FontSize="15"                                  
+                                HeightRequest="40"
+                                TextColor="Black"
+                                FontFamily="Roboto"
+                                Command="{Binding ButtonRespondCommand}"                               
+                                Text="Откликнуться"/>
+                            <!--<Button                                
                                 Margin="15,15,15,10"
                                 BackgroundColor="{StaticResource Gray910}"
                                 CornerRadius="30"
@@ -148,7 +204,10 @@
                                 HeightRequest="40"
                                 TextColor="Black"
                                 FontFamily="Roboto"
-                                Text="Откликнуться"/>
+                                Command="{Binding ButtonRespondCommand}"
+                                Pressed="Button_Pressed"
+                                Released="Button_Released"
+                                Text="Откликнуться"/>-->
                             <!--<Border 
                             BackgroundColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" 
                             HeightRequest="2" 
