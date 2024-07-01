@@ -5,6 +5,7 @@ namespace TaxiStartApp.Common
 {
     public class Constant
     {
+        //public static CacheRepository cacheRepository = new CacheRepository();
         public static string TokenService { get; set; } = "631DFC6B-5080-4E4B-BBDD-2E74DEFA8025";
         public static YandexProfil yandexProfil = new YandexProfil();
         public static UserTokenJson UserToken = new UserTokenJson();

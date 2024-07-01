@@ -1,8 +1,6 @@
 ﻿using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
-using Microsoft.Maui.Controls;
-using TaxiStartApp.Common;
 using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Common.OAuth;
 using TaxiStartApp.Views;
@@ -35,6 +33,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(EditContactPage), typeof(EditContactPage));
         Routing.RegisterRoute(nameof(SelectedPage), typeof(SelectedPage));
         Routing.RegisterRoute(nameof(FilterPage), typeof(FilterPage));
+
+
+       
 
         var fileHelper = DependencyService.Get<IFileHelper>();
         var accessToken = fileHelper.LoadFile();

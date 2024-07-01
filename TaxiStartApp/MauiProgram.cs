@@ -1,10 +1,16 @@
-﻿using DevExpress.Maui;
+﻿using Autofac;
+using DataCore.Cache;
+using DataCore.Data.Nsi;
+using DataCore.Http;
+using DataCore.Nsi;
+using DataCore.Service;
+using DevExpress.Maui;
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Controls.Internal;
+using JobTaxi.Entity.Models;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Bot;
-using TaxiStartApp.Common.Helper;
-
+using TaxiStartApp.Services.Nsi;
 namespace TaxiStartApp
 {
     public static class MauiProgram
@@ -14,8 +20,7 @@ namespace TaxiStartApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()                
-                .UseDevExpress(useLocalization: true)
-                
+                .UseDevExpress(useLocalization: true)                
                 .ConfigureMauiHandlers(handlers => {
                     handlers.AddHandler<BottomSheet, BottomSheetHandler>();
                 })
@@ -30,7 +35,15 @@ namespace TaxiStartApp
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                     fonts.AddFont("fontello.ttf", "Icons");
                     fonts.AddFont("fontello3.ttf", "Filter");
-                }); 
+                });
+
+            builder.Services.AddTransient<ICacheRepository, CacheRepository>();
+            builder.Services.AddTransient<ICache, DriversConstrainCache>();
+            builder.Services.AddTransient<IHttpClientTs, DataCore.Http.HttpClientTs>();
+            builder.Services.AddTransient<IHttpClientNsi, HttpClientNsi<DriversConstraint>>();
+            
+
+
 
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
             DevExpress.Maui.Charts.Initializer.Init();

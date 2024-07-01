@@ -32,7 +32,7 @@
             <Grid Grid.Column="1" VerticalOptions="Center" Background="Transparent">               
                     <Grid  VerticalOptions="Center">
                     <dxc:SimpleButton 
-                        Padding="0,-3,5,0"
+                        Padding="0,-3,18,0"
                         HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}"
                         BackgroundColor="Transparent"
                         WidthRequest="40">

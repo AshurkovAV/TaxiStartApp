@@ -25,15 +25,9 @@ namespace TaxiStartApp.Services
         private string _selectParkCount = Constant.UrlGeneralService + "/selectpark/count?";
         private string _urlSelectParkCreate = Constant.UrlGeneralService + "/selectpark/create";
         private string _urlSelectParkDelete = Constant.UrlGeneralService + "/selectpark/delete";
-        private string _urlSelectPark = Constant.UrlGeneralService + "/selectpark/sp?";
-        private string _urlNsiDriversConstraint = Constant.UrlGeneralService + "/nsi/DriversConstraint";
-        private string _urlNsiWorkConstraint = Constant.UrlGeneralService + "/nsi/WorkCondition";
+        private string _urlSelectPark = Constant.UrlGeneralService + "/selectpark/sp?";       
 
-        //private string _url          = "http://192.168.10.7:8555/park";
-        //private string _urlid        = "http://192.168.10.7:8555/park/id";
-        //private string _urlcount     = "http://192.168.10.7:8555/park/count";
-        //private string _urltruncated = "http://192.168.10.7:8555/park/truncated?";
-        //private string _cars         = "http://192.168.10.7:8555/car?";
+      
         public HttpClientJob() { }
 
         public async Task<IEnumerable<Park>> GetParksAsync()
@@ -192,39 +186,9 @@ namespace TaxiStartApp.Services
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new List<DriversConstraintTruncated>();
             }
-        }
+        }       
 
-        public async Task<IEnumerable<DriversConstraint>> GetNsiDriversConstraint()
-        {
-            try
-            {
-                HttpClientTs httpClientTs = new HttpClientTs(_urlNsiDriversConstraint);
-                var responseFromServer = httpClientTs.Get();
-                var result = JsonConvert.DeserializeObject<IEnumerable<DriversConstraint>>(responseFromServer.Result);
-                return result;
-            }
-            catch (Exception wex)
-            {
-                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
-                return new List<DriversConstraint>();
-            }
-        }
-
-        public async Task<IEnumerable<WorkCondition>> GetNsiWorkConstraint()
-        {
-            try
-            {
-                HttpClientTs httpClientTs = new HttpClientTs(_urlNsiWorkConstraint);
-                var responseFromServer = httpClientTs.Get();
-                var result = JsonConvert.DeserializeObject<IEnumerable<WorkCondition>>(responseFromServer.Result);
-                return result;
-            }
-            catch (Exception wex)
-            {
-                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
-                return new List<WorkCondition>();
-            }
-        }
+        
 
         public async Task<IEnumerable<WorkConditionTruncated>> GetParksWorkConditionTruncatedAsync(string parkGuid)
         {

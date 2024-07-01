@@ -2,14 +2,14 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TaxiStartApp.Models.Nsi
+namespace DataCore.Models.Nsi
 {
-    public class DriversCon : INotifyPropertyChanged
+    public class WorkCon : INotifyPropertyChanged
     {
-        public DriversCon(DriversConstraint driversConstraint)
+        public WorkCon(WorkCondition workCondition)
         {
-            Id = driversConstraint.Id;
-            Name = driversConstraint.Name;
+            Id = workCondition.Id;
+            Name = workCondition.Name;
         }
         public int Id { get; set; }
         public string Name { get; set; }

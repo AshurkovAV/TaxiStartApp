@@ -1,8 +1,8 @@
-﻿using System.Collections.Specialized;
+﻿using DataCore.Data.Nsi;
+using DataCore.Models.Nsi;
+using System.Collections.Specialized;
 using System.Windows.Input;
-using TaxiStartApp.Common.Data.Nsi;
 using TaxiStartApp.Models;
-using TaxiStartApp.Models.Nsi;
 
 namespace TaxiStartApp.ViewModels
 {

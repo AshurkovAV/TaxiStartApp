@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxiStartApp", "TaxiStartAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobTaxi.Entity", "..\JobTaxiService\JobTaxi.Entity\JobTaxi.Entity.csproj", "{11655A74-130E-46F1-AB21-A24A7B81CDF0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{FFEA3D63-38CF-49A7-9C22-02CC06F1143D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCore", "DataCore\DataCore.csproj", "{0E8C0B04-3E97-40FF-99BF-845072703A87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{11655A74-130E-46F1-AB21-A24A7B81CDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11655A74-130E-46F1-AB21-A24A7B81CDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11655A74-130E-46F1-AB21-A24A7B81CDF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFEA3D63-38CF-49A7-9C22-02CC06F1143D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEA3D63-38CF-49A7-9C22-02CC06F1143D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEA3D63-38CF-49A7-9C22-02CC06F1143D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEA3D63-38CF-49A7-9C22-02CC06F1143D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8C0B04-3E97-40FF-99BF-845072703A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8C0B04-3E97-40FF-99BF-845072703A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8C0B04-3E97-40FF-99BF-845072703A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8C0B04-3E97-40FF-99BF-845072703A87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

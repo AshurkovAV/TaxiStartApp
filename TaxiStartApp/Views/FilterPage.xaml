@@ -87,7 +87,7 @@
         <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto">
             <Grid Grid.Column="0"  Margin="20" VerticalOptions="Start">
                 <dxc:SimpleButton 
-                    Padding="0,-3,0,0"
+                    Padding="0,0,0,0"
                     Clicked="ImageButton_Clicked"
                     BackgroundColor="Transparent"
                     WidthRequest="40"                    
@@ -105,7 +105,7 @@
             </Grid>
             <Grid Grid.Column="2"  Margin="20" VerticalOptions="Start">
                 <dxc:SimpleButton 
-                    Padding="0,-3,0,0"
+                    Padding="0,0,0,0"
                     BackgroundColor="Transparent"
                     WidthRequest="40"                    
                     CommandParameter="{Binding}">
@@ -126,7 +126,7 @@
                 <Grid Grid.Row="0" VerticalOptions="Start" >
                     <Grid RowDefinitions="Auto">
                         <Grid Grid.Row="0" Margin="10,0,0,0" >
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                                 <dxe:MultilineEdit Grid.Row="0" CursorColor="{StaticResource Gray910}"
                                                    BackgroundColor="Transparent" 
                                                    FocusedBorderColor="{StaticResource Gray910}"
@@ -243,19 +243,10 @@
                                             HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Значение"/>
+                                                      HelpText="Вывод денег: значение"/>
                                     </Border>
-                                </Grid>
+                                </Grid> 
                                 <Grid Grid.Row="8" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Штрафы" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="9" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Депозит" 
                                             Style="{StaticResource LabelTopDetalAction}"/>
@@ -263,10 +254,10 @@
                                             HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Значение"/>
+                                                      HelpText="Депозит"/>
                                     </Border>
                                 </Grid>
-                                <Grid Grid.Row="10" RowDefinitions="Auto, Auto">
+                                <Grid Grid.Row="9" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Возврат депозита" 
                                             Style="{StaticResource LabelTopDetalAction}"/>
@@ -275,9 +266,26 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding}"                                                          
+                                                          HelpText="Возврат депозита"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="10" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Осмотр" 
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Осмотр"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
+
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="11" RowDefinitions="Auto, Auto">
@@ -285,30 +293,41 @@
                                             Text="Путевые" 
                                             Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
-
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Путевые"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
                                     </Border>
                                 </Grid>
+
                                 <Grid Grid.Row="12" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
-                                            Text="Осмотр" 
+                                            Text="Штрафы (комиссия)" 
                                             Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
-
+                                        <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
+                                                      HelpText="Штрафы (комиссия)"/>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="13" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
-                                            Text="Страховка"
+                                            Text="Радиус работы"
                                             Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
-                                        <dxe:FormSwitchItem 
-                                            OnColor="{StaticResource Gray910}" 
-                                            ThumbColor="{StaticResource Gray500}"                                            
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
-
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Радиус работы"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="14" RowDefinitions="Auto, Auto">
@@ -316,29 +335,61 @@
                                             Text="Мин. срок аренды"
                                             Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
-
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Мин. срок аренды"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
                                     </Border>
                                 </Grid>
+                               
+                                
                                 <Grid Grid.Row="15" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Радиус работы"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="16" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Время списания аренды"
                                             Style="{StaticResource LabelTopDetalAction}"/>
                                     <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
                                             Style="{StaticResource BorderDetalAction}">
-
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Мин. срок аренды"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="16" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Первый день"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            HorizontalOptions="FillAndExpand"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
+                                                          IsDropDownIconVisible="True"
+                                                          ItemsSource="{Binding}"
+                                                          HelpText="Первый день"
+                                                          DisplayMember="Name"
+                                                          ValueMember="Id"/>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="17" RowDefinitions="Auto, Auto">
+                                    <Label  Grid.Row="0"
+                                            Text="Страховка"
+                                            Style="{StaticResource LabelTopDetalAction}"/>
+                                    <Border Grid.Row="1"
+                                            Style="{StaticResource BorderDetalAction}">
+                                        <dxe:FormSwitchItem 
+                                            OnColor="{StaticResource Gray910}" 
+                                            ThumbColor="{StaticResource Gray500}"
+                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Row="18" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Заправка через таксометр"
                                             Style="{StaticResource LabelTopDetalAction}"/>
@@ -351,15 +402,8 @@
 
                                     </Border>
                                 </Grid>
-                                <Grid Grid.Row="18" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Первый день"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-
-                                    </Border>
-                                </Grid>
+                                
+                                
                                 <Grid Grid.Row="19" RowDefinitions="Auto, Auto">
                                     <Label  Grid.Row="0"
                                             Text="Выкуп"

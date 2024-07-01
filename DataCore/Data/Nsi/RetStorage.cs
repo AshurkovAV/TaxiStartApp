@@ -1,13 +1,12 @@
 ﻿using JobTaxi.Entity.Models;
-using TaxiStartApp.Models.Nsi;
-using TaxiStartApp.Models.Park;
-using TaxiStartApp.Services;
+using DataCore.Models.Nsi;
+using DataCore.Nsi;
 
-namespace TaxiStartApp.Common.Data.Nsi
+namespace DataCore.Data.Nsi
 {
-    public static class DriversConstrainStorage
+    public static class RetStorage
     {
-        private static HttpClientJob httpClientJob = new HttpClientJob();     
+        private static HttpClientNsi<DriversConstraint> httpClientNsi = new HttpClientNsi<DriversConstraint>();     
         public static List<DriversCon> GetBlogs()
         {        
             return CreateBlogs();
@@ -15,7 +14,7 @@ namespace TaxiStartApp.Common.Data.Nsi
 
         static List<DriversCon> CreateBlogs()
         {
-            var result = httpClientJob.GetNsiDriversConstraint();
+            var result = httpClientNsi.GetNsi();
             var con = new List<DriversCon>();
             foreach (var item in result.Result)
             {

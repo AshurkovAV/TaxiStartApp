@@ -221,6 +221,8 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\JobTaxiService\JobTaxi.Entity\JobTaxi.Entity.csproj" />
+	  <ProjectReference Include="..\Core\Core.csproj" />
+	  <ProjectReference Include="..\DataCore\DataCore.csproj" />
 	</ItemGroup>
 
 

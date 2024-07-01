@@ -1,13 +1,12 @@
 ﻿using JobTaxi.Entity.Models;
-using TaxiStartApp.Models.Nsi;
-using TaxiStartApp.Models.Park;
-using TaxiStartApp.Services;
+using DataCore.Models.Nsi;
+using DataCore.Nsi;
 
-namespace TaxiStartApp.Common.Data.Nsi
+namespace DataCore.Data.Nsi
 {
     public static class WorkConditionStorage
     {
-        private static HttpClientJob httpClientJob = new HttpClientJob();     
+        private static HttpClientNsi<WorkCondition> httpClientNsi = new HttpClientNsi<WorkCondition>();
         public static List<WorkCon> GetBlogs()
         {        
             return CreateBlogs();
@@ -15,7 +14,7 @@ namespace TaxiStartApp.Common.Data.Nsi
 
         static List<WorkCon> CreateBlogs()
         {
-            var result = httpClientJob.GetNsiWorkConstraint();
+            var result = httpClientNsi.GetNsi();
             var con = new List<WorkCon>();
             foreach (var item in result.Result)
             {

@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using TaxiStartApp.Models.Nsi;
+﻿using DataCore.Models.Nsi;
+using System.Globalization;
 
 
 namespace TaxiStartApp.Common.Converters.Helpers
