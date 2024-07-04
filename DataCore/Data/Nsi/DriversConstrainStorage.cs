@@ -1,22 +1,17 @@
-﻿using JobTaxi.Entity.Models;
+﻿
 using DataCore.Models.Nsi;
 using DataCore.Nsi;
-using DataCore.Service;
+using DataCore.Http;
 
 namespace DataCore.Data.Nsi
 {
     public static class DriversConstrainStorage
     {
-        private static HttpClientNsi<DriversConstraint> httpClientNsi = new HttpClientNsi<DriversConstraint>();     
-        public static List<DriversCon> GetBlogs()
+        private static HttpClientNsi<DriversConstraint> httpClientNsi = new HttpClientNsi<DriversConstraint>(new HttpClientTs());     
+        public static List<DriversConstraint> GetBlogs()
         {
             var result = httpClientNsi.GetNsi();
-            var con = new List<DriversCon>();
-            foreach (var item in result.Result)
-            {
-                con.Add(new DriversCon(item));
-            }
-            return con;
+            return result?.Result?.ToList();
            
         }       
     }

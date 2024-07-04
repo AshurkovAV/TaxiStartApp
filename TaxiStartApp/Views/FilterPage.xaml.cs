@@ -6,11 +6,11 @@ namespace TaxiStartApp.Views
     public partial class FilterPage : ContentPage
     {
         private FilterViewModel dataModel;
-        public FilterPage()
+        public FilterPage(FilterViewModel viewModel)
         {
             Title = "Фильтры";
             InitializeComponent();
-            this.dataModel = new FilterViewModel();
+            this.dataModel = viewModel;
             BindingContext = this.dataModel;
         }
 

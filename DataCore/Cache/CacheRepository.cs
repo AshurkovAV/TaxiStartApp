@@ -8,21 +8,45 @@ namespace DataCore.Cache
     public class CacheRepository : ICacheRepository
     {
         public static string DriversConstrainCache = "DriversConstrainCache";
+        public static string WorkConditionCache = "WorkConditionCache";
+        public static string DepositRetCache = "DepositRetCache";
+        public static string FirstDayCache = "FirstDayCache";
+        public static string InspectionCache = "InspectionCache";
+        public static string MinRentalPeriodCache = "MinRentalPeriodCache";
+        public static string WaybillsCache = "WaybillsCache";
+        public static string WorkRadiusCache = "WorkRadiusCache";
+
 
         protected static Dictionary<string, ICache> Caches = new Dictionary<string, ICache>();
         protected IEnumerable<string> CachesList = new List<string>
     {
-            DriversConstrainCache
+            DriversConstrainCache,
+            WorkConditionCache,
+            DepositRetCache,
+            FirstDayCache,
+            InspectionCache,
+            MinRentalPeriodCache,
+            WaybillsCache,  
+            WorkRadiusCache
         };
 
         public CacheRepository(IServiceProvider serviceProvider)
-        {            
-            foreach (var item in CachesList.ToList())
+        {
+            if (Caches.Count == 0)
             {
-                var s = serviceProvider.GetService<ICache>();
-                Caches.Add(item, s);
+                var scaches = serviceProvider.GetServices<ICache>();
+                foreach (var item in scaches)
+                {
+                    Type myType = item.GetType();
+                    foreach (var item1 in CachesList.ToList())
+                    {
+                        if (item1 == myType.Name)
+                        {
+                            Caches.Add(item1, item);
+                        }
+                    }
+                }
             }
-            //CachesList.ToList().ForEach(p => Caches.Add(p, serviceProvider.GetService<ICache>(p)));
         }
         public ICache Get(string name)
         {

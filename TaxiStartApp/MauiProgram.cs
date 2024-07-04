@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Android.Service.QuickSettings;
+using Autofac;
 using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Http;
@@ -10,7 +11,8 @@ using DevExpress.Maui.Controls.Internal;
 using JobTaxi.Entity.Models;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Bot;
-using TaxiStartApp.Services.Nsi;
+using TaxiStartApp.ViewModels;
+using TaxiStartApp.Views;
 namespace TaxiStartApp
 {
     public static class MauiProgram
@@ -36,16 +38,24 @@ namespace TaxiStartApp
                     fonts.AddFont("fontello.ttf", "Icons");
                     fonts.AddFont("fontello3.ttf", "Filter");
                 });
-
-            builder.Services.AddTransient<ICacheRepository, CacheRepository>();
-            builder.Services.AddTransient<ICache, DriversConstrainCache>();
-            builder.Services.AddTransient<IHttpClientTs, DataCore.Http.HttpClientTs>();
-            builder.Services.AddTransient<IHttpClientNsi, HttpClientNsi<DriversConstraint>>();
             
-
-
-
+            builder.Services.AddSingleton<ICacheRepository, CacheRepository>();
+            builder.Services.AddSingleton<ICache, DriversConstrainCache>();
+            builder.Services.AddSingleton<ICache, WorkConditionCache>();
+            builder.Services.AddSingleton<ICache, DepositRetCache>();
+            builder.Services.AddSingleton<ICache, FirstDayCache>();
+            builder.Services.AddSingleton<ICache, InspectionCache>();
+            builder.Services.AddSingleton<ICache, MinRentalPeriodCache>();
+            builder.Services.AddSingleton<ICache, WaybillsCache>();
+            builder.Services.AddSingleton<ICache, WorkRadiusCache>();
+            builder.Services.AddTransient<IHttpClientTs, DataCore.Http.HttpClientTs>();            
+            builder.Services.AddTransient<FilterViewModel>();
+            builder.Services.AddTransient<FilterPage>();
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
+            
+            using var serviceProvider = builder.Services.BuildServiceProvider();
+            var cacheRepository = serviceProvider.GetService<ICacheRepository>();
+
             DevExpress.Maui.Charts.Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();

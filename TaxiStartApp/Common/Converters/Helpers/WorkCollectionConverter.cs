@@ -8,7 +8,7 @@ namespace TaxiStartApp.Common.Converters.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IList<WorkCon> contacts)
+            if (value is IList<WorkCondition> contacts)
             {
                 return string.Join("; ", contacts.Select(x => x.Name));
             }

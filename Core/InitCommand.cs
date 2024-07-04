@@ -14,9 +14,7 @@ namespace Core
     {
         public void Run()
         {
-            var builder = new ContainerBuilder();
-            //builder.RegisterType<CacheRepository>().As<ICacheRepository>().SingleInstance();
-            //builder.RegisterType<DriversConstrainCache>().Named<ICache>("DriversConstrainCache").SingleInstance();
+            
         }
     }
 }

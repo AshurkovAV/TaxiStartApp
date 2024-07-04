@@ -1,14 +1,14 @@
 ﻿using DataCore.Service;
 using DataCore.Models.Nsi;
-using DataCore.Http;
 using DataCore.Nsi;
+using DataCore.Http;
 
 namespace DataCore.Cache
 {
-    public class DriversConstrainCache : DictionaryCache<IEnumerable<DriversConstraint>>
+    public class WorkConditionCache : DictionaryCache<IEnumerable<WorkCondition>>
     {
-        private HttpClientNsi<DriversConstraint> httpClientNsi = new HttpClientNsi<DriversConstraint>(new HttpClientTs());
-        public DriversConstrainCache() 
+        private static HttpClientNsi<WorkCondition> httpClientNsi = new HttpClientNsi<WorkCondition>(new HttpClientTs());
+        public WorkConditionCache() 
         {
             var result = httpClientNsi.GetNsi().Result;
             BackDictionary = result.ToDictionary(p => p.Name as object, p => (int?)p.Id);

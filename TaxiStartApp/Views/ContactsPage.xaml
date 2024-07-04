@@ -29,10 +29,10 @@
                               TextColor="{AppThemeBinding Light={StaticResource Gray950}, Dark=#E6E1E5}"/>
             </Border>
             
-            <Grid Grid.Column="1" VerticalOptions="Center" Background="Transparent">               
-                    <Grid  VerticalOptions="Center">
+            <Grid Grid.Column="1" VerticalOptions="Center"  Background="Transparent">
+                <Grid  VerticalOptions="Center" HorizontalOptions="Start" Margin="-10,0,0,0">
                     <dxc:SimpleButton 
-                        Padding="0,-3,18,0"
+                        Padding="0,0,0,0"
                         HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding FilterCommand}"
                         BackgroundColor="Transparent"
                         WidthRequest="40">
@@ -41,7 +41,7 @@
                                 <FontImageSource
                                     FontFamily="Filter"
                                     Glyph="&#xf0b0;"
-                                    Size="25"
+                                    Size="30"
                                     Color="{StaticResource Gray100}"/>
                             </Image.Source>
                         </Image>
@@ -185,12 +185,12 @@
                                 </dxc:SimpleButton>
                             </Grid>
                             <dxc:SimpleButton 
-                                Margin="15,0,15,5"
+                                Margin="15,0,15,5"                                
                                 BackgroundColor="{StaticResource Gray910}"
                                 CornerRadius="30"
                                 FontAttributes="Bold"
-                                FontSize="15"                                  
-                                HeightRequest="40"
+                                FontSize="14"                                  
+                                HeightRequest="43"
                                 TextColor="Black"
                                 FontFamily="Roboto"
                                 Command="{Binding ButtonRespondCommand}"                               

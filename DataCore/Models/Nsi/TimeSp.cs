@@ -1,15 +1,13 @@
-﻿using JobTaxi.Entity.Models;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace DataCore.Models.Nsi
 {
-    public class DriversCon : INotifyPropertyChanged
+    public class TimeSp : INotifyPropertyChanged
     {
-        public DriversCon(DriversConstraint driversConstraint)
+        public TimeSp()
         {
-            Id = driversConstraint.Id;
-            Name = driversConstraint.Name;
+            
         }
         public int Id { get; set; }
         public string Name { get; set; }

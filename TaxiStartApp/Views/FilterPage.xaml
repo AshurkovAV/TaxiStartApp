@@ -266,7 +266,7 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"                                                          
+                                                          ItemsSource="{Binding DepositRets}"                                                          
                                                           HelpText="Возврат депозита"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
@@ -281,7 +281,7 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding Inspections}"
                                                           HelpText="Осмотр"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
@@ -297,7 +297,7 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding Waybills}"
                                                           HelpText="Путевые"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
@@ -324,7 +324,7 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding WorkRadii}"
                                                           HelpText="Радиус работы"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
@@ -339,7 +339,7 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding MinRentalPeriods}"
                                                           HelpText="Мин. срок аренды"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
@@ -356,10 +356,12 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
-                                                          HelpText="Мин. срок аренды"
+                                                          ItemsSource="{Binding TimeSps}"
+                                                          HelpText="Время списания аренды"
                                                           DisplayMember="Name"
-                                                          ValueMember="Id"/>
+                                                          ValueMember="Id">
+                                        
+                                        </dxe:ComboBoxEdit>
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="16" RowDefinitions="Auto, Auto">
@@ -371,10 +373,12 @@
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
                                                           IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding}"
+                                                          ItemsSource="{Binding FirstDays}"
                                                           HelpText="Первый день"
                                                           DisplayMember="Name"
                                                           ValueMember="Id"/>
+
+
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="17" RowDefinitions="Auto, Auto">
@@ -425,18 +429,21 @@
             </Grid>
 
         </ScrollView>
-
-        <Button Grid.Row="2"         
-                Margin="15,15,15,10"
-                BackgroundColor="{StaticResource Gray910}"
-                CornerRadius="30"                
-                FontAttributes="Bold"
-                FontSize="18"
-                HeightRequest="40"
-                TextColor="Black"
-                FontFamily="Roboto"
-                Command="{Binding ButtonRespondCommand}"                
-                Text="Применить фильтр"/>
+        <Grid Grid.Row="2" Background="Transparent">
+            <dxc:SimpleButton Grid.Row="2"         
+                              Margin="15,10,15,10"
+                              BackgroundColor="{StaticResource Gray910}"
+                              CornerRadius="15"                
+                              FontAttributes="Bold"
+                              FontSize="14"                              
+                              HeightRequest="43"
+                              TextColor="Black"
+                              FontFamily="Roboto"
+                              Command="{Binding ButtonRespondCommand}"
+                              Text="Применить фильтр"/>
+        </Grid>
+        
+        
     </Grid>
 
 </ContentPage>

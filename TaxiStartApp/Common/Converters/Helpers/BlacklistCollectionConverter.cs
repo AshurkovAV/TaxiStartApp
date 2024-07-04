@@ -9,7 +9,7 @@ namespace TaxiStartApp.Common.Converters.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IList<DriversCon> contacts)
+            if (value is IList<DriversConstraint> contacts)
             {
                 return string.Join("; ", contacts.Select(x => x.Name));
             }

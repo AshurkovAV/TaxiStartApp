@@ -6,7 +6,6 @@ using TaxiStartApp.Common.Helper;
 using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Internal;
 using TaxiStartApp.Services;
-using TaxiStartApp.Services.Nsi;
 using TaxiStartApp.Views;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -14,7 +13,7 @@ namespace TaxiStartApp
 {
     public partial class App : Application
     {
-        public App(ICacheRepository cacheRepository)
+        public App()
         {
             InitializeComponent();
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;

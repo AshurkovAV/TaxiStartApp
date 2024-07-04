@@ -5,10 +5,10 @@ using DataCore.Nsi;
 
 namespace DataCore.Cache
 {
-    public class DriversConstrainCache : DictionaryCache<IEnumerable<DriversConstraint>>
+    public class WaybillsCache : DictionaryCache<IEnumerable<Waybills>>
     {
-        private HttpClientNsi<DriversConstraint> httpClientNsi = new HttpClientNsi<DriversConstraint>(new HttpClientTs());
-        public DriversConstrainCache() 
+        private HttpClientNsi<Waybills> httpClientNsi = new HttpClientNsi<Waybills>(new HttpClientTs());
+        public WaybillsCache() 
         {
             var result = httpClientNsi.GetNsi().Result;
             BackDictionary = result.ToDictionary(p => p.Name as object, p => (int?)p.Id);

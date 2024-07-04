@@ -1,18 +1,21 @@
 ﻿using DataCore.Http;
+using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 
 namespace DataCore.Nsi
 {
-    public class HttpClientNsi<T> : IHttpClientNsi<T>
+    public class HttpClientNsi<T> : IHttpClientNsi<T>        
     {
         private readonly IHttpClientTs _httpClientTs;
 
-        //public HttpClientNsi(IHttpClientTs httpClientTs)
-        //{
-        //    _httpClientTs = httpClientTs;
-        //}        
+        public HttpClientNsi(IHttpClientTs httpClientTs)
+        {
+            _httpClientTs = httpClientTs;
+        }
+        public HttpClientNsi(){           
+        }
         public async Task<IEnumerable<T>> GetNsi()
         {
             try

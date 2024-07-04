@@ -600,19 +600,19 @@
 
         </ScrollView>
         <ActivityIndicator IsRunning="{Binding IsRespond, Mode=OneWay}" Color="{StaticResource Gray910}" />
-        <Button Grid.Row="2"         
-                Margin="15,15,15,10"
-                BackgroundColor="{StaticResource Gray910}"
-                CornerRadius="30"                
-                FontAttributes="Bold"
-                FontSize="18"
-                HeightRequest="40"
-                TextColor="Black"
-                FontFamily="Roboto"
-                Command="{Binding ButtonRespondCommand}"
-                Pressed="Button_Pressed"
-                Released="Button_Released"
-                Text="Откликнуться"/>
+        
+        <dxc:SimpleButton Grid.Row="2" 
+            Margin="15,5,15,5"                                
+            BackgroundColor="{StaticResource Gray910}"
+            CornerRadius="30"
+            FontAttributes="Bold"
+            FontSize="14"                                  
+            HeightRequest="43"
+            TextColor="Black"
+            FontFamily="Roboto"
+            Command="{Binding ButtonRespondCommand}"                               
+            Text="Откликнуться"/>
+
     </Grid>
 
 </ContentPage>

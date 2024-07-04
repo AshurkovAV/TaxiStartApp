@@ -5,7 +5,7 @@ namespace DataCore.Http
     public class HttpClientTs: IHttpClientTs
     {
         private string _url;   
-        public string Url { set { value = _url; } get { return _url; } }
+        public string Url { set { _url = value; } get { return _url; } }
         public async Task<string> Get() 
         {
             WebRequest request = WebRequest.Create(_url);
