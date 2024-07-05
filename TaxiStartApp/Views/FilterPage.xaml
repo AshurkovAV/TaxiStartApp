@@ -108,7 +108,7 @@
                     Padding="0,0,0,0"
                     BackgroundColor="Transparent"
                     WidthRequest="40"                    
-                    CommandParameter="{Binding}">
+                    Command="{Binding SaveCommand}">
                     <Image>
                         <Image.Source>
                             <FontImageSource
@@ -133,7 +133,8 @@
                                                    x:Name="bioEditor"                                                               
                                                    TextColor="{StaticResource Gray100}"
                                                    Margin="5" 
-                                                   BoxMode="Filled"                               
+                                                   BoxMode="Filled"   
+                                                   
                                                    HelpText="Название фильтра" 
                                                    HelpTextColor="Gray" MaxCharacterCount="100" />
                                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto">
@@ -187,11 +188,11 @@
                                                       CursorColor="{StaticResource Gray910}"
                                                       FocusedBorderColor="{StaticResource Gray910}"
                                                       TextColor="{StaticResource Gray100}"
-                                                      HelpTextColor="Gray" 
+                                                      HelpTextColor="Gray"                                                       
                                                       Margin="5" 
+                                                      Text="{Binding UserFilter.ParkPercent,  Mode=TwoWay}"
                                                       BoxMode="Filled"
-                                                      HelpText="Процент парка"                                                     
-                                                      />
+                                                      HelpText="Процент парка"/>
 
                                     </Border>
                                 </Grid>

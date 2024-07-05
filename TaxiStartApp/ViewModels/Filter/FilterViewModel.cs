@@ -3,6 +3,7 @@ using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
+using JobTaxi.Entity.Dto.User;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using TaxiStartApp.Models;
@@ -11,12 +12,25 @@ namespace TaxiStartApp.ViewModels
 {
     public class FilterViewModel : ViewModelBase
     {
+        
+        private ICommand _saveCommand;
+        public ICommand SaveCommand
+        {
+            get => _saveCommand;
+            set
+            {
+                _saveCommand = value;
+                RaisePropertyChanged();
+            }
+        }
         private IServiceProvider _serviceProvider;
         public FilterViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             NsiDriversSelect.CollectionChanged += OnBlacklistCollectionChanged;
             NsiWorkSelect.CollectionChanged += OnWorklistCollectionChanged;
+            SaveCommand = new Command(Save);
+            _usersFilter = new UsersFilterDto();   
             Load();
         }
 
@@ -43,8 +57,22 @@ namespace TaxiStartApp.ViewModels
                 FirstDays = fd.Data;
                 TimeSps = TimeSpStorage.GetBlogs();
             });
-        }       
-        
+        }
+
+        private void Save()
+        {
+            var s = UserFilter.ParkPercent;
+        }
+        private UsersFilterDto _usersFilter;
+        public UsersFilterDto UserFilter {
+            get => _usersFilter;
+            set
+            {
+                _usersFilter = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public ObservableCollection<WorkCondition> NsiWorkSelect { get; } = new();
         void OnWorklistCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
