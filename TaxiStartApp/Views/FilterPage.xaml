@@ -139,274 +139,45 @@
                                                    HelpTextColor="Gray" MaxCharacterCount="100" />
                                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto">
                                     <Label  Grid.Row="0"
-                                            Text="Ограничение для водителей" 
+                                            Text="Выбор города" 
                                             FontFamily="Roboto"
                                             TextColor="White" 
                                             FontSize="17"  Margin="20" />
                                     <dxe:FormListPickerItem Grid.Row="1" 
                                                             Padding="20,0,20,0"
-                                                            ItemsSource="{Binding DriversCons}" 
+                                                            ItemsSource="{Binding LocationFiltr}" 
                                                             PickerShowMode="Popup" 
-                                                            PickerTitle="Выбор ограничения"
+                                                            PickerTitle="Выбор города"
                                                             IsMultipleSelectionEnabled="True"
-                                                            SelectedItems="{Binding NsiDriversSelect}"
+                                                            SelectedItems="{Binding NsiLocation}"
                                                             ShowSearchPanel="True"                       
                                                             PickerPageButtonPosition="Title"
-                                                            DisplayMember="Name"                                                            
-                                                            SelectedItem="{Binding NsiDriversSelect, Mode=TwoWay}" Text="Выбор ограничения"
-                                                            Content="{Binding NsiDriversSelect, Converter={helpers:BlacklistCollectionConverter}, Mode=TwoWay}"/>
+                                                            DisplayMember="OblName"                                                            
+                                                            SelectedItem="{Binding NsiLocation, Mode=TwoWay}" Text="Выбор города"
+                                                            Content="{Binding NsiLocation, Converter={helpers:BlacklistCollectionConverter}, Mode=TwoWay}"/>
 
 
                                 </Grid>
                                 <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
                                     <Label  Grid.Row="0"
-                                            Text="Условия работы" 
+                                            Text="Класс автомобиля" 
                                             FontFamily="Roboto"
                                             TextColor="White" 
                                             FontSize="17"  Margin="20" />
                                     <dxe:FormListPickerItem Grid.Row="1" 
                                                             Padding="20,0,20,0"
-                                                            ItemsSource="{Binding WorkCons}" 
+                                                            ItemsSource="{Binding AutoClasses}" 
                                                             PickerShowMode="Popup" 
-                                                            PickerTitle="Выбор условия"
+                                                            PickerTitle="Выбор класса автомобиля"
                                                             IsMultipleSelectionEnabled="True"
-                                                            SelectedItems="{Binding NsiWorkSelect}"
+                                                            SelectedItems="{Binding NsiAutoClassSelect}"
                                                             ShowSearchPanel="True"                                                                                   
                                                             DisplayMember="Name"                                                            
-                                                            SelectedItem="{Binding NsiWorkSelect, Mode=TwoWay}" Text="Выбор условия"
-                                                            Content="{Binding NsiWorkSelect, Converter={helpers:WorkCollectionConverter}, Mode=TwoWay}"/>
+                                                            SelectedItem="{Binding NsiAutoClassSelect, Mode=TwoWay}" Text="Класс автомобиля"
+                                                            Content="{Binding NsiAutoClassSelect, Converter={helpers:AutoCollectionConverter}, Mode=TwoWay}"/>
 
-                                </Grid>
-                                <Grid Grid.Row="3" RowDefinitions="Auto, Auto" >
-                                    <Label  Grid.Row="0"
-                                            Text="Процент парка" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:TextEdit BackgroundColor="Transparent" 
-                                                      CursorColor="{StaticResource Gray910}"
-                                                      FocusedBorderColor="{StaticResource Gray910}"
-                                                      TextColor="{StaticResource Gray100}"
-                                                      HelpTextColor="Gray"                                                       
-                                                      Margin="5" 
-                                                      Text="{Binding UserFilter.ParkPercent,  Mode=TwoWay}"
-                                                      BoxMode="Filled"
-                                                      HelpText="Процент парка"/>
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="4" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Самозанятый"                                            
-                                            Style="{StaticResource LabelTopDetalAction}" />
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:FormSwitchItem 
-                                            OnColor="{StaticResource Gray910}" 
-                                            ThumbColor="{StaticResource Gray500}"                                            
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
-                                    </Border>
-
-                                </Grid>
-                                <Grid Grid.Row="5" RowDefinitions="Auto, Auto" >
-                                    <Label  Grid.Row="0"
-                                            Text="Сумма доп. аренды для самозанятых" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Сумма доп. аренды для самозанятых"/>
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="6" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Расчет суммы за вывод денег" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:FormSwitchItem 
-                                            OnColor="{StaticResource Gray910}" 
-                                            ThumbColor="{StaticResource Gray500}"                                            
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Процент/Фиксированный"/>
-
-                                    </Border>
-
-
-                                </Grid>
-                                <Grid Grid.Row="7" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Вывод денег: значение" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Вывод денег: значение"/>
-                                    </Border>
-                                </Grid> 
-                                <Grid Grid.Row="8" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Депозит" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Депозит"/>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="9" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Возврат депозита" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding DepositRets}"                                                          
-                                                          HelpText="Возврат депозита"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="10" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Осмотр" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding Inspections}"
-                                                          HelpText="Осмотр"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="11" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Путевые" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding Waybills}"
-                                                          HelpText="Путевые"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-                                    </Border>
-                                </Grid>
-
-                                <Grid Grid.Row="12" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Штрафы (комиссия)" 
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:TextEdit Style="{StaticResource TextEditDetalAction}"
-                                                      HelpText="Штрафы (комиссия)"/>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="13" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Радиус работы"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding WorkRadii}"
-                                                          HelpText="Радиус работы"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="14" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Мин. срок аренды"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding MinRentalPeriods}"
-                                                          HelpText="Мин. срок аренды"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-                                    </Border>
                                 </Grid>
                                
-                                
-                                <Grid Grid.Row="15" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Время списания аренды"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding TimeSps}"
-                                                          HelpText="Время списания аренды"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id">
-                                        
-                                        </dxe:ComboBoxEdit>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="16" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Первый день"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            HorizontalOptions="FillAndExpand"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:ComboBoxEdit Style="{StaticResource ComboBoxEditDetalAction}"
-                                                          IsDropDownIconVisible="True"
-                                                          ItemsSource="{Binding FirstDays}"
-                                                          HelpText="Первый день"
-                                                          DisplayMember="Name"
-                                                          ValueMember="Id"/>
-
-
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="17" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Страховка"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:FormSwitchItem 
-                                            OnColor="{StaticResource Gray910}" 
-                                            ThumbColor="{StaticResource Gray500}"
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
-                                    </Border>
-                                </Grid>
-                                <Grid Grid.Row="18" RowDefinitions="Auto, Auto">
-                                    <Label  Grid.Row="0"
-                                            Text="Заправка через таксометр"
-                                            Style="{StaticResource LabelTopDetalAction}"/>
-                                    <Border Grid.Row="1"
-                                            Style="{StaticResource BorderDetalAction}">
-                                        <dxe:FormSwitchItem 
-                                            OnColor="{StaticResource Gray910}" 
-                                            ThumbColor="{StaticResource Gray500}"                                            
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
-
-                                    </Border>
-                                </Grid>
                                 
                                 
                                 <Grid Grid.Row="19" RowDefinitions="Auto, Auto">

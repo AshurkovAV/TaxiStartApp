@@ -5,7 +5,7 @@ namespace TaxiStartApp.Models.Park
 {
     public class Cars : INotifyPropertyChanged
     {
-        public Cars(int id, string carName, string model, string color, string number, int year, double priceForDay, string shemaName, string className)
+        public Cars(int id, string carName, string model, string color, string number, int? year, double? priceForDay, string shemaName, string className)
         {
             Id = id;
             CarName = carName;
@@ -22,8 +22,8 @@ namespace TaxiStartApp.Models.Park
         public string Model { get; set; }
         public string Color { get; set; }
         public string Number { get; set; }
-        public int Year { get; set; }
-        public double PriceForDay { get; set; }
+        public int? Year { get; set; }
+        public double? PriceForDay { get; set; }
         public string ShemaName { get; set; }
         public string ClassName { get; set; }
 

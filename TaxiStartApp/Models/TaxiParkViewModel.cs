@@ -128,11 +128,10 @@ namespace TaxiStartApp.Models
             IEnumerable<ContactTaxiPark> newContactTaxiPark = null;
             DataStorage._startIndex = lastLoadedIndex;
             DataStorage._batchSize = loadBatchSize;
-            newContactTaxiPark = DataStorage.GetBlogs();
+            newContactTaxiPark = DataStorage.GetBlogsToUser(Common.Constant.yandexProfil.id);
             foreach (var item in newContactTaxiPark)
             {
-                var selectpr = DataStorage.GetSelectParkDto(item.Id, Common.Constant.yandexProfil.id);
-                if (selectpr != null && selectpr?.ParkId != 0)
+                if (item.ParkTrun.SelectPark > 0)
                 {
                     item.Grid1Visible = false;
                     item.Grid2Visible = true;
@@ -141,7 +140,7 @@ namespace TaxiStartApp.Models
                 {
                     item.Grid1Visible = true;
                     item.Grid2Visible = false;
-                }
+                }               
             }
             TaxiParkData.AddRange(newContactTaxiPark);
             lastLoadedIndex += 1;

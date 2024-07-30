@@ -6,14 +6,14 @@ namespace DataCore.Http
     {
         private string _url;   
         public string Url { set { _url = value; } get { return _url; } }
-        public async Task<string> Get() 
+        public string Get() 
         {
             WebRequest request = WebRequest.Create(_url);
             request.Credentials = CredentialCache.DefaultCredentials;
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream dataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = await reader.ReadToEndAsync();
+            string responseFromServer = reader.ReadToEnd();
             reader.Close();
             dataStream.Close();
             response.Close();

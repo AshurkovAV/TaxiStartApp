@@ -1,7 +1,8 @@
 ﻿using DataCore.Http;
-using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
 
 
 namespace DataCore.Nsi
@@ -14,16 +15,25 @@ namespace DataCore.Nsi
         {
             _httpClientTs = httpClientTs;
         }
-        public HttpClientNsi(){           
+        public HttpClientNsi()
+        {   
         }
         public async Task<IEnumerable<T>> GetNsi()
         {
             try
             {
+                
                 Type type = typeof(T);                 
                 _httpClientTs.Url = Constant.UrlGeneralService + "/nsi/" + type.Name;
                 var responseFromServer = _httpClientTs.Get();
-                var result = JsonConvert.DeserializeObject<IEnumerable<T>>(responseFromServer.Result);
+                //byte[] byteArray = Encoding.UTF8.GetBytes(responseFromServer.Result);
+                //using (Stream stream = new MemoryStream(byteArray))
+                //{
+                //    var result1 = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<T>>(stream);
+                //    return result1;
+                //}
+
+                var result = JsonConvert.DeserializeObject<IEnumerable<T>>(responseFromServer);
                 return result;
             }
             catch (Exception wex)

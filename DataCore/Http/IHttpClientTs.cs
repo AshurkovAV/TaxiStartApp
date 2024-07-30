@@ -2,7 +2,7 @@
 {
     public interface IHttpClientTs
     {
-        public Task<string> Get();
+        public string Get();
         public string Url { get; set; }
 
     }

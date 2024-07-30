@@ -27,8 +27,8 @@ namespace TaxiStartApp.ViewModels
         public FilterViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            NsiDriversSelect.CollectionChanged += OnBlacklistCollectionChanged;
-            NsiWorkSelect.CollectionChanged += OnWorklistCollectionChanged;
+            NsiLocation.CollectionChanged += OnBlacklistCollectionChanged;
+            NsiAutoClassSelect.CollectionChanged += OnWorklistCollectionChanged;
             SaveCommand = new Command(Save);
             _usersFilter = new UsersFilterDto();   
             Load();
@@ -37,24 +37,27 @@ namespace TaxiStartApp.ViewModels
         private void Load()
         {
             var cacheRepository = _serviceProvider.GetService<ICacheRepository>();
-            Task.Run(() => {
-                
-                var d = (DictionaryCache<IEnumerable<DriversConstraint>>)cacheRepository.Get("DriversConstrainCache");
+            Task.Run(() => {                
+                //var d = (DictionaryCache<IEnumerable<DriversConstraint>>)cacheRepository.Get("DriversConstrainCache");
                 var wc = (DictionaryCache<IEnumerable<WorkCondition>>)cacheRepository.Get("WorkConditionCache");
-                var dr = (DictionaryCache<IEnumerable<DepositRet>>)cacheRepository.Get("DepositRetCache");
-                var w = (DictionaryCache<IEnumerable<Waybills>>)cacheRepository.Get("WaybillsCache");
-                var fd = (DictionaryCache<IEnumerable<FirstDay>>)cacheRepository.Get("FirstDayCache");
-                var i = (DictionaryCache<IEnumerable<Inspection>>)cacheRepository.Get("InspectionCache");
-                var mrp = (DictionaryCache<IEnumerable<MinRentalPeriod>>)cacheRepository.Get("MinRentalPeriodCache");
-                var wr = (DictionaryCache<IEnumerable<WorkRadius>>)cacheRepository.Get("WorkRadiusCache");
-                DriversCons = d.Data;
+                //var dr = (DictionaryCache<IEnumerable<DepositRet>>)cacheRepository.Get("DepositRetCache");
+                //var w = (DictionaryCache<IEnumerable<Waybills>>)cacheRepository.Get("WaybillsCache");
+                //var fd = (DictionaryCache<IEnumerable<FirstDay>>)cacheRepository.Get("FirstDayCache");
+                //var i = (DictionaryCache<IEnumerable<Inspection>>)cacheRepository.Get("InspectionCache");
+                //var mrp = (DictionaryCache<IEnumerable<MinRentalPeriod>>)cacheRepository.Get("MinRentalPeriodCache");
+               // var wr = (DictionaryCache<IEnumerable<WorkRadius>>)cacheRepository.Get("WorkRadiusCache");
+                var loc = (DictionaryCache<IEnumerable<DataCore.Models.Nsi.Location>>)cacheRepository.Get("LocationCache");
+                var auto = (DictionaryCache<IEnumerable<DataCore.Models.Nsi.AutoClass>>)cacheRepository.Get("AutoClassCache");
+                LocationFiltr = loc.Data;
+                AutoClasses = auto.Data;
                 WorkCons = wc.Data;
-                DepositRets = dr.Data;
-                Waybills = w.Data;
-                WorkRadii = wr.Data;
-                Inspections = i.Data;
-                MinRentalPeriods = mrp.Data;
-                FirstDays = fd.Data;
+                //DriversCons = d.Data;
+                //DepositRets = dr.Data;
+                //Waybills = w.Data;
+                //WorkRadii = wr.Data;
+                //Inspections = i.Data;
+                //MinRentalPeriods = mrp.Data;
+                //FirstDays = fd.Data;
                 TimeSps = TimeSpStorage.GetBlogs();
             });
         }
@@ -73,15 +76,15 @@ namespace TaxiStartApp.ViewModels
             }
         }
 
-        public ObservableCollection<WorkCondition> NsiWorkSelect { get; } = new();
+        public ObservableCollection<AutoClass> NsiAutoClassSelect { get; } = new();
         void OnWorklistCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(NsiWorkSelect));
+            RaisePropertyChanged(nameof(NsiAutoClassSelect));
         }
-        public ObservableCollection<DriversConstraint> NsiDriversSelect { get; } = new();
+        public ObservableCollection<DataCore.Models.Nsi.Location> NsiLocation { get; } = new();
         void OnBlacklistCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(NsiDriversSelect));
+            RaisePropertyChanged(nameof(NsiLocation));
         }
         private IEnumerable<DriversConstraint> _driversCons;
         public IEnumerable<DriversConstraint> DriversCons
@@ -93,6 +96,16 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+        private IEnumerable<DataCore.Models.Nsi.Location> _locationFiltr;
+        public IEnumerable<DataCore.Models.Nsi.Location> LocationFiltr
+        {
+            get => _locationFiltr;
+            set
+            {
+                _locationFiltr = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private IEnumerable<WorkCondition> _workCons;
         public IEnumerable<WorkCondition> WorkCons
@@ -101,6 +114,16 @@ namespace TaxiStartApp.ViewModels
             set
             {
                 _workCons = value;
+                RaisePropertyChanged();
+            }
+        }
+        private IEnumerable<AutoClass> _autoClass;
+        public IEnumerable<AutoClass> AutoClasses
+        {
+            get => _autoClass;
+            set
+            {
+                _autoClass = value;
                 RaisePropertyChanged();
             }
         }

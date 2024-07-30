@@ -14,6 +14,7 @@ namespace TaxiStartApp.Services
         private string _urlid = Constant.UrlGeneralService + "/park/id";
         private string _urlcount = Constant.UrlGeneralService + "/park/count";
         private string _urltruncated = Constant.UrlGeneralService + "/park/truncated?";
+        private string _urltruncatedTouseid = Constant.UrlGeneralService + "/park/truncated/touser?";
         private string _urltruncatedUser = Constant.UrlGeneralService + "/park/truncated/user?";
         private string _cars = Constant.UrlGeneralService + "/car?";
         private string _carsNav = Constant.UrlGeneralService + "/car/nav?";
@@ -49,6 +50,22 @@ namespace TaxiStartApp.Services
             try
             {
                 HttpClientTs httpClientTs = new HttpClientTs(_urltruncated + $"rows={rows}&page={page}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<ParkTruncated>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<ParkTruncated>();
+            }
+        }
+
+        public async Task<IEnumerable<ParkTruncated>> GetParksTruncatedToUserIdAsync(int rows, int page, int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urltruncatedTouseid + $"rows={rows}&page={page}&userId={userId}");
                 var responseFromServer = httpClientTs.Get();
                 var result = JsonConvert.DeserializeObject<IEnumerable<ParkTruncated>>(responseFromServer.Result);
                 return result;
@@ -108,19 +125,19 @@ namespace TaxiStartApp.Services
             }
         }
 
-        public async Task<IEnumerable<Car>> GetCarsRowPageAsync(int parkId, int rows, int page)
+        public async Task<IEnumerable<CarDto>> GetCarsRowPageAsync(int parkId, int rows, int page)
         {
             try
             {
                 HttpClientTs httpClientTs = new HttpClientTs(_carsNav + $"parkid={parkId}&rows={rows}&page={page}");
                 var responseFromServer = httpClientTs.Get();
-                var result = JsonConvert.DeserializeObject<IEnumerable<Car>>(responseFromServer.Result);
+                var result = JsonConvert.DeserializeObject<IEnumerable<CarDto>>(responseFromServer.Result);
                 return result;
             }
             catch (Exception wex)
             {
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
-                return new List<Car>();
+                return new List<CarDto>();
             }
         }
 

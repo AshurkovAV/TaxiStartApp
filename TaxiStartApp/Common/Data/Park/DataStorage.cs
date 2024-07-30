@@ -18,9 +18,19 @@ namespace TaxiStartApp.Common.Data.Park
         {
             return GetSelectParks(selectParkId, userId);
         }
+
+        /// <summary>
+        /// old
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<ContactTaxiPark> GetBlogs()
         {
             return CreateBlogs();
+        }
+
+        public static IEnumerable<ContactTaxiPark> GetBlogsToUser(int userId)
+        {
+            return CreateBlogsToUser(userId);
         }
         public static IEnumerable<ContactTaxiPark> GetBlogs(int userId)
         {
@@ -49,6 +59,22 @@ namespace TaxiStartApp.Common.Data.Park
                 }
             }
             return con;      
+
+        }
+
+        static List<ContactTaxiPark> CreateBlogsToUser(int userId)
+        {
+            var result = httpClientJob.GetParksTruncatedToUserIdAsync(_batchSize, _startIndex, userId);
+            var con = new List<ContactTaxiPark>();
+            foreach (var contact in result.Result)
+            {
+                con.Add(new ContactTaxiPark(contact));
+                if (contact.CarAvatar != null)
+                {
+                    con.FirstOrDefault(x => x.Id == contact.Id).CarAvatar = ImageSource.FromStream(() => new MemoryStream(contact.CarAvatar));
+                }
+            }
+            return con;
 
         }
 

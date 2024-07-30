@@ -79,11 +79,10 @@ namespace TaxiStartApp.ViewModels
         {
             IEnumerable<ContactTaxiPark> newContactTaxiPark = null;
             DataStorage._startIndex = lastLoadedIndex;
-            newContactTaxiPark = DataStorage.GetBlogs(Constant.yandexProfil.id);
+            newContactTaxiPark = DataStorage.GetBlogsToUser(Common.Constant.yandexProfil.id);
             foreach (var item in newContactTaxiPark)
             {
-                var selectpr = DataStorage.GetSelectParkDto(item.Id, Constant.yandexProfil.id);
-                if (selectpr != null && selectpr?.ParkId != null)
+                if (item.ParkTrun.SelectPark > 0)
                 {
                     item.Grid1Visible = false;
                     item.Grid2Visible = true;

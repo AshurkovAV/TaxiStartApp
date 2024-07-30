@@ -48,6 +48,8 @@ namespace TaxiStartApp
             builder.Services.AddSingleton<ICache, MinRentalPeriodCache>();
             builder.Services.AddSingleton<ICache, WaybillsCache>();
             builder.Services.AddSingleton<ICache, WorkRadiusCache>();
+            builder.Services.AddSingleton<ICache, LocationCache>();
+            builder.Services.AddSingleton<ICache, AutoClassCache>();
             builder.Services.AddTransient<IHttpClientTs, DataCore.Http.HttpClientTs>();            
             builder.Services.AddTransient<FilterViewModel>();
             builder.Services.AddTransient<FilterPage>();

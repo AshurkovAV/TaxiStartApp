@@ -239,11 +239,7 @@
                                     <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
                                         <Label Grid.Column="0" Text="Модель " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
                                         <Label Grid.Column="1" Text="{Binding Model}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
-                                    </Grid>
-                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
-                                        <Label Grid.Column="0" Text="Цвет " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
-                                        <Label Grid.Column="1" Text="{Binding Color}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
-                                    </Grid>
+                                    </Grid>                                   
                                     <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
                                         <Label Grid.Column="0" Text="Год выпуска " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
                                         <Label Grid.Column="1" Text="{Binding Year}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
@@ -265,6 +261,10 @@
                                                    TextColor="White"
                                                    Padding="12,4"/>
                                         </Border>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                        <Label Grid.Column="0" Text="График работы " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" Text="{Binding ShemaName}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
                                     </Grid>
                                 </VerticalStackLayout>
                             </Border>

@@ -1,15 +1,16 @@
-﻿using System.Globalization;
+﻿using DataCore.Models.Nsi;
+using System.Globalization;
 
 
 namespace TaxiStartApp.Common.Converters.Helpers
 {
-    public class BlacklistCollectionConverter : IValueConverter
+    public class AutoCollectionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IList<DataCore.Models.Nsi.Location> contacts)
+            if (value is IList<AutoClass> contacts)
             {
-                return string.Join("; ", contacts.Select(x => x.OblName));
+                return string.Join("; ", contacts.Select(x => x.Name));
             }
             return string.Empty;
         }

@@ -15,7 +15,8 @@ namespace DataCore.Cache
         public static string MinRentalPeriodCache = "MinRentalPeriodCache";
         public static string WaybillsCache = "WaybillsCache";
         public static string WorkRadiusCache = "WorkRadiusCache";
-
+        public static string LocationCache = "LocationCache";
+        public static string AutoClassCache = "AutoClassCache";
 
         protected static Dictionary<string, ICache> Caches = new Dictionary<string, ICache>();
         protected IEnumerable<string> CachesList = new List<string>
@@ -27,7 +28,9 @@ namespace DataCore.Cache
             InspectionCache,
             MinRentalPeriodCache,
             WaybillsCache,  
-            WorkRadiusCache
+            WorkRadiusCache,
+            LocationCache,
+            AutoClassCache
         };
 
         public CacheRepository(IServiceProvider serviceProvider)

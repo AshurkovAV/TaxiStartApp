@@ -38,8 +38,8 @@ namespace TaxiStartApp.Common.Data.Park
                         contact.Number,
                         contact.Year,
                         contact.PriceForDay,
-                        "",
-                        ""));                
+                        contact.ShemaName,
+                        contact.ClassName));                
             }
             return con;      
 
