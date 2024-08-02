@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaxiStartApp.Views.SelectedPage"
              xmlns:local1="clr-namespace:TaxiStartApp.Models.Park"
+             xmlns:local2="clr-namespace:TaxiStartApp.Models.User"
              BackgroundColor="{StaticResource Gray550}"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls">   
     <Grid RowDefinitions="Auto, *">
         <Label Grid.Row="0" 
@@ -158,9 +160,68 @@
                               SelectedHeaderTextColor="{StaticResource Gray10}">
                 <dxco:TabViewItem.Content>
                     <Grid>
-                        <Label Text="Calendar Here" 
-                           HorizontalOptions="Center" 
-                           VerticalOptions="CenterAndExpand"/>
+                        <dxcv:DXCollectionView Grid.Row="0" 
+                           ItemsSource="{Binding SubscriptionData}"
+                           IsRefreshing="{Binding IsLoadingSubscription, Mode=TwoWay}"  
+                           IsPullToRefreshEnabled="True"
+                           PullToRefreshCommand="{Binding PullSubToRefreshCommand}"
+                           IndicatorColor="#FFC71F"                           
+                           SelectionMode="Single"                           
+                           IsLoadMoreEnabled="True" 
+                           LoadMoreCommand="{Binding LoadSubscriptionCommand}"  
+                           TapCommand="{Binding OpenBlogCommand}"
+                           Margin="{OnIdiom Phone='0,10,0,0', Tablet='71,0,0,0'}">
+                            <!--Define the item template.-->
+                            <dxcv:DXCollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type local2:Subscription}">
+                                    <Border StrokeShape="RoundRectangle 20"
+                                            Margin="5"  
+                                            BackgroundColor="{StaticResource Gray650}">
+                                        <VerticalStackLayout Margin="0,0,0,0">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*" >
+                                                <Label Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       Margin="16,25,16,5"
+                                                       FontAttributes="Bold" Text="{Binding Filter.FilterName}" 
+                                                       TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                                       FontSize="18" 
+                                                       MaxLines="3" LineBreakMode="WordWrap"/>
+                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
+                                                <dxe:FormSwitchItem 
+                                                    Grid.Column="0"
+                                                    Grid.Row="0"
+                                                    OnColor="{StaticResource Gray910}" 
+                                                    ThumbColor="{StaticResource Gray500}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}"
+                                                    SeparatorColor="{StaticResource Gray650}"
+                                                    IsToggled="{Binding }" 
+                                                    Text="Уведомления включены"/>
+                                                    <dxco:SimpleButton 
+                                                        Grid.Row="0"
+                                                        Grid.Column="2"
+                                                        Padding="4,0,4,0" 
+                                                        HorizontalOptions="End" 
+                                                        VerticalOptions="Center" Command="{Binding }"
+                                                        BackgroundColor="Transparent"
+                                                        WidthRequest="40">
+                                                        <Image>
+                                                            <Image.Source>
+                                                                <FontImageSource
+                                                                    FontFamily="Edit"
+                                                                    Glyph="&#xf142;"
+                                                                    Size="18"
+                                                                    Color="{StaticResource Gray100}"/>
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </dxco:SimpleButton>
+                                                </Grid>
+                                            </Grid>  
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+
+                            </dxcv:DXCollectionView.ItemTemplate>
+                        </dxcv:DXCollectionView>
                     </Grid>
                 </dxco:TabViewItem.Content>
             </dxco:TabViewItem>

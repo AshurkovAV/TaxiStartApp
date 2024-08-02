@@ -1,4 +1,5 @@
 ﻿using JobTaxi.Entity.Dto;
+using JobTaxi.Entity.Dto.User;
 using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using TaxiStartApp.Common;
@@ -65,6 +66,22 @@ namespace TaxiStartApp.Services
                 return true;
             } 
             catch { return false; }
+            
+        }
+
+        public UsersFilterDto CreateUserFilter(UsersFilterDto usersFilterDto)
+        {
+            try
+            {
+                HttpClientJob httpClientJob = new HttpClientJob();
+                var resultOffer = httpClientJob.CreateFilter(usersFilterDto);
+
+                var result = JsonConvert.DeserializeObject<UsersFilterDto>(resultOffer.Result);
+                return result;
+            }
+            catch(Exception ex) 
+            { }
+            return null;
             
         }
     }

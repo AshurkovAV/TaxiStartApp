@@ -11,6 +11,7 @@ using DevExpress.Maui.Controls.Internal;
 using JobTaxi.Entity.Models;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Bot;
+using TaxiStartApp.Services;
 using TaxiStartApp.ViewModels;
 using TaxiStartApp.Views;
 namespace TaxiStartApp
@@ -37,6 +38,7 @@ namespace TaxiStartApp
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                     fonts.AddFont("fontello.ttf", "Icons");
                     fonts.AddFont("fontello3.ttf", "Filter");
+                    fonts.AddFont("fontello4.ttf", "Edit");
                 });
             
             builder.Services.AddSingleton<ICacheRepository, CacheRepository>();
@@ -54,7 +56,8 @@ namespace TaxiStartApp
             builder.Services.AddTransient<FilterViewModel>();
             builder.Services.AddTransient<FilterPage>();
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
-            
+            builder.Services.AddSingleton<IDataService, DataService>();
+
             using var serviceProvider = builder.Services.BuildServiceProvider();
             var cacheRepository = serviceProvider.GetService<ICacheRepository>();
 

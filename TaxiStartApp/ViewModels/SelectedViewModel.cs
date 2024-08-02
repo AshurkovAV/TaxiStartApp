@@ -1,16 +1,21 @@
 ﻿using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Data.Park;
+using TaxiStartApp.Common.Data.User;
 using TaxiStartApp.Models;
 using TaxiStartApp.Models.Park;
+using TaxiStartApp.Models.User;
+using static Java.Util.Concurrent.Flow;
 
 namespace TaxiStartApp.ViewModels
 {
     public class SelectedViewModel : ViewModelBase
     {
         bool isLoading;
+        bool isLoadingSubscription;
         int lastLoadedIndex = 1;
-        int sourceSize = 0;
+        int sourceSize = 0; 
+        int sourceSizeSubscription = 0;
         int loadBatchSize = 4;
         public int SourceSize
         {
@@ -21,6 +26,28 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public int SourceSizeSubscription
+        {
+            get => sourceSizeSubscription;
+            set
+            {
+                sourceSizeSubscription = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private List<Subscription> _subscription;
+        public List<Subscription> SubscriptionData
+        {
+            get => _subscription;
+            set
+            {
+                _subscription = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private List<ContactTaxiPark> _taxiParkData;
         public List<ContactTaxiPark> TaxiParkData
         {
@@ -31,6 +58,8 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public ICommand LoadSubscriptionCommand { get; set; }
         public ICommand LoadMoreCommand { get; set; }
         ICommand pullToRefreshCommand = null;
         public ICommand PullToRefreshCommand
@@ -45,13 +74,31 @@ namespace TaxiStartApp.ViewModels
                 }
             }
         }
+
+        ICommand pullSubToRefreshCommand = null;
+        public ICommand PullSubToRefreshCommand
+        {
+            get { return pullSubToRefreshCommand; }
+            set
+            {
+                if (pullSubToRefreshCommand != value)
+                {
+                    pullSubToRefreshCommand = value;
+                    RaisePropertyChanged("PullSubToRefreshCommand");
+                }
+            }
+        }
         public SelectedViewModel()
         {
             TaxiParkData = new List<ContactTaxiPark>();
+            SubscriptionData = new List<Subscription>();
+            
             DataStorage._batchSize = loadBatchSize;
             LoadDataAsync();
-            LoadMoreCommand = new Command(LoadMore);
+            LoadMoreCommand = new Command(LoadMore, CanLoadMore);
+            LoadSubscriptionCommand = new Command(LoadSub, CanLoadSub);
             PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
+            PullSubToRefreshCommand = new Command(ExecutePullSubToRefreshCommand);
 
         }
         void ExecutePullToRefreshCommand()
@@ -64,6 +111,15 @@ namespace TaxiStartApp.ViewModels
                 //LoadTaxi();
             });
         }
+        void ExecutePullSubToRefreshCommand()
+        {
+            Task.Run(() => {
+                SourceSizeSubscription = DataSubscription.GetTotalCount(Constant.yandexProfil.id);
+                SubscriptionData = new List<Subscription>();
+                IsLoadingSubscription = false;
+                LoadSubscription();
+            });
+        }
         public async Task LoadDataAsync()
         {            
             await Task.Run(() =>
@@ -72,14 +128,23 @@ namespace TaxiStartApp.ViewModels
                 if (SourceSize > 0)
                 {
                     IsVisibleGrid = false;
-                }                                
+                }
+                SourceSizeSubscription = DataSubscription.GetTotalCount(Constant.yandexProfil.id);
             });
+        }
+
+        public void LoadSubscription()
+        {
+            IEnumerable<Subscription> newSubscription = null;
+            newSubscription = DataSubscription.GetBlogs(Common.Constant.yandexProfil.id);
+            SubscriptionData.AddRange(newSubscription);
+            IsLoadingSubscription = false;
         }
         public void LoadTaxi()
         {
             IEnumerable<ContactTaxiPark> newContactTaxiPark = null;
             DataStorage._startIndex = lastLoadedIndex;
-            newContactTaxiPark = DataStorage.GetBlogsToUser(Common.Constant.yandexProfil.id);
+            newContactTaxiPark = DataStorage.GetBlogs(Common.Constant.yandexProfil.id);
             foreach (var item in newContactTaxiPark)
             {
                 if (item.ParkTrun.SelectPark > 0)
@@ -103,7 +168,6 @@ namespace TaxiStartApp.ViewModels
         }
         public async void LoadTaxiPark()
         {
-            
             await Task.Run(() =>
             {
                 LoadTaxi();                
@@ -114,9 +178,23 @@ namespace TaxiStartApp.ViewModels
         {
             LoadTaxiPark();            
         }
+        public void LoadSub()
+        {
+            Task.Run(() =>
+            {
+                LoadSubscription();
+            });
+        }
+        
+
         public bool CanLoadMore()
         {
             return TaxiParkData?.Count < SourceSize;
+        }
+
+        public bool CanLoadSub()
+        {
+            return SubscriptionData?.Count < SourceSizeSubscription;
         }
         public bool IsLoading
         {
@@ -127,6 +205,17 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public bool IsLoadingSubscription
+        {
+            get => isLoadingSubscription;
+            set
+            {
+                isLoadingSubscription = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private bool isVisibleGrid = true;
         
         public bool IsVisibleGrid

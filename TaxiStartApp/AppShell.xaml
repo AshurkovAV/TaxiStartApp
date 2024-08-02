@@ -8,8 +8,7 @@
     BackgroundColor="Black"
     TitleColor="White"
     UnselectedColor="White"
-    Shell.FlyoutBehavior="Flyout">
-   
+    Shell.FlyoutBehavior="Flyout">   
     <ShellContent
         x:Name="loginpage"
         ContentTemplate="{DataTemplate pages:LoginPage}"
@@ -70,7 +69,7 @@
                 ContentTemplate="{DataTemplate pages:MapPage}"            
                 Route="MapPage" />
         </Tab>
-        <Tab Title="Меню" >
+        <Tab Title="Профиль" >
             <Tab.Icon>
                 <FontImageSource
                     FontFamily="Filter"
@@ -79,9 +78,22 @@
                     Color="White"/>
             </Tab.Icon>
             <ShellContent
-                Title="Меню"
+                Title="Профиль"
                 ContentTemplate="{DataTemplate pages:MainPage}"
                 Route="MainPage" />
+        </Tab>
+        <Tab Title="Таксопарк" >
+            <Tab.Icon>
+                <FontImageSource
+            FontFamily="Filter"
+            Glyph="&#xf207;"
+            Size="25"
+            Color="White"/>
+            </Tab.Icon>
+            <ShellContent 
+        Title="Таксопарк" 
+        ContentTemplate="{DataTemplate pages:ContactsPage}"
+        Route="ContactsPage"/>
         </Tab>
         <Tab Title="Избраное" >
             <Tab.Icon>
@@ -95,20 +107,7 @@
                 Title="Избраное"
                 ContentTemplate="{DataTemplate pages:SelectedPage}"
                 Route="SelectedPage" />
-        </Tab>       
-        <Tab Title="Таксопарк" >
-            <Tab.Icon>
-                <FontImageSource
-                    FontFamily="Filter"
-                    Glyph="&#xf207;"
-                    Size="25"
-                    Color="White"/>
-            </Tab.Icon>
-            <ShellContent 
-                Title="Таксопарк" 
-                ContentTemplate="{DataTemplate pages:ContactsPage}"
-                Route="ContactsPage"/>
-        </Tab>
+        </Tab>    
     </TabBar>
     
 

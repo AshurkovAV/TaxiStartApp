@@ -19,6 +19,11 @@ namespace TaxiStartApp.Common.Data.Park
             return GetSelectParks(selectParkId, userId);
         }
 
+        public static IEnumerable<SelectParkDto> GetSelectParkDto(int userId)
+        {
+            return GetSelectParks(userId);
+        }
+
         /// <summary>
         /// old
         /// </summary>
@@ -50,8 +55,6 @@ namespace TaxiStartApp.Common.Data.Park
             var con = new List<ContactTaxiPark>();
             foreach (var contact in result.Result)
             {
-                // var resultCar = httpClientJob.GetCarsAsync(contact.Id);
-                // resultCar.Result.OrderBy(x => x.Id).FirstOrDefault().CarsPictures.FirstOrDefault(c=>);
                 con.Add(new ContactTaxiPark(contact));
                 if (contact.CarAvatar != null)
                 {
@@ -93,6 +96,14 @@ namespace TaxiStartApp.Common.Data.Park
         {
             var result = httpClientJob.GetSelectParks(selectparkId, userId);
             
+            return result.Result;
+
+        }
+
+        static IEnumerable<SelectParkDto> GetSelectParks(int userId)
+        {
+            var result = httpClientJob.GetSelectParksToUserIdAsync(userId);
+
             return result.Result;
 
         }

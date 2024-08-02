@@ -4,15 +4,28 @@ using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
 using JobTaxi.Entity.Dto.User;
+
 using System.Collections.Specialized;
 using System.Windows.Input;
+using TaxiStartApp.Common;
 using TaxiStartApp.Models;
+using TaxiStartApp.Services;
 
 namespace TaxiStartApp.ViewModels
 {
     public class FilterViewModel : ViewModelBase
     {
-        
+
+        private ICommand _buttonRespondCommand;
+        public ICommand ButtonRespondCommand
+        {
+            get => _buttonRespondCommand;
+            set
+            {
+                _buttonRespondCommand = value;
+                RaisePropertyChanged();
+            }
+        }
         private ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -24,9 +37,13 @@ namespace TaxiStartApp.ViewModels
             }
         }
         private IServiceProvider _serviceProvider;
-        public FilterViewModel(IServiceProvider serviceProvider)
+        private IDataService _dataService;
+        public FilterViewModel(
+            IServiceProvider serviceProvider,
+            IDataService dataService)
         {
             _serviceProvider = serviceProvider;
+            _dataService = dataService;
             NsiLocation.CollectionChanged += OnBlacklistCollectionChanged;
             NsiAutoClassSelect.CollectionChanged += OnWorklistCollectionChanged;
             SaveCommand = new Command(Save);
@@ -64,7 +81,10 @@ namespace TaxiStartApp.ViewModels
 
         private void Save()
         {
-            var s = UserFilter.ParkPercent;
+            var filterName = UserFilter.FilterName;
+            UserFilter.FilterUserId = Constant.yandexProfil.id;
+            _dataService.CreateUserFilter(UserFilter);
+
         }
         private UsersFilterDto _usersFilter;
         public UsersFilterDto UserFilter {

@@ -1,4 +1,5 @@
 ﻿using JobTaxi.Entity.Dto;
+using JobTaxi.Entity.Dto.User;
 using JobTaxi.Entity.Models;
 
 namespace TaxiStartApp.Services
@@ -11,5 +12,6 @@ namespace TaxiStartApp.Services
         public SelectPark CreateSelectPark(SelectParkDto selectParkDto);
         public bool DeleteSelectPark(SelectParkDto selectParkDto);
         public bool RespondToRequest(int? parkId = null);
+        public UsersFilterDto CreateUserFilter(UsersFilterDto usersFilterDto);
     }
 }

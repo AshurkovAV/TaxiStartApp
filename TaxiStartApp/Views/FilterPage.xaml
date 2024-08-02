@@ -133,8 +133,8 @@
                                                    x:Name="bioEditor"                                                               
                                                    TextColor="{StaticResource Gray100}"
                                                    Margin="5" 
-                                                   BoxMode="Filled"   
-                                                   
+                                                   Text="{Binding UserFilter.FilterName}"
+                                                   BoxMode="Filled" 
                                                    HelpText="Название фильтра" 
                                                    HelpTextColor="Gray" MaxCharacterCount="100" />
                                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto">

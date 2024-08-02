@@ -1,5 +1,6 @@
 ﻿using Java.Net;
 using JobTaxi.Entity.Dto;
+using JobTaxi.Entity.Dto.User;
 using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -26,9 +27,13 @@ namespace TaxiStartApp.Services
         private string _selectParkCount = Constant.UrlGeneralService + "/selectpark/count?";
         private string _urlSelectParkCreate = Constant.UrlGeneralService + "/selectpark/create";
         private string _urlSelectParkDelete = Constant.UrlGeneralService + "/selectpark/delete";
-        private string _urlSelectPark = Constant.UrlGeneralService + "/selectpark/sp?";       
+        private string _urlSelectPark = Constant.UrlGeneralService + "/selectpark/sp?";
+        private string _urlSelectPark1 = Constant.UrlGeneralService + "/selectpark?";
+        private string _urlFilterUserCreate = Constant.UrlGeneralService + "/user/usersfilter/create";
+        private string _urlcountFilterUser = Constant.UrlGeneralService + "/user/usersfilter/count?";
+        private string _urlFilterUserToId = Constant.UrlGeneralService + "/user/usersfilter/us?";
 
-      
+
         public HttpClientJob() { }
 
         public async Task<IEnumerable<Park>> GetParksAsync()
@@ -74,6 +79,22 @@ namespace TaxiStartApp.Services
             {
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new List<ParkTruncated>();
+            }
+        }
+
+        public async Task<IEnumerable<SelectParkDto>> GetSelectParksToUserIdAsync(int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlSelectPark1 + $"userId={userId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<SelectParkDto>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<SelectParkDto>();
             }
         }
 
@@ -141,6 +162,23 @@ namespace TaxiStartApp.Services
             }
         }
 
+        public async Task<IEnumerable<UsersFilterDto>> GetFilterUserToIdAsync(int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlFilterUserToId + $"userid={userId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<IEnumerable<UsersFilterDto>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<UsersFilterDto>();
+            }
+        }
+
+
         public async Task<int> GetParksCountAsync()
         {
             try
@@ -162,6 +200,22 @@ namespace TaxiStartApp.Services
             try
             {
                 HttpClientTs httpClientTs = new HttpClientTs(_urlcountCar + $"parkid={parkId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<int>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return 0;
+            }
+        }
+
+        public async Task<int> GetFilterCountAsync(int userId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlcountFilterUser + $"userid={userId}");
                 var responseFromServer = httpClientTs.Get();
                 var result = JsonConvert.DeserializeObject<int>(responseFromServer.Result);
                 return result;
@@ -345,6 +399,34 @@ namespace TaxiStartApp.Services
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return new SelectParkDto();
             }
+        }
+
+
+        public async Task<string> CreateFilter(UsersFilterDto usersFilterDto)
+        {
+            WebRequest request = WebRequest.Create(_urlFilterUserCreate);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(usersFilterDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
         }
     }
 }
