@@ -1,5 +1,4 @@
-﻿using Android.Widget;
-using JobTaxi.Entity.Dto;
+﻿using DevExpress.Maui.Controls;
 using JobTaxi.Entity.Dto.User;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,76 +10,120 @@ namespace TaxiStartApp.Models.User
     public class Subscription : UsersFilterDto, INotifyPropertyChanged
     {
         public UsersFilterDto Filter { get; set; }
-        public ICommand LikeCommand { get; set; }
-        public ICommand LikeEmpCommand { get; set; }
         public ICommand ButtonRespondCommand { get; set; }
-        private IDataService _dataService;
+        public ICommand ButtonSheetCommand { get; set; }
+        public ICommand BackCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand RenameCommand { get; set; }
+        public ICommand EditCommand { get; set; }
         
+
+
+
+        public string textPush;
+
+        private IDataService _dataService;
 
         public Subscription(UsersFilterDto usersFilterDto)
         {
             Id = usersFilterDto.Id;
             Filter = usersFilterDto;
             _dataService = DependencyService.Get<IDataService>();
-            LikeCommand = new Command(Like1);
-            LikeEmpCommand = new Command(Like2);
             ButtonRespondCommand = new Command(ButtonRespond);
+            ButtonSheetCommand = new Command(ButtonSheetLoad);
+            BackCommand = new Command(Back);
+            DeleteCommand = new Command(Delete);
+            EditCommand = new Command(Edit);
+            RenameCommand = new Command(Back);
+            BottomSheetState = BottomSheetState.Hidden;
+        }
+        BottomSheetState bottomSheetState;
+        public BottomSheetState BottomSheetState
+        {
+            get => bottomSheetState;
+            set
+            {
+                bottomSheetState = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TextPush
+        {
+            get
+            {
+                if (Filter.IsPush)
+                {
+                    textPush = "Уведомления включены";
+                }
+                else
+                {
+                    textPush = "Уведомления выключенны";
+                }
+                return textPush;
+            }
+            set
+            {
+                textPush = value;
+                OnPropertyChanged();
+            }
+        }
+
+        void Back()
+        {
+            BottomSheetState = BottomSheetState.Hidden;
+        }
+        void Delete()
+        {
+            _ = Task.Run(() =>
+            {
+                var data = _dataService.DeleteUsersFilter(Filter.Id);
+                if (data == true)
+                {                    
+                }
+
+                BottomSheetState = BottomSheetState.Hidden;
+            });
+        }
+        void Edit()
+        {
+            
+        }
+        void Rename()
+        {
+            
+        }
+        
+
+        void ButtonSheetLoad()
+        {
+            if (BottomSheetState == BottomSheetState.HalfExpanded)
+            {
+                BottomSheetState = BottomSheetState.Hidden;
+            }
+            else
+            {
+                BottomSheetState = BottomSheetState.HalfExpanded;
+            }
         }
         public async void ButtonRespond()
         {
-            
-                var driver = _dataService.RespondToRequest(Id);
-                if (driver == true)
+            _ = Task.Run(() =>
+            {
+                var data = _dataService.IsPushNotif(Filter.Id, !(bool)Filter.IsPush);
+                if (data == true)
                 {
-                    await Shell.Current.DisplayAlert("Заявка успешно отправлена", "", "OK");
+                    Filter.IsPush = !(bool)Filter.IsPush;
+                    if (Filter.IsPush)
+                    {
+                        TextPush = "Уведомления включены";
+                    }
+                    else
+                    {
+                        TextPush = "Уведомления выключенны";
+                    }
                 }
-            
+            });
         }
-        public async void Like1()
-        {
-            if (Grid1Visible == true)
-            {
-                Grid1Visible = false; Grid2Visible = true;
-
-                var driver = _dataService.CreateSelectPark(new JobTaxi.Entity.Dto.SelectParkDto
-                {
-                    ParkId = Id,
-                    UserId = Common.Constant.yandexProfil.id
-                });
-            }
-        }
-        public async void Like2()
-        {
-            if (Grid2Visible == true)
-            {
-                var driver = _dataService.DeleteSelectPark(new JobTaxi.Entity.Dto.SelectParkDto
-                {
-                    ParkId = Id,
-                    UserId = Common.Constant.yandexProfil.id
-                });
-                Grid2Visible = false; Grid1Visible = true;
-            }
-        }
-        private bool grid1Visible = true;
-        private bool grid2Visible = false;
-        public bool Grid1Visible
-        {
-            get => grid1Visible;
-            set
-            {
-                grid1Visible = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool Grid2Visible
-        {
-            get => grid2Visible;
-            set
-            {
-                grid2Visible = value;
-                OnPropertyChanged();
-            }
-        }       
         public DateTime? PublicationDate { get; set; }   
 
 

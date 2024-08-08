@@ -18,6 +18,17 @@
                 sb.AppendLine($"OS Version: {DeviceInfo.Current.VersionString}");
                 sb.AppendLine($"Idiom: {DeviceInfo.Current.Idiom}");
                 sb.AppendLine($"Platform: {DeviceInfo.Current.Platform}");
+
+                sb.AppendLine($"-------------------//------------------");
+                Constant.MainDisplayWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+                Constant.MainDisplayHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
+                sb.AppendLine($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+                sb.AppendLine($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+                sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+                sb.AppendLine($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
+                sb.AppendLine($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
+
+
                 var device_id = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
                 sb.AppendLine($"device_id: {device_id}");
                 Constant.DeviceId = device_id;

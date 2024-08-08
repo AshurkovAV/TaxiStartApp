@@ -325,6 +325,14 @@
                 center: [55.863459, 37.702032],
                 zoom: 10
             });
+    var myPlacemark = new ymaps.Placemark([55.863459, 37.702032], null,{	  
+	iconLayout: 'default#image',
+	iconImageHref: "https://таксиработааренда.рф/images/icon_ya1.png",
+	iconImageSize: [40, 40],
+	iconImageOffset: [-15, -44]
+});
+        // добавляем объекты на карту
+	    myMap.geoObjects.add(myPlacemark);
         }
     </script>
 </head>

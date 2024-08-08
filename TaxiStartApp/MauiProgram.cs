@@ -37,7 +37,7 @@ namespace TaxiStartApp
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                     fonts.AddFont("fontello.ttf", "Icons");
-                    fonts.AddFont("fontello3.ttf", "Filter");
+                    fonts.AddFont("fontello2.ttf", "Filter");
                     fonts.AddFont("fontello4.ttf", "Edit");
                 });
             

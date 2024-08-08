@@ -5,43 +5,13 @@
              NavigationPage.HasNavigationBar="True"
              x:Class= "TaxiStartApp.Views.MapPage">
     <ContentPage.Content>
-        <Grid >
+        <Grid Margin="-10" >
             
-                <VerticalStackLayout Margin="-10">
+                
                     <WebView x:Name="web" >
-                        <WebView.Source>
-                            <HtmlWebViewSource>
-                                <HtmlWebViewSource.Html>
-                                    <![CDATA[
-              
-                                    <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Размещение интерактивной карты на странице</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     <script src="https://api-maps.yandex.ru/2.1/?apikey=795e75fd-b231-4712-972b-3fae53bcd3e1&lang=ru_RU" type="text/javascript">
-                    </script>
-    <script type="text/javascript">
-        ymaps.ready(init);
-        function init(){
-            var myMap = new ymaps.Map("map", {
-                center: [55.863459, 37.702032],
-                zoom: 15
-            });
-        }
-    </script>
-</head>
-
-<body>
-    <div id="map" style="width: 410px; height: 780px"></div>
-</body>
-
-</html>
-                ]]>
-                                </HtmlWebViewSource.Html>
-                            </HtmlWebViewSource>
-                        </WebView.Source>
+                       
                     </WebView>
-                </VerticalStackLayout>
+                
             
            
         </Grid>

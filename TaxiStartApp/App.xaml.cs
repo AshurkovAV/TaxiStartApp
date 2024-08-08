@@ -29,12 +29,6 @@ namespace TaxiStartApp
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
 
 
-            //if (!Bootstrapper.Instance.Init())
-            //{              
-            //}
-
-           //  = new CacheRepository();
-
             MainPage = new AppShell();
 
             //CrossFirebasePushNotification.Current.OnTokenRefresh += Curren_onToken;

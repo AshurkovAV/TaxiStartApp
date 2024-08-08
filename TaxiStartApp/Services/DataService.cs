@@ -84,5 +84,28 @@ namespace TaxiStartApp.Services
             return null;
             
         }
+
+        public bool IsPushNotif(int filterId, bool push)
+        {
+            try
+            {
+                HttpClientJob httpClientJob = new HttpClientJob();
+                var resultdata = httpClientJob.IsPush(filterId, push);
+                return resultdata.Result;
+            }
+            catch (Exception ex)
+            { }
+            return false;
+
+        }
+
+        public bool DeleteUsersFilter(int id)
+        {
+            HttpClientJob httpClientJob = new HttpClientJob();
+            var resuldata= httpClientJob.DeleteUsersFilter(id);
+
+            var result = resuldata.Result;
+            return result;
+        }
     }
 }

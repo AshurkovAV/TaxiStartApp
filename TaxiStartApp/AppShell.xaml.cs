@@ -35,23 +35,21 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FilterPage), typeof(FilterPage));
 
 
-       
-
-        var fileHelper = DependencyService.Get<IFileHelper>();
-        var accessToken = fileHelper.LoadFile();
-		if (accessToken.Exception == null)
-		{
-            YandexProfil yandexProfil = new YandexProfil();
-            yandexProfil.Get(accessToken.Result);
-            this.CurrentItem = mainpage;
-		}
-		else
-		{ 
-			this.CurrentItem = loginpage; 
-		}
-        
-
-        
+        try
+        {
+            var fileHelper = DependencyService.Get<IFileHelper>();
+            var accessToken = fileHelper.LoadFile();
+            if (accessToken.Exception == null)
+            {
+                YandexProfil yandexProfil = new YandexProfil();
+                yandexProfil.Get(accessToken.Result);
+                this.CurrentItem = mainpage;
+            }
+            else
+            {
+                this.CurrentItem = loginpage;
+            }
+        } catch { }
     }
 
 	private async void ReadFireBaseAdminSdk()

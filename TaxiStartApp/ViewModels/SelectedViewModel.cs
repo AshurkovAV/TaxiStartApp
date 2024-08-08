@@ -1,11 +1,12 @@
-﻿using System.Windows.Input;
+﻿using DevExpress.Maui.Controls;
+using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Data.Park;
 using TaxiStartApp.Common.Data.User;
 using TaxiStartApp.Models;
 using TaxiStartApp.Models.Park;
 using TaxiStartApp.Models.User;
-using static Java.Util.Concurrent.Flow;
+
 
 namespace TaxiStartApp.ViewModels
 {
@@ -17,6 +18,8 @@ namespace TaxiStartApp.ViewModels
         int sourceSize = 0; 
         int sourceSizeSubscription = 0;
         int loadBatchSize = 4;
+
+        
         public int SourceSize
         {
             get => sourceSize;
@@ -57,8 +60,8 @@ namespace TaxiStartApp.ViewModels
                 _taxiParkData = value;
                 RaisePropertyChanged();
             }
-        }
-
+        }        
+        
         public ICommand LoadSubscriptionCommand { get; set; }
         public ICommand LoadMoreCommand { get; set; }
         ICommand pullToRefreshCommand = null;
@@ -92,15 +95,16 @@ namespace TaxiStartApp.ViewModels
         {
             TaxiParkData = new List<ContactTaxiPark>();
             SubscriptionData = new List<Subscription>();
-            
             DataStorage._batchSize = loadBatchSize;
             LoadDataAsync();
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
             LoadSubscriptionCommand = new Command(LoadSub, CanLoadSub);
             PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
-            PullSubToRefreshCommand = new Command(ExecutePullSubToRefreshCommand);
-
+            PullSubToRefreshCommand = new Command(ExecutePullSubToRefreshCommand);           
+           
         }
+
+        
         void ExecutePullToRefreshCommand()
         {
             Task.Run(() => {
@@ -117,7 +121,6 @@ namespace TaxiStartApp.ViewModels
                 SourceSizeSubscription = DataSubscription.GetTotalCount(Constant.yandexProfil.id);
                 SubscriptionData = new List<Subscription>();
                 IsLoadingSubscription = false;
-                LoadSubscription();
             });
         }
         public async Task LoadDataAsync()

@@ -24,6 +24,7 @@ namespace TaxiStartApp.Models.Park
             LikeCommand = new Command(Like1);
             LikeEmpCommand = new Command(Like2);
             ButtonRespondCommand = new Command(ButtonRespond);
+            
         }
         public async void ButtonRespond()
         {
@@ -48,6 +49,7 @@ namespace TaxiStartApp.Models.Park
                 });
             }
         }
+        
         public async void Like2()
         {
             if (Grid2Visible == true)

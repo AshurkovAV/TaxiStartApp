@@ -35,6 +35,9 @@ namespace TaxiStartApp.Common
         public static int ShareParkCountWork { get; set; }
         public static int ShareParkCountCar { get; set; }
 
+        public static double MainDisplayWidth { get; set; }
+        public static double MainDisplayHeight { get; set; }
+
         /// <summary>
         /// Ключ для бота 
         /// @HabUnloadBot

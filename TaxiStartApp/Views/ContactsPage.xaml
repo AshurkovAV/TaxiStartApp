@@ -11,7 +11,8 @@
              xmlns:coon="clr-namespace:TaxiStartApp.Common.Converters"
              x:Class= "TaxiStartApp.Views.ContactsPage">
     <ContentPage.Resources>
-        <coon:GlyphStatusConverter x:Key="movieOnFavoriteListAccountMovieStatesToGlyph" />        
+        <coon:GlyphStatusConverter x:Key="movieOnFavoriteListAccountMovieStatesToGlyph" />
+       
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*">
         <Grid ColumnDefinitions="360,Auto">            
@@ -59,9 +60,11 @@
             </Grid>
         </Grid>
         <dxcv:DXCollectionView Grid.Row="1" ItemsSource="{Binding TaxiParkData}"
-                           IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
+                               x:Name="collectionView" 
+                               IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
                                IsPullToRefreshEnabled="True"
                                PullToRefreshCommand="{Binding PullToRefreshCommand}"
+                               FilterString="StartsWith([ParkTrun.ParkName], 'Такс')"
                                IndicatorColor="#FFC71F"                           
                                SelectionMode="Single"                           
                                IsLoadMoreEnabled="True" 

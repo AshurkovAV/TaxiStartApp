@@ -32,7 +32,8 @@ namespace TaxiStartApp.Services
         private string _urlFilterUserCreate = Constant.UrlGeneralService + "/user/usersfilter/create";
         private string _urlcountFilterUser = Constant.UrlGeneralService + "/user/usersfilter/count?";
         private string _urlFilterUserToId = Constant.UrlGeneralService + "/user/usersfilter/us?";
-
+        private string _urlFilterIsPush = Constant.UrlGeneralService + "/user/usersfilter/ispush?";
+        private string _urlFilterUserDelete = Constant.UrlGeneralService + "/user/usersfilter/delete?";
 
         public HttpClientJob() { }
 
@@ -401,6 +402,22 @@ namespace TaxiStartApp.Services
             }
         }
 
+        public async Task<bool> DeleteUsersFilter(int id)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlFilterUserDelete + $"id={id}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<bool>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return false;
+            }
+        }
+
 
         public async Task<string> CreateFilter(UsersFilterDto usersFilterDto)
         {
@@ -427,6 +444,22 @@ namespace TaxiStartApp.Services
             response.Close();
 
             return dataStream;
+        }
+
+        public async Task<bool> IsPush(int id, bool push)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlFilterIsPush + $"id={id}&push={push}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<bool>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return false;
+            }
         }
     }
 }

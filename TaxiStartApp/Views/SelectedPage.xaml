@@ -5,6 +5,7 @@
              xmlns:local1="clr-namespace:TaxiStartApp.Models.Park"
              xmlns:local2="clr-namespace:TaxiStartApp.Models.User"
              BackgroundColor="{StaticResource Gray550}"
+             xmlns:convert="clr-namespace:TaxiStartApp.Common.Converters"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls">   
@@ -75,7 +76,7 @@
                                                    FontSize="18" 
                                                    MaxLines="3" LineBreakMode="WordWrap"/>
 
-                                            <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}"
+                                            <Grid Grid.Column="2" IsVisible="{Binding Grid1Visible, Mode=OneWay}"
                                                   Margin="0,25,16,0" >
                                                     <ImageButton x:Name="but" Padding="1" Clicked="ImageButton_Clicked"  Command="{Binding LikeCommand}">
                                                         <ImageButton.Source>
@@ -88,8 +89,7 @@
                                                     </ImageButton>
 
                                                 </Grid>
-                                            <Grid Grid.Column="2" 
-                                                  IsVisible="{Binding Grid2Visible, Mode=TwoWay}"
+                                            <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible, Mode=TwoWay}"
                                                   Margin="0,25,16,0" >
                                                 <ImageButton  Padding="1" Command="{Binding LikeEmpCommand}">
                                                     <ImageButton.Source>
@@ -177,51 +177,159 @@
                                     <Border StrokeShape="RoundRectangle 20"
                                             Margin="5"  
                                             BackgroundColor="{StaticResource Gray650}">
-                                        <VerticalStackLayout Margin="0,0,0,0">
-                                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*" >
-                                                <Label Grid.Row="0"
-                                                       Grid.Column="0"
-                                                       Margin="16,25,16,5"
-                                                       FontAttributes="Bold" Text="{Binding Filter.FilterName}" 
-                                                       TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
-                                                       FontSize="18" 
-                                                       MaxLines="3" LineBreakMode="WordWrap"/>
-                                                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
-                                                <dxe:FormSwitchItem 
-                                                    Grid.Column="0"
-                                                    Grid.Row="0"
-                                                    OnColor="{StaticResource Gray910}" 
-                                                    ThumbColor="{StaticResource Gray500}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}"
-                                                    SeparatorColor="{StaticResource Gray650}"
-                                                    IsToggled="{Binding }" 
-                                                    Text="Уведомления включены"/>
-                                                    <dxco:SimpleButton 
-                                                        Grid.Row="0"
-                                                        Grid.Column="2"
-                                                        Padding="4,0,4,0" 
-                                                        HorizontalOptions="End" 
-                                                        VerticalOptions="Center" Command="{Binding }"
-                                                        BackgroundColor="Transparent"
-                                                        WidthRequest="40">
-                                                        <Image>
-                                                            <Image.Source>
-                                                                <FontImageSource
-                                                                    FontFamily="Edit"
-                                                                    Glyph="&#xf142;"
-                                                                    Size="18"
-                                                                    Color="{StaticResource Gray100}"/>
-                                                            </Image.Source>
-                                                        </Image>
-                                                    </dxco:SimpleButton>
+                                        <VerticalStackLayout Margin="0,0,0,0">                                            
+                                            <Label 
+                                                   Margin="16,25,16,5"
+                                                   FontAttributes="Bold" Text="{Binding Filter.FilterName}" 
+                                                   TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                                   FontSize="18" 
+                                                   MaxLines="3" LineBreakMode="WordWrap"/>                                          
+                                                
+                                                <Grid ColumnDefinitions="Auto,*,Auto" >
+                                                    <Grid Grid.Column="0">
+                                                    <dxe:FormSwitchItem 
+                                                        TapCommand="{Binding ButtonRespondCommand}"
+                                                                    OnColor="{StaticResource Gray910}" 
+                                                                    ThumbColor="{StaticResource Gray500}"
+                                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}"
+                                                                    SeparatorColor="{StaticResource Gray650}"
+                                                                    IsToggled="{Binding Filter.IsPush, Mode=OneWay}" 
+                                                        
+                                                                    />
+                                                    </Grid>
+                                                <Grid Grid.Column="1">
+                                                    <Label 
+                                                        Padding="0,10,0,0"
+                                                        Text="{Binding TextPush, Mode=OneWay}" 
+                                                        TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                                        FontSize="14" 
+                                                        MaxLines="3" 
+                                                        LineBreakMode="WordWrap"/>
                                                 </Grid>
-                                            </Grid>  
+                                                <Grid Grid.Column="2" HorizontalOptions="EndAndExpand" >
+                                                        <dxco:SimpleButton 
+                                                            Padding="4,0,4,0"                                                                            
+                                                            VerticalOptions="Center" 
+                                                            Command="{Binding ButtonSheetCommand}"
+                                                            BackgroundColor="Transparent"
+                                                            WidthRequest="40">
+                                                            <Image>
+                                                                <Image.Source>
+                                                                    <FontImageSource
+                                                                        FontFamily="Edit"
+                                                                        Glyph="&#xf142;"
+                                                                        Size="20"
+                                                                        Color="{StaticResource Gray100}"/>
+                                                                </Image.Source>
+                                                            </Image>
+                                                        </dxco:SimpleButton>
+                                                    </Grid>
+                                                <dxco:BottomSheet    
+                                                    State="{Binding BottomSheetState, Mode=TwoWay}"
+                                                    CornerRadius="30"
+                                                    IsVisible="False"
+                                                    BackgroundColor="White"
+                                                    HalfExpandedRatio="0.25"
+                                                    AllowedState ="HalfExpanded"        
+                                                    AllowDismiss="False"
+                                                    ShowGrabber="True"
+                                                    IsModal="True">
+                                                    <!--#region BottomSheetContent-->
+                                                    <VerticalStackLayout Padding="4,0,4,4" >
+                                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                                            <Label Grid.Column="0"
+                                                                Margin="16,5,16,5"
+                                                                FontAttributes="Bold" 
+                                                                Text="{Binding Filter.FilterName}" 
+                                                                FontSize="18" 
+                                                                TextColor="Black"
+                                                                MaxLines="3" LineBreakMode="WordWrap"/>
+                                                            <Grid Grid.Column="2"  VerticalOptions="Start">
+                                                                <dxco:SimpleButton 
+                                                                        Padding="0,0,20,0"                                                                       
+                                                                        BackgroundColor="Transparent"
+                                                                        WidthRequest="40"                    
+                                                                        Command="{Binding BackCommand}">
+                                                                    <Image>
+                                                                        <Image.Source>
+                                                                            <FontImageSource
+                                                                                FontFamily="Filter"
+                                                                                Glyph="&#xe806;"
+                                                                                Size="20"
+                                                                                Color="Black"/>
+                                                                        </Image.Source>
+                                                                    </Image>
+                                                                </dxco:SimpleButton>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <dxco:SimpleButton  BackgroundColor="Transparent"
+                                                                            Padding="10,10,0,10" 
+                                                                            HorizontalOptions="Start"
+                                                                           Command="{Binding RenameCommand}" >
+                                                            <HorizontalStackLayout>
+                                                                <Image>
+                                                                    <Image.Source>
+                                                                        <FontImageSource
+                                                                            FontFamily="Filter"
+                                                                            Glyph="&#xe807;"
+                                                                            Size="20"
+                                                                            Color="Black"/>
+                                                                    </Image.Source>
+                                                                </Image>
+                                                                <Label Text="Переименновать" FontSize="16" 
+                                                                       TextColor="Black" 
+                                                                       HorizontalOptions="Center" Margin="8,0,0,0" />
+                                                            </HorizontalStackLayout>
+                                                        </dxco:SimpleButton>
+                                                        <dxco:SimpleButton  BackgroundColor="Transparent"
+                                                                 Padding="10,10,0,10" 
+                                                                 HorizontalOptions="Start"
+                                                                 Command="{Binding EditCommand}" >
+                                                            <HorizontalStackLayout>
+                                                                <Image>
+                                                                    <Image.Source>
+                                                                        <FontImageSource
+                                                                             FontFamily="Filter"
+                                                                             Glyph="&#xe809;"
+                                                                             Size="20"
+                                                                             Color="Black"/>
+                                                                    </Image.Source>
+                                                                </Image>
+                                                                <Label Text="Изменить параметры" FontSize="16" 
+                                                                    TextColor="Black" 
+                                                                    HorizontalOptions="Center" Margin="8,0,0,0" />
+                                                            </HorizontalStackLayout>
+                                                        </dxco:SimpleButton>
+                                                        <dxco:SimpleButton  BackgroundColor="Transparent"
+                                                                      Padding="10,10,0,10" 
+                                                                      HorizontalOptions="Start"
+                                                                      Command="{Binding DeleteCommand}" >
+                                                            <HorizontalStackLayout>
+                                                                <Image>
+                                                                    <Image.Source>
+                                                                        <FontImageSource
+                                                                                  FontFamily="Filter"
+                                                                                  Glyph="&#xe808;"
+                                                                                  Size="20"
+                                                                                  Color="Black"/>
+                                                                    </Image.Source>
+                                                                </Image>
+                                                                <Label Text="Удалить" FontSize="16" 
+                                                                         TextColor="Black" 
+                                                                         HorizontalOptions="Center" Margin="8,0,0,0" />
+                                                            </HorizontalStackLayout>
+                                                        </dxco:SimpleButton>                                                      
+
+                                                    </VerticalStackLayout>
+                                                    <!--#endregion-->
+                                                </dxco:BottomSheet>
+                                            </Grid>
                                         </VerticalStackLayout>
                                     </Border>
                                 </DataTemplate>
-
                             </dxcv:DXCollectionView.ItemTemplate>
                         </dxcv:DXCollectionView>
+                                             
                     </Grid>
                 </dxco:TabViewItem.Content>
             </dxco:TabViewItem>
