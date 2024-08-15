@@ -24,10 +24,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(TelefonPage), typeof(TelefonPage));
         Routing.RegisterRoute(nameof(ContactsPage), typeof(ContactsPage));
         Routing.RegisterRoute(nameof(VerificationPage), typeof(VerificationPage));
-        //Routing.RegisterRoute("ProfilPage", typeof(ProfilPage));
         Routing.RegisterRoute("MainPage/ProfilPage", typeof(ProfilPage));
         Routing.RegisterRoute("EditBioPage/ProfilPage", typeof(ProfilPage));
-        //Routing.RegisterRoute("ProfilPage/EditBioPage", typeof(EditBioPage));
         Routing.RegisterRoute("ProfilPage/EditBioPage", typeof(EditBioPage));
         Routing.RegisterRoute("ContactPage/EditContactPage", typeof(EditContactPage));
         Routing.RegisterRoute(nameof(EditContactPage), typeof(EditContactPage));
