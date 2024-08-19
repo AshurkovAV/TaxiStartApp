@@ -10,6 +10,7 @@ using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Models;
 using TaxiStartApp.Services;
+using TaxiStartApp.Services.Http.User;
 
 namespace TaxiStartApp.ViewModels
 {
@@ -83,7 +84,18 @@ namespace TaxiStartApp.ViewModels
         {
             var filterName = UserFilter.FilterName;
             UserFilter.FilterUserId = Constant.yandexProfil.id;
-            _dataService.CreateUserFilter(UserFilter);
+            UserFilter.AutoClass = new List<int> { 0 };
+            UserFilter.LocationFilter = new List<int> { 0 };    
+            foreach (var item in NsiAutoClassSelect)
+            {
+                UserFilter.AutoClass.Add(item.Id);                
+            }
+            foreach (var item in NsiLocation)
+            {
+                UserFilter.LocationFilter.Add(item.Id);
+            }
+            FilterHttp filterHttp = new FilterHttp(UserFilter);
+            filterHttp.PostCreate();            
 
         }
         private UsersFilterDto _usersFilter;

@@ -67,22 +67,7 @@ namespace TaxiStartApp.Services
             catch { return false; }
             
         }
-
-        public UsersFilterDto CreateUserFilter(UsersFilterDto usersFilterDto)
-        {
-            try
-            {
-                HttpClientJob httpClientJob = new HttpClientJob();
-                var resultOffer = httpClientJob.CreateFilter(usersFilterDto);
-
-                var result = JsonConvert.DeserializeObject<UsersFilterDto>(resultOffer.Result);
-                return result;
-            }
-            catch(Exception ex) 
-            { }
-            return null;
-            
-        }
+        
 
         public SelectAutoClass CreateUserSelectClassAutoFilter(SelectAutoClassDto selectAutoClassDto)
         {

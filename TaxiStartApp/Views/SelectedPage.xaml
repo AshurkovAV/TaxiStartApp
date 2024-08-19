@@ -323,7 +323,56 @@
                                                     </VerticalStackLayout>
                                                     <!--#endregion-->
                                                 </dxco:BottomSheet>
-                                            </Grid>
+                        <dxco:BottomSheet    
+                          State="{Binding BottomSheetState, Mode=TwoWay}"
+                          CornerRadius="30"
+    IsVisible="False"
+    BackgroundColor="White"
+    HalfExpandedRatio="0.25"
+    AllowedState ="HalfExpanded"        
+    AllowDismiss="False"
+    ShowGrabber="True"
+    IsModal="True">
+                          <!--#region BottomSheetContent-->
+                          <VerticalStackLayout Padding="4,0,4,4" >
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                              <Label Grid.Column="0"
+                Margin="16,5,16,5"
+                FontAttributes="Bold" 
+                Text="{Binding Filter.FilterName}" 
+                FontSize="18" 
+                TextColor="Black"
+                MaxLines="3" LineBreakMode="WordWrap"/>
+                              <Grid Grid.Column="2"  VerticalOptions="Start">
+                                <dxco:SimpleButton 
+                        Padding="0,0,20,0"                                                                       
+                        BackgroundColor="Transparent"
+                        WidthRequest="40"                    
+                        Command="{Binding BackCommand}">
+                                  <Image>
+                                    <Image.Source>
+                                      <FontImageSource
+                                FontFamily="Filter"
+                                Glyph="&#xe806;"
+                                Size="20"
+                                Color="Black"/>
+                                    </Image.Source>
+                                  </Image>
+                                </dxco:SimpleButton>
+                              </Grid>
+                            </Grid>
+                            <dxco:SimpleButton  BackgroundColor="Transparent"
+                            Padding="10,10,0,10" 
+                            HorizontalOptions="Start"
+                           Command="{Binding RenameCommand}" >
+                              
+                            </dxco:SimpleButton>
+                           
+
+                          </VerticalStackLayout>
+                          <!--#endregion-->
+                        </dxco:BottomSheet>
+                      </Grid>
                                         </VerticalStackLayout>
                                     </Border>
                                 </DataTemplate>

@@ -4,7 +4,7 @@ using TaxiStartApp.Services.Http.Interface;
 
 namespace TaxiStartApp.Services.Http
 {
-    public class OfferHttp: IHttp
+    public class OfferHttp : IHttp
     {
         private OfferDto _offerDto;
         public OfferHttp(OfferDto offerDto)
