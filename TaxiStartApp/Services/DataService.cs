@@ -3,8 +3,7 @@ using JobTaxi.Entity.Dto.User;
 using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using TaxiStartApp.Common;
-using TaxiStartApp.Common.Data.Park;
-using TaxiStartApp.Models.Park;
+using TaxiStartApp.Services.Http;
 
 namespace TaxiStartApp.Services
 {
@@ -24,7 +23,7 @@ namespace TaxiStartApp.Services
         public Offer CreateOffer(OfferDto offer)
         {
             HttpClientJob httpClientJob = new HttpClientJob();
-            var resultOffer = httpClientJob.CreateOffer(offer);
+            var resultOffer = httpClientJob.POSTCreateHttpUnivers(new OfferHttp(offer));
 
             var result = JsonConvert.DeserializeObject<Offer>(resultOffer.Result);
             return result;
@@ -84,6 +83,23 @@ namespace TaxiStartApp.Services
             return null;
             
         }
+
+        public SelectAutoClass CreateUserSelectClassAutoFilter(SelectAutoClassDto selectAutoClassDto)
+        {
+            try
+            {
+                HttpClientJob httpClientJob = new HttpClientJob();
+                var resultData = httpClientJob.CreateUserSelectClassAutoFilter(selectAutoClassDto);
+
+                var result = JsonConvert.DeserializeObject<SelectAutoClass>(resultData.Result);
+                return result;
+            }
+            catch (Exception ex)
+            { }
+            return null;
+
+        }
+
 
         public bool IsPushNotif(int filterId, bool push)
         {

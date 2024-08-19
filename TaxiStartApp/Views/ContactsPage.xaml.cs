@@ -11,6 +11,7 @@ namespace TaxiStartApp.Views
             InitializeComponent();
             this.dataModel = new TaxiParkViewModel();
             BindingContext = this.dataModel;
+            //collectionView.FilterString = "Contains([ParkTrun.ParkName], 'taxi')";
         }
 
         protected override async void OnAppearing()

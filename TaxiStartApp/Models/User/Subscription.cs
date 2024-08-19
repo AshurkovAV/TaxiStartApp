@@ -17,9 +17,6 @@ namespace TaxiStartApp.Models.User
         public ICommand RenameCommand { get; set; }
         public ICommand EditCommand { get; set; }
         
-
-
-
         public string textPush;
 
         private IDataService _dataService;

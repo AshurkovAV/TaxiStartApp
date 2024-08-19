@@ -64,7 +64,6 @@
                                IsRefreshing="{Binding IsLoading, Mode=TwoWay}"  
                                IsPullToRefreshEnabled="True"
                                PullToRefreshCommand="{Binding PullToRefreshCommand}"
-                               FilterString="StartsWith([ParkTrun.ParkName], 'Такс')"
                                IndicatorColor="#FFC71F"                           
                                SelectionMode="Single"                           
                                IsLoadMoreEnabled="True" 

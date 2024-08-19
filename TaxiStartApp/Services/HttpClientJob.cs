@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
 using TaxiStartApp.Common;
+using TaxiStartApp.Services.Http.Interface;
 
 namespace TaxiStartApp.Services
 {
@@ -34,6 +35,10 @@ namespace TaxiStartApp.Services
         private string _urlFilterUserToId = Constant.UrlGeneralService + "/user/usersfilter/us?";
         private string _urlFilterIsPush = Constant.UrlGeneralService + "/user/usersfilter/ispush?";
         private string _urlFilterUserDelete = Constant.UrlGeneralService + "/user/usersfilter/delete?";
+        private string _urlSelectAutoClass = Constant.UrlGeneralService + "/SelectAutoClass?";
+        private string _urlSelectLocationFilter = Constant.UrlGeneralService + "/SelectLocationFilter?";
+        private string _urlFilterUserSelectAutoClassCreate = Constant.UrlGeneralService + "/SelectAutoClass/create";
+        private string _urlFilterUserSelectLocationCreate = Constant.UrlGeneralService + "/SelectLocationFilter/create";
 
         public HttpClientJob() { }
 
@@ -446,6 +451,60 @@ namespace TaxiStartApp.Services
             return dataStream;
         }
 
+        public async Task<string> CreateUserSelectClassAutoFilter(SelectAutoClassDto selectAutoClassDto)
+        {
+            WebRequest request = WebRequest.Create(_urlFilterUserSelectAutoClassCreate);
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(selectAutoClassDto);
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
+        }
+
+        public async Task<string> POSTCreateHttpUnivers(IHttp http)
+        {
+            WebRequest request = WebRequest.Create(http.GetUrl());
+            request.Method = "POST";
+            request.Credentials = CredentialCache.DefaultCredentials;
+            var json = JsonConvert.SerializeObject(http.GetObject());
+            byte[] byteArray = Encoding.UTF8.GetBytes(json);
+
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+
+            using var reqStream = request.GetRequestStream();
+            reqStream.Write(byteArray, 0, byteArray.Length);
+
+            using var response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            using var respStream = response.GetResponseStream();
+
+            using var reader = new StreamReader(respStream);
+            string dataStream = reader.ReadToEnd();
+            reader.Close();
+            response.Close();
+
+            return dataStream;
+        }
+
         public async Task<bool> IsPush(int id, bool push)
         {
             try
@@ -459,6 +518,39 @@ namespace TaxiStartApp.Services
             {
                 Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
                 return false;
+            }
+        }
+
+
+        public async Task<List<SelectLocationFilter>> GetSelectLocationFilter(int userId, int filterId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlSelectLocationFilter + $"userId={userId}&filterId={filterId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<List<SelectLocationFilter>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<SelectLocationFilter>();
+            }
+        }
+
+        public async Task<List<SelectAuto>> GetSelectAutoClass(int userId, int filterId)
+        {
+            try
+            {
+                HttpClientTs httpClientTs = new HttpClientTs(_urlSelectAutoClass + $"userId={userId}&filterId={filterId}");
+                var responseFromServer = httpClientTs.Get();
+                var result = JsonConvert.DeserializeObject<List<SelectAuto>>(responseFromServer.Result);
+                return result;
+            }
+            catch (Exception wex)
+            {
+                Debug.WriteLine(wex.Message + "!!!!!! Error !!!!!!");
+                return new List<SelectAuto>();
             }
         }
     }
