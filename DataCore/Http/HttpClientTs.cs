@@ -10,6 +10,7 @@ namespace DataCore.Http
         {
             WebRequest request = WebRequest.Create(_url);
             request.Credentials = CredentialCache.DefaultCredentials;
+            request.Headers.Add("Host", "api.xn--80aaaaadxhwt3bixfhni.xn--p1ai:443");
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream dataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
