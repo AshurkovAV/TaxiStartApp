@@ -187,10 +187,11 @@
                                     <Border Grid.Row="1"
                                             Style="{StaticResource BorderDetalAction}">
                                         <dxe:FormSwitchItem 
+                                          TapCommand="{Binding ButtonRansomCommand}"
                                             OnColor="{StaticResource Gray910}" 
                                             ThumbColor="{StaticResource Gray500}"                                            
-                                            IsToggled="{Binding IsSoundEnabled}" Text="Нет/Да"/>
-
+                                            IsToggled="{Binding IsRansomEnabled}"
+                                            Text="Нет/Да"/>
                                     </Border>
                                 </Grid>
                             </Grid>

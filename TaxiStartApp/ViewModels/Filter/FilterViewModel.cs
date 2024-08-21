@@ -1,4 +1,4 @@
-﻿using AndroidX.ConstraintLayout.Core;
+﻿using Android.Widget;
 using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
@@ -17,13 +17,15 @@ namespace TaxiStartApp.ViewModels
     public class FilterViewModel : ViewModelBase
     {
 
-        private ICommand _buttonRespondCommand;
-        public ICommand ButtonRespondCommand
+        private UsersFilterDto _filter;
+
+        private ICommand _buttonRansomCommand;
+        public ICommand ButtonRansomCommand
         {
-            get => _buttonRespondCommand;
+            get => _buttonRansomCommand;
             set
             {
-                _buttonRespondCommand = value;
+                _buttonRansomCommand = value;
                 RaisePropertyChanged();
             }
         }
@@ -48,6 +50,7 @@ namespace TaxiStartApp.ViewModels
             NsiLocation.CollectionChanged += OnBlacklistCollectionChanged;
             NsiAutoClassSelect.CollectionChanged += OnWorklistCollectionChanged;
             SaveCommand = new Command(Save);
+            ButtonRansomCommand = new Command(ButtonRansom);
             _usersFilter = new UsersFilterDto();   
             Load();
         }
@@ -84,8 +87,10 @@ namespace TaxiStartApp.ViewModels
         {
             var filterName = UserFilter.FilterName;
             UserFilter.FilterUserId = Constant.yandexProfil.id;
-            UserFilter.AutoClass = new List<int> { 0 };
-            UserFilter.LocationFilter = new List<int> { 0 };    
+            UserFilter.AutoClass = new List<int>();
+            UserFilter.LocationFilter = new List<int>();
+            UserFilter.Ransom = IsRansomEnabled;
+
             foreach (var item in NsiAutoClassSelect)
             {
                 UserFilter.AutoClass.Add(item.Id);                
@@ -95,9 +100,28 @@ namespace TaxiStartApp.ViewModels
                 UserFilter.LocationFilter.Add(item.Id);
             }
             FilterHttp filterHttp = new FilterHttp(UserFilter);
-            filterHttp.PostCreate();            
-
+            UserFilter =  filterHttp.PostCreate(); 
         }
+
+        private bool _isRansomEnabled;
+        public bool IsRansomEnabled
+        {
+            get => _isRansomEnabled;
+            set
+            {
+                _isRansomEnabled = value;
+                RaisePropertyChanged();
+            }
+        }
+        public async void ButtonRansom()
+        {
+            _ = Task.Run(() =>
+            {
+               // var data = _dataService.IsPushNotif(Filter.Id, !(bool)Filter.IsPush);
+               
+            });
+        }
+
         private UsersFilterDto _usersFilter;
         public UsersFilterDto UserFilter {
             get => _usersFilter;
