@@ -1,10 +1,8 @@
-﻿using Android.Widget;
-using DataCore.Cache;
+﻿using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
 using JobTaxi.Entity.Dto.User;
-
 using System.Collections.Specialized;
 using System.Windows.Input;
 using TaxiStartApp.Common;
@@ -87,17 +85,17 @@ namespace TaxiStartApp.ViewModels
         {
             var filterName = UserFilter.FilterName;
             UserFilter.FilterUserId = Constant.yandexProfil.id;
-            UserFilter.AutoClass = new List<int>();
-            UserFilter.LocationFilter = new List<int>();
+            UserFilter.AutoClass = new List<SelectAuto>();
+            UserFilter.LocationFilter = new List<SelectLocation>();
             UserFilter.Ransom = IsRansomEnabled;
 
             foreach (var item in NsiAutoClassSelect)
             {
-                UserFilter.AutoClass.Add(item.Id);                
+                UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id});                
             }
             foreach (var item in NsiLocation)
             {
-                UserFilter.LocationFilter.Add(item.Id);
+                UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
             }
             FilterHttp filterHttp = new FilterHttp(UserFilter);
             UserFilter =  filterHttp.PostCreate(); 
