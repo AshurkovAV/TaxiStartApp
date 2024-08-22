@@ -147,13 +147,13 @@
                                                             Padding="20,0,20,0"
                                                             ItemsSource="{Binding LocationFiltr}" 
                                                             PickerShowMode="Popup" 
-                                                            PickerTitle="Выбор города"
+                                                            PickerTitle="Добавить город"
                                                             IsMultipleSelectionEnabled="True"
                                                             SelectedItems="{Binding NsiLocation}"
                                                             ShowSearchPanel="True"                       
                                                             PickerPageButtonPosition="Title"
                                                             DisplayMember="OblName"                                                            
-                                                            SelectedItem="{Binding NsiLocation, Mode=TwoWay}" Text="Выбор города"
+                                                            SelectedItem="{Binding NsiLocation, Mode=TwoWay}" Text="Добавить город"
                                                             Content="{Binding NsiLocation, Converter={helpers:BlacklistCollectionConverter}, Mode=TwoWay}"/>
 
 
@@ -168,12 +168,12 @@
                                                             Padding="20,0,20,0"
                                                             ItemsSource="{Binding AutoClasses}" 
                                                             PickerShowMode="Popup" 
-                                                            PickerTitle="Выбор класса автомобиля"
+                                                            PickerTitle="Добавить класс автомобиля"
                                                             IsMultipleSelectionEnabled="True"
                                                             SelectedItems="{Binding NsiAutoClassSelect}"
                                                             ShowSearchPanel="True"                                                                                   
                                                             DisplayMember="Name"                                                            
-                                                            SelectedItem="{Binding NsiAutoClassSelect, Mode=TwoWay}" Text="Класс автомобиля"
+                                                            SelectedItem="{Binding NsiAutoClassSelect, Mode=TwoWay}" Text="Добавить класс автомобиля"
                                                             Content="{Binding NsiAutoClassSelect, Converter={helpers:AutoCollectionConverter}, Mode=TwoWay}"/>
 
                                 </Grid>
