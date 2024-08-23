@@ -133,10 +133,13 @@
                                                    x:Name="bioEditor"                                                               
                                                    TextColor="{StaticResource Gray100}"
                                                    Margin="5" 
-                                                   Text="{Binding UserFilter.FilterName}"
+                                                   
+                                                   Text="{Binding UserFilter.FilterName, Mode=TwoWay}"
+                                                   HasError="{Binding UserFilter.HasError, Mode=TwoWay}"
                                                    BoxMode="Filled" 
                                                    HelpText="Название фильтра" 
                                                    HelpTextColor="Gray" MaxCharacterCount="100" />
+                               
                                 <Grid Grid.Row="1" RowDefinitions="Auto,Auto">
                                     <Label  Grid.Row="0"
                                             Text="Выбор города" 

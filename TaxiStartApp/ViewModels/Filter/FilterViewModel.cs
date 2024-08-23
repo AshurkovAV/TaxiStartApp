@@ -1,21 +1,22 @@
-﻿using DataCore.Cache;
+﻿using Core.Validation;
+using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
 using JobTaxi.Entity.Dto.User;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Models;
+using TaxiStartApp.Models.User;
 using TaxiStartApp.Services;
 using TaxiStartApp.Services.Http.User;
 
 namespace TaxiStartApp.ViewModels
 {
-    public class FilterViewModel : ViewModelBase
+    public class FilterViewModel : ViewModelBase, IDataErrorInfo
     {
-
-        private UsersFilterDto _filter;
 
         private ICommand _buttonRansomCommand;
         public ICommand ButtonRansomCommand
@@ -39,6 +40,7 @@ namespace TaxiStartApp.ViewModels
         }
         private IServiceProvider _serviceProvider;
         private IDataService _dataService;
+        private readonly DataErrorInfoSupport _dataErrorInfoSupport;
         public FilterViewModel(
             IServiceProvider serviceProvider,
             IDataService dataService)
@@ -49,8 +51,9 @@ namespace TaxiStartApp.ViewModels
             NsiAutoClassSelect.CollectionChanged += OnWorklistCollectionChanged;
             SaveCommand = new Command(Save);
             ButtonRansomCommand = new Command(ButtonRansom);
-            _usersFilter = new UsersFilterDto();   
+            _usersFilter = new UsersFilterModel();   
             Load();
+            _dataErrorInfoSupport = new DataErrorInfoSupport(this);
         }
 
         private void Load()
@@ -80,9 +83,23 @@ namespace TaxiStartApp.ViewModels
                 TimeSps = TimeSpStorage.GetBlogs();
             });
         }
+        #region IDataErrorInfo Members
+
+        string IDataErrorInfo.Error
+        {
+            get { return _dataErrorInfoSupport.Error; }
+        }
+
+        string IDataErrorInfo.this[string memberName]
+        {
+            get { return _dataErrorInfoSupport[memberName]; }
+        }
+
+        #endregion
 
         private void Save()
         {
+            
             var filterName = UserFilter.FilterName;
             UserFilter.FilterUserId = Constant.yandexProfil.id;
             UserFilter.AutoClass = new List<SelectAuto>();
@@ -260,5 +277,7 @@ namespace TaxiStartApp.ViewModels
         }
 
         public ICommand OpenWebCommand { get; }
+
+        
     }
 }
