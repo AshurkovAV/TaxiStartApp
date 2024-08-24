@@ -132,10 +132,10 @@
                                                    FocusedBorderColor="{StaticResource Gray910}"
                                                    x:Name="bioEditor"                                                               
                                                    TextColor="{StaticResource Gray100}"
-                                                   Margin="5" 
-                                                   
-                                                   Text="{Binding UserFilter.FilterName, Mode=TwoWay}"
-                                                   HasError="{Binding UserFilter.HasError, Mode=TwoWay}"
+                                                   Margin="5"   
+                                                   TextChangedCommand="{Binding TextChangedCommand}"
+                                                   Text="{Binding UserFilter.FilterName}"
+                                                   HasError="{Binding HasError, Mode=TwoWay}"
                                                    BoxMode="Filled" 
                                                    HelpText="Название фильтра" 
                                                    HelpTextColor="Gray" MaxCharacterCount="100" />

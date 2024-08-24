@@ -23,8 +23,8 @@
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net7.0-ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
-		<AssemblyVersion>3</AssemblyVersion>
-		<FileVersion>3</FileVersion>
+		<AssemblyVersion>4</AssemblyVersion>
+		<FileVersion>4</FileVersion>
 		<AndroidSigningKeyStore>debug.keystore</AndroidSigningKeyStore>
 	</PropertyGroup>
 
@@ -45,11 +45,15 @@
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidKeyStore>False</AndroidKeyStore>
 	  <AndroidSigningStorePass></AndroidSigningStorePass>
+	  <ApplicationDisplayVersion>1.0.086.04</ApplicationDisplayVersion>
+	  <ApplicationVersion>4</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
 	  <AndroidKeyStore>False</AndroidKeyStore>
 	  <AndroidSigningStorePass></AndroidSigningStorePass>
+	  <ApplicationDisplayVersion>1.0.086.04</ApplicationDisplayVersion>
+	  <ApplicationVersion>4</ApplicationVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

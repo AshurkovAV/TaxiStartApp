@@ -4,18 +4,17 @@ using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
 using JobTaxi.Entity.Dto.User;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Models;
-using TaxiStartApp.Models.User;
 using TaxiStartApp.Services;
 using TaxiStartApp.Services.Http.User;
 
 namespace TaxiStartApp.ViewModels
 {
-    public class FilterViewModel : ViewModelBase, IDataErrorInfo
+    public class FilterViewModel : ViewModelBase
     {
 
         private ICommand _buttonRansomCommand;
@@ -51,7 +50,8 @@ namespace TaxiStartApp.ViewModels
             NsiAutoClassSelect.CollectionChanged += OnWorklistCollectionChanged;
             SaveCommand = new Command(Save);
             ButtonRansomCommand = new Command(ButtonRansom);
-            _usersFilter = new UsersFilterModel();   
+            TextChangedCommand = new Command(TextChanged);
+            _usersFilter = new UsersFilterDto();   
             Load();
             _dataErrorInfoSupport = new DataErrorInfoSupport(this);
         }
@@ -82,40 +82,54 @@ namespace TaxiStartApp.ViewModels
                 //FirstDays = fd.Data;
                 TimeSps = TimeSpStorage.GetBlogs();
             });
-        }
-        #region IDataErrorInfo Members
+        }        
 
-        string IDataErrorInfo.Error
+        private ICommand _textChangedCommand;
+        public ICommand TextChangedCommand
         {
-            get { return _dataErrorInfoSupport.Error; }
+            get => _textChangedCommand;
+            set
+            {
+                _textChangedCommand = value;
+                RaisePropertyChanged();
+            }
         }
+        
 
-        string IDataErrorInfo.this[string memberName]
+        private bool _hasError;
+        public bool HasError
         {
-            get { return _dataErrorInfoSupport[memberName]; }
+            get=> _hasError;            
+            set
+            {
+                _hasError = value;
+                RaisePropertyChanged();
+            }
         }
-
-        #endregion
 
         private void Save()
         {
-            
-            var filterName = UserFilter.FilterName;
-            UserFilter.FilterUserId = Constant.yandexProfil.id;
-            UserFilter.AutoClass = new List<SelectAuto>();
-            UserFilter.LocationFilter = new List<SelectLocation>();
-            UserFilter.Ransom = IsRansomEnabled;
+            HasError = UserFilter.FilterName.IsNullOrEmpty()
+                   ? true
+                   : false;
+            if (!HasError)
+            {
+                UserFilter.FilterUserId = Constant.yandexProfil.id;
+                UserFilter.AutoClass = new List<SelectAuto>();
+                UserFilter.LocationFilter = new List<SelectLocation>();
+                UserFilter.Ransom = IsRansomEnabled;
 
-            foreach (var item in NsiAutoClassSelect)
-            {
-                UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id});                
+                foreach (var item in NsiAutoClassSelect)
+                {
+                    UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id });
+                }
+                foreach (var item in NsiLocation)
+                {
+                    UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
+                }
+                FilterHttp filterHttp = new FilterHttp(UserFilter);
+                UserFilter = filterHttp.PostCreate();
             }
-            foreach (var item in NsiLocation)
-            {
-                UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
-            }
-            FilterHttp filterHttp = new FilterHttp(UserFilter);
-            UserFilter =  filterHttp.PostCreate(); 
         }
 
         private bool _isRansomEnabled;
@@ -128,6 +142,17 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+        public async void TextChanged()
+        {
+            _ = Task.Run(() =>
+            {
+                HasError = UserFilter.FilterName.IsNullOrEmpty()
+                   ? true
+                   : false;
+
+            });
+        }
+        
         public async void ButtonRansom()
         {
             _ = Task.Run(() =>
