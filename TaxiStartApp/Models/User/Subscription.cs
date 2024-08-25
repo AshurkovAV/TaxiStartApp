@@ -18,6 +18,7 @@ namespace TaxiStartApp.Models.User
         public ICommand EditCommand { get; set; }
         
         public string textPush;
+        public string textLocation;
 
         private IDataService _dataService;
 
@@ -65,6 +66,24 @@ namespace TaxiStartApp.Models.User
             }
         }
 
+        public string TextLocation
+        {
+            get
+            {
+                foreach (var item in Filter.LocationFilter)
+                {
+                    textLocation = textLocation +  item.NameLocation + "; ";
+                }
+                
+                return textLocation;
+            }
+            set
+            {
+                textLocation = value;
+                OnPropertyChanged();
+            }
+        }
+
         void Back()
         {
             BottomSheetState = BottomSheetState.Hidden;
@@ -90,6 +109,7 @@ namespace TaxiStartApp.Models.User
             
         }
         
+
 
         void ButtonSheetLoad()
         {

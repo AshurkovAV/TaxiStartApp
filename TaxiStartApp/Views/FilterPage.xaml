@@ -216,7 +216,7 @@
                               TextColor="Black"
                               FontFamily="Roboto"
                               Command="{Binding ButtonRespondCommand}"
-                              Text="Применить фильтр"/>
+                              Text="{Binding SimlpeButtonText}"/>
         </Grid>
         
         

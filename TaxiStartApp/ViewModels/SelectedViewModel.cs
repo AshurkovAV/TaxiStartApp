@@ -100,10 +100,8 @@ namespace TaxiStartApp.ViewModels
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
             LoadSubscriptionCommand = new Command(LoadSub, CanLoadSub);
             PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
-            PullSubToRefreshCommand = new Command(ExecutePullSubToRefreshCommand);           
-           
+            PullSubToRefreshCommand = new Command(ExecutePullSubToRefreshCommand);  
         }
-
         
         void ExecutePullToRefreshCommand()
         {

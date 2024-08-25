@@ -3,6 +3,7 @@ using DataCore.Cache;
 using DataCore.Data.Nsi;
 using DataCore.Models.Nsi;
 using DataCore.Service;
+using JobTaxi.Entity.Dto.Park;
 using JobTaxi.Entity.Dto.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Specialized;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Models;
 using TaxiStartApp.Services;
+using TaxiStartApp.Services.Http.Park;
 using TaxiStartApp.Services.Http.User;
 
 namespace TaxiStartApp.ViewModels
@@ -54,6 +56,7 @@ namespace TaxiStartApp.ViewModels
             _usersFilter = new UsersFilterDto();   
             Load();
             _dataErrorInfoSupport = new DataErrorInfoSupport(this);
+            SimlpeButtonText = "Показать таксопарки";
         }
 
         private void Load()
@@ -157,8 +160,25 @@ namespace TaxiStartApp.ViewModels
         {
             _ = Task.Run(() =>
             {
-               // var data = _dataService.IsPushNotif(Filter.Id, !(bool)Filter.IsPush);
-               
+                foreach (var item in NsiAutoClassSelect)
+                {
+                    UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id });
+                }
+                foreach (var item in NsiLocation)
+                {
+                    UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
+                }
+
+                ParkHttp parkHttp = new ParkHttp();
+                parkHttp.SetObject = new ParkQueryDto 
+                { 
+                    Ransom = IsRansomEnabled,
+                    UserId = Constant.yandexProfil.id ,
+                    AutoClass = UserFilter.AutoClass,
+                    LocationFilter = UserFilter.LocationFilter
+                };
+                var count = parkHttp.PostCount();
+                SimlpeButtonText = $"Показать {count} таксопарков";
             });
         }
 
@@ -171,6 +191,17 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+        private string _simlpeButtonText;
+        public string SimlpeButtonText
+        {
+            get => _simlpeButtonText;
+            set
+            {
+                _simlpeButtonText = value;
+                RaisePropertyChanged();
+            }
+        }
+        
 
         public ObservableCollection<AutoClass> NsiAutoClassSelect { get; } = new();
         void OnWorklistCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

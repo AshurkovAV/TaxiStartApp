@@ -101,10 +101,7 @@
                                                     </ImageButton.Source>
                                                 </ImageButton>
                                             </Grid>
-
-
                                         </Grid>
-
                                         <Label Grid.Column="1"
                                                Text="{Binding ParkTrun.ParkPhone}" 
                                                TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
@@ -112,7 +109,6 @@
                                                MaxLines="3" 
                                                LineBreakMode="WordWrap" 
                                                Margin="16,0,16,10"/>
-
                                         <Grid ColumnDefinitions="Auto" Margin="16,0,16,5">
                                             <Label Grid.Column="0" Text="{Binding ParkTrun.ParkAddress}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
                                         </Grid>
@@ -183,8 +179,13 @@
                                                    FontAttributes="Bold" Text="{Binding Filter.FilterName}" 
                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
                                                    FontSize="18" 
-                                                   MaxLines="3" LineBreakMode="WordWrap"/>                                          
-                                                
+                                                   MaxLines="3" LineBreakMode="WordWrap"/>
+                                                  <Label 
+                                                    Margin="16,25,16,5"
+                                                    Text="{Binding TextLocation}" 
+                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                                    FontSize="14" 
+                                                    MaxLines="3" LineBreakMode="WordWrap"/>
                                                 <Grid ColumnDefinitions="Auto,*,Auto" >
                                                     <Grid Grid.Column="0">
                                                     <dxe:FormSwitchItem 
@@ -193,10 +194,9 @@
                                                                     ThumbColor="{StaticResource Gray500}"
                                                                     TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}"
                                                                     SeparatorColor="{StaticResource Gray650}"
-                                                                    IsToggled="{Binding Filter.IsPush, Mode=OneWay}" 
-                                                        
+                                                                    IsToggled="{Binding Filter.IsPush, Mode=OneWay}"                                                         
                                                                     />
-                                                    </Grid>
+                                                    </Grid>                                                
                                                 <Grid Grid.Column="1">
                                                     <Label 
                                                         Padding="0,10,0,0"

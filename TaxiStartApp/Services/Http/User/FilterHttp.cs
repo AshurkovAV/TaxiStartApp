@@ -1,9 +1,7 @@
 ﻿using JobTaxi.Entity.Dto;
 using JobTaxi.Entity.Dto.User;
-using JobTaxi.Entity.Models;
 using Newtonsoft.Json;
 using TaxiStartApp.Common;
-using TaxiStartApp.Models.User;
 using TaxiStartApp.Services.Http.Interface;
 
 namespace TaxiStartApp.Services.Http.User
@@ -25,6 +23,7 @@ namespace TaxiStartApp.Services.Http.User
             return Constant.UrlGeneralService + "/user/usersfilter/create";
         }
         public UsersFilterDto PostCreate() {
+
             var result = _httpClientJob.POSTCreateHttpUnivers(this);
             return JsonConvert.DeserializeObject<UsersFilterDto>(result.Result);
         }

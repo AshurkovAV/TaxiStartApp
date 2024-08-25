@@ -90,7 +90,7 @@
                          IsModal="True">                        
                             <!--#region BottomSheetContent-->
                             <VerticalStackLayout Padding="4,0,4,4" >                            
-                            <WebView x:Name="web" Navigated="web_Navigated"  HeightRequest="300"  />
+                            <WebView x:Name="web" Navigated="web_Navigated"  HeightRequest="700"  />
                             <ActivityIndicator x:Name="activator" IsRunning="False" Color="{StaticResource Gray910}" />
                             <!--<WebView.Source>
                                 <HtmlWebViewSource>
