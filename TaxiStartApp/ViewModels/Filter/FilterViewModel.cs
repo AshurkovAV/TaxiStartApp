@@ -117,19 +117,7 @@ namespace TaxiStartApp.ViewModels
                    : false;
             if (!HasError)
             {
-                UserFilter.FilterUserId = Constant.yandexProfil.id;
-                UserFilter.AutoClass = new List<SelectAuto>();
-                UserFilter.LocationFilter = new List<SelectLocation>();
-                UserFilter.Ransom = IsRansomEnabled;
-
-                foreach (var item in NsiAutoClassSelect)
-                {
-                    UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id });
-                }
-                foreach (var item in NsiLocation)
-                {
-                    UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
-                }
+                SelectLoad();
                 FilterHttp filterHttp = new FilterHttp(UserFilter);
                 UserFilter = filterHttp.PostCreate();
             }
@@ -160,15 +148,7 @@ namespace TaxiStartApp.ViewModels
         {
             _ = Task.Run(() =>
             {
-                foreach (var item in NsiAutoClassSelect)
-                {
-                    UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id });
-                }
-                foreach (var item in NsiLocation)
-                {
-                    UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
-                }
-
+                SelectLoad();
                 ParkHttp parkHttp = new ParkHttp();
                 parkHttp.SetObject = new ParkQueryDto 
                 { 
@@ -177,9 +157,25 @@ namespace TaxiStartApp.ViewModels
                     AutoClass = UserFilter.AutoClass,
                     LocationFilter = UserFilter.LocationFilter
                 };
-                var count = parkHttp.PostCount();
-                SimlpeButtonText = $"Показать {count} таксопарков";
+                Count = parkHttp.PostCount();                
             });
+            SimlpeButtonText = $"Показать {Count} таксопарков";
+        }
+        private void SelectLoad()
+        {
+            UserFilter.FilterUserId = Constant.yandexProfil.id;
+            UserFilter.AutoClass = new List<SelectAuto>();
+            UserFilter.LocationFilter = new List<SelectLocation>();
+            UserFilter.Ransom = IsRansomEnabled;
+
+            foreach (var item in NsiAutoClassSelect)
+            {
+                UserFilter.AutoClass.Add(new SelectAuto { SelectAutoId = item.Id });
+            }
+            foreach (var item in NsiLocation)
+            {
+                UserFilter.LocationFilter.Add(new SelectLocation { SelectLocationId = item.Id });
+            }
         }
 
         private UsersFilterDto _usersFilter;
@@ -191,6 +187,18 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        private int _count;
+        public int Count
+        {
+            get => _count;
+            set
+            {
+                _count = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private string _simlpeButtonText;
         public string SimlpeButtonText
         {

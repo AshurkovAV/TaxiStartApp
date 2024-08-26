@@ -18,10 +18,10 @@ namespace TaxiStartApp.Models.Menu
             await Task.FromResult(Data = new List<MenuItem>() {
                 new MenuItem("Профиль", "profil.png", "ProfilPage"),
                 //new Menu("Оплата", "pay.png"),
-                new MenuItem("Подписка" , "sub.png", ""),
-                new MenuItem("Как это работает?", "vosh.png", ""),
-                new MenuItem("Конфиденциальность", "secure.png", ""),
-                new MenuItem("Промокоды", "promo.png", ""),
+                //new MenuItem("Подписка" , "sub.png", ""),
+                //new MenuItem("Как это работает?", "vosh.png", ""),
+                //new MenuItem("Конфиденциальность", "secure.png", ""),
+                //new MenuItem("Промокоды", "promo.png", ""),
             });            
         }
 

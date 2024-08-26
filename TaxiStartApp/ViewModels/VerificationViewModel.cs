@@ -1,12 +1,5 @@
-﻿using Android.Content;
-using FirebaseAdmin.Messaging;
-using Microsoft.Maui.Controls;
-using Plugin.LocalNotification;
-using System;
-using System.Diagnostics;
-using TaxiStartApp.Common;
+﻿using TaxiStartApp.Common;
 using TaxiStartApp.Views;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TaxiStartApp.ViewModels
 {

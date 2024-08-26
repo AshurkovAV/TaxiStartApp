@@ -124,7 +124,7 @@
     <ContentPage.Content>
         
             <Grid RowDefinitions="Auto,*">
-                <Grid Grid.Row="0" Margin="20" VerticalOptions="Start">
+                <!--<Grid Grid.Row="0" Margin="20" VerticalOptions="Start">
                     <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding BackCommand}">
                         <ImageButton.Source>
                             <FontImageSource
@@ -134,7 +134,7 @@
                                 Color="{StaticResource Gray200}"/>
                         </ImageButton.Source>
                     </ImageButton>
-                </Grid>
+                </Grid>-->
 
                 <!--<VerticalStackLayout>
                 <dxco:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding DealersLoading}">

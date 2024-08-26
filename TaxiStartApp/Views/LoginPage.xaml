@@ -120,7 +120,7 @@
                             <!--#endregion-->
                         </dxc:BottomSheet>                    
                 </VerticalStackLayout>
-                <Button
+                <!--<Button
                     Grid.Row="2"
                     Margin="15,0"
                     BackgroundColor="{StaticResource Gray650}"
@@ -131,7 +131,7 @@
                     TextColor="White"
                     FontFamily="Roboto"
                     Command="{Binding TelefonCommand}"
-                    Text="Войти по номеру телефона"/>
+                    Text="Войти по номеру телефона"/>-->
                 
                     <Label x:Name="label"                       
                            Grid.Row="3"

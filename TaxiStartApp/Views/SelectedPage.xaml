@@ -180,12 +180,12 @@
                                                    TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
                                                    FontSize="18" 
                                                    MaxLines="3" LineBreakMode="WordWrap"/>
-                                                  <Label 
+                                            <Label 
                                                     Margin="16,25,16,5"
                                                     Text="{Binding TextLocation}" 
                                                     TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
                                                     FontSize="14" 
-                                                    MaxLines="3" LineBreakMode="WordWrap"/>
+                                                    LineBreakMode="WordWrap"/>
                                                 <Grid ColumnDefinitions="Auto,*,Auto" >
                                                     <Grid Grid.Column="0">
                                                     <dxe:FormSwitchItem 
