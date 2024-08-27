@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using TaxiStartApp.Common;
+using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Models;
 using TaxiStartApp.Services;
 using TaxiStartApp.Services.Http.Park;
@@ -18,7 +19,31 @@ namespace TaxiStartApp.ViewModels
 {
     public class FilterViewModel : ViewModelBase
     {
+        
+            private ICommand _clikCommand;
+        public ICommand ClikCommand
+        {
+            get => _clikCommand;
+            set
+            {
+                _clikCommand = value;
+                RaisePropertyChanged();
+            }
+        }
 
+
+
+        private ICommand _buttonRespondCommand;
+        public ICommand ButtonRespondCommand
+        {
+            get => _buttonRespondCommand;
+            set
+            {
+                _buttonRespondCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+        
         private ICommand _buttonRansomCommand;
         public ICommand ButtonRansomCommand
         {
@@ -53,6 +78,7 @@ namespace TaxiStartApp.ViewModels
             SaveCommand = new Command(Save);
             ButtonRansomCommand = new Command(ButtonRansom);
             TextChangedCommand = new Command(TextChanged);
+            ButtonRespondCommand = new Command(ButtonRespond);
             _usersFilter = new UsersFilterDto();   
             Load();
             _dataErrorInfoSupport = new DataErrorInfoSupport(this);
@@ -144,22 +170,60 @@ namespace TaxiStartApp.ViewModels
             });
         }
         
-        public async void ButtonRansom()
+        public async void ButtonRespond()
         {
-            _ = Task.Run(() =>
-            {
+            
                 SelectLoad();
                 ParkHttp parkHttp = new ParkHttp();
-                parkHttp.SetObject = new ParkQueryDto 
-                { 
+                parkHttp.SetObject = new ParkQueryDto
+                {
                     Ransom = IsRansomEnabled,
-                    UserId = Constant.yandexProfil.id ,
+                    UserId = Constant.yandexProfil.id,
                     AutoClass = UserFilter.AutoClass,
                     LocationFilter = UserFilter.LocationFilter
                 };
-                Count = parkHttp.PostCount();                
+                Count = parkHttp.PostCount();
+                SimlpeButtonText = $"Показать {Count} таксопарков";
+           
+        }
+        private Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+        public async void ButtonRansom()
+        {
+            SimlpeButtonText = string.Empty;  
+            
+            if (CurentTask?.Status == TaskStatus.Running)
+            {
+                //CurentTask.Wait();
+                
+            }            
+            CurentTask = Run();
+            CurentId = CurentTask.Id;
+            CurentTask.Start();            
+        }
+        private Task CurentTask { get; set; }
+        private int CurentId { get; set; }
+        private int id { get; set; }
+        private Task Run()
+        {            
+            return new Task(()=>
+            {
+                SelectLoad();
+                ParkHttp parkHttp = new ParkHttp();
+                parkHttp.SetObject = new ParkQueryDto
+                {
+                    Ransom = IsRansomEnabled,
+                    UserId = Constant.yandexProfil.id,
+                    AutoClass = UserFilter.AutoClass,
+                    LocationFilter = UserFilter.LocationFilter
+                };
+                Count = parkHttp.PostCount();
+                id += 1;
+                if (CurentId == id)
+                {
+                    SimlpeButtonText = $"Показать {Count} таксопарков";
+                }
+                
             });
-            SimlpeButtonText = $"Показать {Count} таксопарков";
         }
         private void SelectLoad()
         {
@@ -195,18 +259,19 @@ namespace TaxiStartApp.ViewModels
             set
             {
                 _count = value;
+                
                 RaisePropertyChanged();
             }
         }
 
-        private string _simlpeButtonText;
+        private string _simlpeButtonText ;
         public string SimlpeButtonText
         {
             get => _simlpeButtonText;
             set
             {
                 _simlpeButtonText = value;
-                RaisePropertyChanged();
+                RaisePropertyChanged("SimlpeButtonText");
             }
         }
         

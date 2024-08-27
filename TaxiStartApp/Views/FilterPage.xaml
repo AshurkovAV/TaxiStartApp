@@ -209,12 +209,12 @@
             <dxc:SimpleButton Grid.Row="2"         
                               Margin="15,10,15,10"
                               BackgroundColor="{StaticResource Gray910}"
-                              CornerRadius="15"                
+                              CornerRadius="15"       
                               FontAttributes="Bold"
                               FontSize="14"                              
                               HeightRequest="43"
                               TextColor="Black"
-                              FontFamily="Roboto"
+                              FontFamily="Roboto"        
                               Command="{Binding ButtonRespondCommand}"
                               Text="{Binding SimlpeButtonText}"/>
         </Grid>
