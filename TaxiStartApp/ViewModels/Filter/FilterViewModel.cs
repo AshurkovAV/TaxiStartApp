@@ -187,25 +187,31 @@ namespace TaxiStartApp.ViewModels
            // IsActivator = false;
         }
         private Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+        Queue<Task> taskQueue = new Queue<Task>();
         public async void ButtonRansom()
         {
             IsActivator = true;
-
-            SelectLoad();
-            ParkHttp parkHttp = new ParkHttp();
-            SimlpeButtonText = string.Empty;
-            Count = 0;
-            parkHttp.SetObject = new ParkQueryDto
-            {
-                Ransom = IsRansomEnabled,
-                UserId = Constant.yandexProfil.id,
-                AutoClass = UserFilter.AutoClass,
-                LocationFilter = UserFilter.LocationFilter
-            };
-
-            Count = await Task.Run(parkHttp.PostCount);
-            SimlpeButtonText = $"Показать {Count} таксопарков";
-
+            
+            
+            taskQueue.Enqueue(Task.Run(async () => {
+                SelectLoad();
+                SimlpeButtonText = string.Empty;
+                Count = 0;
+                ParkHttp parkHttp = new ParkHttp();
+                parkHttp.SetObject = new ParkQueryDto
+                {
+                    Ransom = IsRansomEnabled,
+                    UserId = Constant.yandexProfil.id,
+                    AutoClass = UserFilter.AutoClass,
+                    LocationFilter = UserFilter.LocationFilter
+                };
+                Count = await parkHttp.PostCount();
+                SimlpeButtonText = $"Показать {Count} таксопарков";
+                IsActivator = false;
+            } ));
+            
+            
+            
         }
 
         private bool _isActivator = true;
@@ -218,22 +224,7 @@ namespace TaxiStartApp.ViewModels
                 RaisePropertyChanged("IsActivator");
             }
         }
-        //private Task Run()
-        //{
-        //    SelectLoad();
-        //    ParkHttp parkHttp = new ParkHttp();
-        //    parkHttp.SetObject = new ParkQueryDto
-        //    {
-        //        Ransom = IsRansomEnabled,
-        //        UserId = Constant.yandexProfil.id,
-        //        AutoClass = UserFilter.AutoClass,
-        //        LocationFilter = UserFilter.LocationFilter
-        //    };
-        //    Count = await parkHttp.PostCount();
-        //    if (ints.Count == CurentTask.Id)
-        //        SimlpeButtonText = $"Показать {Count} таксопарков";
-        //    //IsActivator = false;
-        //}
+       
         private void SelectLoad()
         {
             UserFilter.FilterUserId = Constant.yandexProfil.id;

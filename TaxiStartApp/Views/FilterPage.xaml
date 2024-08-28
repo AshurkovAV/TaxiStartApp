@@ -172,6 +172,8 @@
                                                             ItemsSource="{Binding AutoClasses}" 
                                                             PickerShowMode="Popup" 
                                                             PickerTitle="Добавить класс автомобиля"
+                                                            TapCommand="{Binding ButtonRespondCommand}"
+                                                            
                                                             IsMultipleSelectionEnabled="True"
                                                             SelectedItems="{Binding NsiAutoClassSelect}"
                                                             ShowSearchPanel="True"                                                                                   
@@ -217,7 +219,7 @@
                               FontFamily="Roboto"        
                               Command="{Binding ButtonRespondCommand}"
                               Text="{Binding SimlpeButtonText}">
-                <Grid ColumnDefinitions="20, *">
+                <Grid ColumnDefinitions="30, *">
                     <Label Grid.Column="1"
                         Text="{Binding SimlpeButtonText}" 
                         FontAttributes="Bold"

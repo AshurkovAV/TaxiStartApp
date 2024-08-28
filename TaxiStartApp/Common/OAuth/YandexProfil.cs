@@ -31,26 +31,25 @@ namespace TaxiStartApp.Common.OAuth
             catch (TimeoutException e)
             {
                 Console.WriteLine(e.Message);
-            }
-            
+            }            
         }
 
-        public int id { get; set; }
-        public string idYandex { get; set; }
-        public string login { get; set; }
-        public string clientId { get; set; }
-        public string displayName { get; set; }
-        public string realName { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string sex { get; set; }
-        public string defaultEmail { get; set; }        
-        public string birthday { get; set; }
+        public int    id              { get; set; }
+        public string idYandex        { get; set; }
+        public string login           { get; set; }
+        public string clientId        { get; set; }
+        public string displayName     { get; set; }
+        public string realName        { get; set; }
+        public string firstName       { get; set; }
+        public string lastName        { get; set; }
+        public string sex             { get; set; }
+        public string defaultEmail    { get; set; }        
+        public string birthday        { get; set; }
         public string defaultAvatarId { get; set; }
-        public bool isAvatarEmpty { get; set; }
-        public string defaultPhone { get; set; }        
-        public string deviceId { get; set; }
-        public ImageSource? Avatar { get; set; }
+        public bool isAvatarEmpty     { get; set; }
+        public string defaultPhone    { get; set; }        
+        public string deviceId        { get; set; }
+        public ImageSource? Avatar    { get; set; }
 
     }
 }
