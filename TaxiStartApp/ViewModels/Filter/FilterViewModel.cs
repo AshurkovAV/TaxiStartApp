@@ -169,62 +169,71 @@ namespace TaxiStartApp.ViewModels
 
             });
         }
-        
+
         public async void ButtonRespond()
         {
-            
-                SelectLoad();
-                ParkHttp parkHttp = new ParkHttp();
-                parkHttp.SetObject = new ParkQueryDto
-                {
-                    Ransom = IsRansomEnabled,
-                    UserId = Constant.yandexProfil.id,
-                    AutoClass = UserFilter.AutoClass,
-                    LocationFilter = UserFilter.LocationFilter
-                };
-                Count = parkHttp.PostCount();
-                SimlpeButtonText = $"Показать {Count} таксопарков";
-           
+            IsActivator = true;
+            SelectLoad();
+            ParkHttp parkHttp = new ParkHttp();
+            parkHttp.SetObject = new ParkQueryDto
+            {
+                Ransom = IsRansomEnabled,
+                UserId = Constant.yandexProfil.id,
+                AutoClass = UserFilter.AutoClass,
+                LocationFilter = UserFilter.LocationFilter
+            };
+            Count = await parkHttp.PostCount();
+            SimlpeButtonText = $"Показать {Count} таксопарков";
+           // IsActivator = false;
         }
         private Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
         public async void ButtonRansom()
         {
-            SimlpeButtonText = string.Empty;  
-            
-            if (CurentTask?.Status == TaskStatus.Running)
+            IsActivator = true;
+
+            SelectLoad();
+            ParkHttp parkHttp = new ParkHttp();
+            SimlpeButtonText = string.Empty;
+            Count = 0;
+            parkHttp.SetObject = new ParkQueryDto
             {
-                //CurentTask.Wait();
-                
-            }            
-            CurentTask = Run();
-            CurentId = CurentTask.Id;
-            CurentTask.Start();            
+                Ransom = IsRansomEnabled,
+                UserId = Constant.yandexProfil.id,
+                AutoClass = UserFilter.AutoClass,
+                LocationFilter = UserFilter.LocationFilter
+            };
+
+            Count = await Task.Run(parkHttp.PostCount);
+            SimlpeButtonText = $"Показать {Count} таксопарков";
+
         }
-        private Task CurentTask { get; set; }
-        private int CurentId { get; set; }
-        private int id { get; set; }
-        private Task Run()
-        {            
-            return new Task(()=>
+
+        private bool _isActivator = true;
+        public bool IsActivator
+        {
+            get => _isActivator;
+            set
             {
-                SelectLoad();
-                ParkHttp parkHttp = new ParkHttp();
-                parkHttp.SetObject = new ParkQueryDto
-                {
-                    Ransom = IsRansomEnabled,
-                    UserId = Constant.yandexProfil.id,
-                    AutoClass = UserFilter.AutoClass,
-                    LocationFilter = UserFilter.LocationFilter
-                };
-                Count = parkHttp.PostCount();
-                id += 1;
-                if (CurentId == id)
-                {
-                    SimlpeButtonText = $"Показать {Count} таксопарков";
-                }
-                
-            });
+                _isActivator = value;
+                RaisePropertyChanged("IsActivator");
+            }
         }
+        //private Task Run()
+        //{
+        //    SelectLoad();
+        //    ParkHttp parkHttp = new ParkHttp();
+        //    parkHttp.SetObject = new ParkQueryDto
+        //    {
+        //        Ransom = IsRansomEnabled,
+        //        UserId = Constant.yandexProfil.id,
+        //        AutoClass = UserFilter.AutoClass,
+        //        LocationFilter = UserFilter.LocationFilter
+        //    };
+        //    Count = await parkHttp.PostCount();
+        //    if (ints.Count == CurentTask.Id)
+        //        SimlpeButtonText = $"Показать {Count} таксопарков";
+        //    //IsActivator = false;
+        //}
         private void SelectLoad()
         {
             UserFilter.FilterUserId = Constant.yandexProfil.id;

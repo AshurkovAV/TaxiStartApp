@@ -211,12 +211,24 @@
                               BackgroundColor="{StaticResource Gray910}"
                               CornerRadius="15"       
                               FontAttributes="Bold"
-                              FontSize="14"                              
+                              FontSize="14"
                               HeightRequest="43"
                               TextColor="Black"
                               FontFamily="Roboto"        
                               Command="{Binding ButtonRespondCommand}"
-                              Text="{Binding SimlpeButtonText}"/>
+                              Text="{Binding SimlpeButtonText}">
+                <Grid ColumnDefinitions="20, *">
+                    <Label Grid.Column="1"
+                        Text="{Binding SimlpeButtonText}" 
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        TextColor="Black"
+                        FontFamily="Roboto" 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+                    <ActivityIndicator Grid.Column="0" x:Name="activator" IsRunning="{Binding IsActivator}" Color="White" />                    
+                </Grid>
+            </dxc:SimpleButton>
         </Grid>
         
         

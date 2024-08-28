@@ -19,10 +19,10 @@ namespace TaxiStartApp.Services.Http.Park
             return Url;
         }
         public BaseDto SetObject { set{ _data = value; } }
-        public int PostCount(){
+        public async Task<int> PostCount(){
             Url = _urlcount;
-            var result = _httpClientJob.POSTCreateHttpUnivers(this);
-            return JsonConvert.DeserializeObject<int>(result.Result);
+            var result = await _httpClientJob.POSTCreateHttpUnivers(this);
+            return JsonConvert.DeserializeObject<int>(result);
         }        
     }
 }
