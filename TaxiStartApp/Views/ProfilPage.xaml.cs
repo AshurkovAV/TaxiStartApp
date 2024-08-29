@@ -1,4 +1,5 @@
-﻿using TaxiStartApp.ViewModels.Profil;
+﻿using System;
+using TaxiStartApp.ViewModels.Profil;
 
 namespace TaxiStartApp.Views
 {
@@ -14,10 +15,10 @@ namespace TaxiStartApp.Views
         }
         protected override async void OnAppearing()
         {
-            activator.IsRunning = true;
+            //activator.IsRunning = true;
             base.OnAppearing();
             await this.dataModel.LoadDataAsync();
-            activator.IsRunning = false;
+            //activator.IsRunning = false;
 
         }
         protected override bool OnBackButtonPressed()

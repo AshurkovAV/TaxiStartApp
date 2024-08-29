@@ -1,10 +1,14 @@
 ﻿using Android.Webkit;
+using JobTaxi.Entity.Dto.Park;
+using JobTaxi.Entity.Models;
+using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using TaxiStartApp.Common;
 using TaxiStartApp.Common.Interface;
+using TaxiStartApp.Services.Http.Park;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace TaxiStartApp.ViewModels.Profil
@@ -33,17 +37,28 @@ namespace TaxiStartApp.ViewModels.Profil
 
         public async Task LoadDataAsync()
         {
-            //DealersLoading = true;            
+            DealersLoading = true;            
             Language = "Русский";
-            DisplayName = Constant.yandexProfil.displayName;
-            DefaultEmail = Constant.yandexProfil.defaultEmail;
-            Telefon = Constant.yandexProfil.defaultPhone;
+            DisplayName   = Constant.yandexProfil.displayName;
+            DefaultEmail  = Constant.yandexProfil.defaultEmail;
+            Telefon       = Constant.yandexProfil.defaultPhone;
             VibrationMode = "Default";
-            var avat = await _httpClientTs.GetAvat();
-            Avatar = ImageSource.FromStream(() => avat);
-           // DealersLoading = false;
+            var avat = await Task.WhenAll(Run());
+            Avatar = ImageSource.FromStream(() => avat.Last());
+            
         }
 
+
+        async Task<Stream> Run()
+        {
+            Stream avat = null;            
+            await Task.Run(async () =>
+            {
+               avat = await _httpClientTs.GetAvat();
+                DealersLoading = false;
+            });
+            return avat;
+        }
         private bool dealersLoading = true;
         public bool DealersLoading
         {
@@ -51,7 +66,7 @@ namespace TaxiStartApp.ViewModels.Profil
             set
             {
                 dealersLoading = value;
-                OnPropertyChanged();
+                OnPropertyChanged("DealersLoading");
             }
         }
 
@@ -61,7 +76,7 @@ namespace TaxiStartApp.ViewModels.Profil
             set
             {
                 this.avatar = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Avatar");
             }
         }
 

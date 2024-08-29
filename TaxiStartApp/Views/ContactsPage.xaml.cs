@@ -10,14 +10,12 @@ namespace TaxiStartApp.Views
         {
             InitializeComponent();
             this.dataModel = new TaxiParkViewModel();
-            BindingContext = this.dataModel;
-            //collectionView.FilterString = "Contains([ParkTrun.ParkName], 'taxi')";
+            BindingContext = this.dataModel;            
         }
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
-            //await this.dataModel.LoadDataAsync();
+            base.OnAppearing();            
         }
 
         private void ImageButton_Clicked(object sender, EventArgs e)

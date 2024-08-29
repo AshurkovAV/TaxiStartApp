@@ -12,88 +12,7 @@
              x:Class= "TaxiStartApp.Views.ProfilPage">   
     
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="dxco:ShimmerView" x:Key="ShimmerEffect">
-                <Setter Property="WaveWidth" Value="0.7"/>
-                <Setter Property="WaveOpacity" Value="0.8"/>
-                <Setter Property="WaveDuration" Value="0:0:0.8"/>
-            </Style>
-
-            <Style TargetType="Border" x:Key="ShimmerElementAction">
-                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
-                <Setter Property="WidthRequest" Value="60"/>
-                <Setter Property="HeightRequest" Value="60"/>
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-            <Style TargetType="Border" x:Key="ShimmerElementCard">
-                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
-                <Setter Property="WidthRequest" Value="250"/>
-                <Setter Property="HeightRequest" Value="150"/>
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-            <Style TargetType="Ellipse" x:Key="ShimmerElementAvatar">
-                <Setter Property="Fill" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="WidthRequest" Value="60"/>
-                <Setter Property="HeightRequest" Value="60"/>
-            </Style>
-            <Style TargetType="Border" x:Key="ShimmerElementRow">
-                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
-                <Setter Property="HeightRequest" Value="24"/>
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-            <Style TargetType="Border" x:Key="ShimmerElementBioRow">
-                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
-                <Setter Property="HeightRequest" Value="45"/>
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-
-            <Style TargetType="Border" x:Key="ElementAction">
-                <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
-                <Setter Property="WidthRequest" Value="100"/>
-                <Setter Property="HeightRequest" Value="90"/>
-                <Setter Property="StrokeThickness" Value="0"/>
-            </Style>
-            <Style TargetType="Label" x:Key="TextAction">
-                <Setter Property="TextColor" Value="{AppThemeBinding Light=#101010, Dark=#FFFFFF}"/>
-                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="FontSize" Value="15"/>
-            </Style>
-
-            <Style TargetType="dx:DXBorder" x:Key="ElementCard">
-                <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
-                <Setter Property="CornerRadius" Value="12"/>
-                <Setter Property="WidthRequest" Value="240"/>
-            </Style>
-            <Style TargetType="Label" x:Key="TextCardTitle">
-                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="FontSize" Value="16"/>
-            </Style>
-            <Style TargetType="Label" x:Key="TextCardCaption">
-                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
-                <Setter Property="LineBreakMode" Value="TailTruncation"/>
-                <Setter Property="FontSize" Value="12"/>
-            </Style>
-
-            <Style TargetType="Label" x:Key="TextHeader">
-                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurface}"/>
-                <Setter Property="FontSize" Value="18"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-            </Style>
-            <Style TargetType="Label" x:Key="TextUserName">
-                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurface}"/>
-                <Setter Property="FontSize" Value="14"/>
-            </Style>
-            <Style TargetType="Label" x:Key="TextUserCaption">
-                <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}"/>
-                <Setter Property="FontSize" Value="14"/>
-            </Style>
-        </ResourceDictionary>
+       
         <Style TargetType="dxe:FormItemBase" ApplyToDerivedTypes="True" x:Key="baseStyle">
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}"/>
             <Setter Property="ImageColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray100}}" />
@@ -124,78 +43,21 @@
     <ContentPage.Content>
         
             <Grid RowDefinitions="Auto,*">
-                <!--<Grid Grid.Row="0" Margin="20" VerticalOptions="Start">
-                    <ImageButton HorizontalOptions="Start" VerticalOptions="Center" Command="{Binding BackCommand}">
-                        <ImageButton.Source>
-                            <FontImageSource
-                                FontFamily="Icons"
-                                Glyph="&#xe803;"
-                                Size="25"
-                                Color="{StaticResource Gray200}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Grid>-->
-
-                <!--<VerticalStackLayout>
-                <dxco:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding DealersLoading}">
-                    <dxco:ShimmerView.Content>                        
-                            <Grid RowDefinitions="*,Auto" Grid.Column="0" Margin="24,0,0,0">
-                                    <dxe:FormGroupItem >
-                                        <dxe:FormItem  Detail="{Binding DefaultEmail}" DetailFontFamily="Roboto" DetailFontSize="14" ImageVerticalOptions="Center"
-           Padding="0,10" Text="{Binding DisplayName}" TextFontFamily="Roboto" TextFontSize="18">
-                                            <dxe:FormItem.ImageTemplate>
-                                                <DataTemplate>
-                                                    <dxco:DXImage Margin="0,0,10,0" Aspect="AspectFit" HeightRequest="60" Source="{Binding Avatar}" WidthRequest="60">
-                                                        <dxco:DXImage.Clip>
-                                                            <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
-                                                        </dxco:DXImage.Clip>
-                                                    </dxco:DXImage>
-                                                </DataTemplate>
-                                            </dxe:FormItem.ImageTemplate>
-                                        </dxe:FormItem>
-                                        <dxe:FormItem AllowTap="True" Detail="{Binding Bio, Converter={helpers:BioDetailsConverter}, Mode=OneWay}" DetailColor="Gray"
-TapCommand="{Binding EditBioCommand}" Text="{Binding Bio, Converter={helpers:BioTextConverter}, Mode=OneWay}" />
-                                    </dxe:FormGroupItem>
-                                </Grid>
-                    </dxco:ShimmerView.Content>
-                    <dxco:ShimmerView.LoadingView>
-                            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="16" Margin="24,0">
-                                <Ellipse Style="{StaticResource ShimmerElementAvatar}" Grid.RowSpan="2" />
-                                <Border Style="{StaticResource ShimmerElementRow}" Grid.Column="1" />
-                                <Border Style="{StaticResource ShimmerElementRow}" Margin="0,0,0,0" Grid.Column="1" Grid.Row="1" />
-                                <Border Style="{StaticResource ShimmerElementBioRow}" Margin="0,30,0,0" Grid.ColumnSpan="2" Grid.Row="3" />
-                            </Grid>
-                        </dxco:ShimmerView.LoadingView>
-                </dxco:ShimmerView>
-                    <dxco:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding DealersLoading}">
-                        <dxco:ShimmerView.Content>
-                            <dxe:FormGroupItem Header="Телефон">
-                                <dxe:FormListPickerItem ImageSource="globe" 
-                                                        InlineContent="{x:Null}" 
-                                                        PickerTitle="Телефон"                                            
-                                                        PickerShowMode="Popup"
-                                                        Text="{Binding Telefon}" />
-                            </dxe:FormGroupItem>
-                        </dxco:ShimmerView.Content>
-                        <dxco:ShimmerView.LoadingView>                            
-                                <Border Style="{StaticResource ShimmerElementRow}"  />                            
-                        </dxco:ShimmerView.LoadingView>
-                    </dxco:ShimmerView>
-
-                </VerticalStackLayout>-->
-            <ActivityIndicator x:Name="activator" IsRunning="False" Color="{StaticResource Gray910}" />
             <dx:DXStackLayout Grid.Row="1" Orientation="Vertical" Padding="20,-20" ItemSpacing="10">
                     <dxe:FormGroupItem >
                         <dxe:FormItem  Detail="{Binding DefaultEmail}" DetailFontFamily="Roboto" DetailFontSize="14" ImageVerticalOptions="Center"
            Padding="0,10" Text="{Binding DisplayName}" TextFontFamily="Roboto" TextFontSize="18">
                             <dxe:FormItem.ImageTemplate>
                                 <DataTemplate>
-                                    <dxco:DXImage Margin="0,0,10,0" Aspect="AspectFit" HeightRequest="60" Source="{Binding Avatar}" WidthRequest="60">
+                                <Grid>
+                                    <ActivityIndicator x:Name="activator" IsRunning="{Binding DealersLoading}" Color="{StaticResource Gray910}" />
+                                    <dxco:DXImage Margin="0,0,10,0" Aspect="AspectFit" HeightRequest="60" Source="{Binding Avatar, Mode=OneWay}" WidthRequest="60">
                                         <dxco:DXImage.Clip>
                                             <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
                                         </dxco:DXImage.Clip>
                                     </dxco:DXImage>
-                                </DataTemplate>
+                                </Grid>
+                            </DataTemplate>
                             </dxe:FormItem.ImageTemplate>
                         </dxe:FormItem>
                         <dxe:FormItem AllowTap="True" Detail="{Binding Bio, Converter={helpers:BioDetailsConverter}, Mode=OneWay}" DetailColor="Gray"

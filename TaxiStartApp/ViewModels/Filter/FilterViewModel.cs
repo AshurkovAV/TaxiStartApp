@@ -172,31 +172,24 @@ namespace TaxiStartApp.ViewModels
 
         public async void ButtonRespond()
         {
-            IsActivator = true;
-            SelectLoad();
-            ParkHttp parkHttp = new ParkHttp();
-            parkHttp.SetObject = new ParkQueryDto
-            {
-                Ransom = IsRansomEnabled,
-                UserId = Constant.yandexProfil.id,
-                AutoClass = UserFilter.AutoClass,
-                LocationFilter = UserFilter.LocationFilter
-            };
-            Count = await parkHttp.PostCount();
-            SimlpeButtonText = $"Показать {Count} таксопарков";
-           // IsActivator = false;
+            ButtonRansom();
         }
-        private Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
-        Queue<Task> taskQueue = new Queue<Task>();
         public async void ButtonRansom()
         {
             IsActivator = true;
-            
-            
-            taskQueue.Enqueue(Task.Run(async () => {
+            await Task.Delay(1000);
+            var results = await Task.WhenAll(Run());
+            SimlpeButtonText = $"Показать {results.Last()} таксопарков";            
+        }
+
+        async Task<int> Run()
+        {
+            var count = 0;
+            await Task.Run(async () =>
+            {
                 SelectLoad();
                 SimlpeButtonText = string.Empty;
-                Count = 0;
+                
                 ParkHttp parkHttp = new ParkHttp();
                 parkHttp.SetObject = new ParkQueryDto
                 {
@@ -205,16 +198,13 @@ namespace TaxiStartApp.ViewModels
                     AutoClass = UserFilter.AutoClass,
                     LocationFilter = UserFilter.LocationFilter
                 };
-                Count = await parkHttp.PostCount();
-                SimlpeButtonText = $"Показать {Count} таксопарков";
+                count = await parkHttp.PostCount();                
                 IsActivator = false;
-            } ));
-            
-            
-            
+            });
+            return count;
         }
 
-        private bool _isActivator = true;
+        private bool _isActivator ;
         public bool IsActivator
         {
             get => _isActivator;
@@ -250,19 +240,7 @@ namespace TaxiStartApp.ViewModels
                 _usersFilter = value;
                 RaisePropertyChanged();
             }
-        }
-
-        private int _count;
-        public int Count
-        {
-            get => _count;
-            set
-            {
-                _count = value;
-                
-                RaisePropertyChanged();
-            }
-        }
+        }        
 
         private string _simlpeButtonText ;
         public string SimlpeButtonText
