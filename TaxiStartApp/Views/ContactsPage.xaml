@@ -15,7 +15,7 @@
        
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*">
-        <Grid ColumnDefinitions="360,Auto">            
+        <Grid ColumnDefinitions="*,30">            
             <Border 
                     VerticalOptions="Center" 
                     StrokeThickness="0" Stroke="Transparent" Background="Transparent">

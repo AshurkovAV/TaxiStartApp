@@ -11,7 +11,7 @@ namespace TaxiStartApp.ViewModels
         public const string ViewName = "MapPage";
         int lastLoadedIndex = 1;
         int sourceSize = 0;
-        int loadBatchSize = 3;
+        int loadBatchSize = 2;
         private IDataService _dataService;
         private List<ContactTaxiPark> _taxiParkData;
         public List<ContactTaxiPark> TaxiParkData

@@ -139,7 +139,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
-        <Grid ZIndex="1" Grid.Row="0" ColumnDefinitions="*,250,*">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,4*,1*">
             <Grid Grid.Column="0"  Margin="20" VerticalOptions="Start">
                 <ImageButton  HorizontalOptions="Start" Clicked="ImageButton_Clicked" VerticalOptions="Center" Command="{Binding BackCommand}">
                     <ImageButton.Source>
@@ -151,46 +151,48 @@
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>
-            <Grid Grid.Column="1"  HorizontalOptions="End">
-                <Grid Grid.Column="1"  Margin="20" HorizontalOptions="End" >
-                    <ImageButton Command="{Binding ShareCommand}">
-                        <ImageButton.Source>
-                            <FontImageSource
-                                FontFamily="Icons"
-                                Glyph="&#xe800;"
-                                Size="25"
-                                Color="{StaticResource Gray200}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Grid>
-            </Grid>
-            <Grid Grid.Column="2" HorizontalOptions="End">
-                <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}"  Margin="20" >
-                    <ImageButton x:Name="but" Command="{Binding LikeCommand}">
-                        <ImageButton.Source>
-                            <FontImageSource x:Name="ImageSour"
-                                                 FontFamily="Filter"
-                                                 Glyph="&#xe802;"                                                    
-                                                 Size="25"
-                                                 Color="{StaticResource Gray200}"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Grid>
-                <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible, Mode=OneWay}" Margin="20" >
-                    <ImageButton  Command="{Binding LikeEmpCommand}">
-                        <ImageButton.Source>
-                            <FontImageSource 
-                                    FontFamily="Filter"
-                                    Glyph="&#xe803;"
-                                    Size="25"
-                                    Color="#ce2029"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Grid>
-            </Grid>
+     
+        <Grid Grid.Column="1"  HorizontalOptions="End">
+          <Grid Grid.Column="1"  Margin="20" HorizontalOptions="End" >
+            <ImageButton Command="{Binding ShareCommand}">
+              <ImageButton.Source>
+                <FontImageSource
+                           FontFamily="Icons"
+                           Glyph="&#xe800;"
+                           Size="25"
+                           Color="{StaticResource Gray200}"/>
+              </ImageButton.Source>
+            </ImageButton>
+          </Grid>
+        </Grid>
+      <Grid Grid.Column="2" HorizontalOptions="End" >
+          <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}"  Margin="20" >
+            <ImageButton x:Name="but" Command="{Binding LikeCommand}">
+              <ImageButton.Source>
+                <FontImageSource x:Name="ImageSour"
+                                            FontFamily="Filter"
+                                            Glyph="&#xe802;"                                                    
+                                            Size="25"
+                                            Color="{StaticResource Gray200}"/>
+              </ImageButton.Source>
+            </ImageButton>
+          </Grid>
+          <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible, Mode=OneWay}" Margin="20" >
+            <ImageButton  Command="{Binding LikeEmpCommand}">
+              <ImageButton.Source>
+                <FontImageSource 
+                               FontFamily="Filter"
+                               Glyph="&#xe803;"
+                               Size="25"
+                               Color="#ce2029"/>
+              </ImageButton.Source>
+            </ImageButton>
+          </Grid>
+        </Grid>    
+     
         </Grid>
 
-        <ScrollView ZIndex="2" Grid.Row="1">
+        <ScrollView ZIndex="1" Grid.Row="1">
             <Grid RowDefinitions="Auto,*,Auto">
                 <Grid Grid.Row="0">
                     <dx:DXStackLayout  Orientation="Vertical" Padding="20,-20" ItemSpacing="10">
@@ -306,7 +308,7 @@
                                     BackgroundColor="{StaticResource Gray650}">
                                 <VerticalStackLayout Margin="-10" HeightRequest="200" >
 
-                                    <WebView >
+                  <WebView >
                                         <WebView.Source>
                                             <HtmlWebViewSource>
                                                 <HtmlWebViewSource.Html>
@@ -609,8 +611,8 @@
         </ScrollView>
         <ActivityIndicator IsRunning="{Binding IsRespond, Mode=OneWay}" Color="{StaticResource Gray910}" />
         
-        <dxc:SimpleButton ZIndex="4" Grid.Row="2"
-            Margin="15,5,15,5"                                
+        <dxc:SimpleButton ZIndex="3" Grid.Row="1" VerticalOptions="End"
+            Margin="15,5,15,15"                                
             BackgroundColor="{StaticResource Gray910}"
             CornerRadius="30"
             FontAttributes="Bold"
