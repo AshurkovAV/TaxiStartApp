@@ -1,4 +1,6 @@
-﻿using JobTaxi.Entity.Dto;
+﻿using IntelliJ.Lang.Annotations;
+using JobTaxi.Entity.Dto;
+using Microsoft.Maui.ApplicationModel.Communication;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -13,7 +15,6 @@ namespace TaxiStartApp.Models.Park
         public ICommand LikeEmpCommand { get; set; }
         public ICommand ButtonRespondCommand { get; set; }
         private IDataService _dataService;
-        
 
         public ContactTaxiPark(ParkTruncated parkTruncated)
         {
@@ -25,7 +26,18 @@ namespace TaxiStartApp.Models.Park
             LikeCommand = new Command(Like1);
             LikeEmpCommand = new Command(Like2);
             ButtonRespondCommand = new Command(ButtonRespond);
-            
+            Avatar = ImageSource.FromStream(() => new MemoryStream(ParkTrun.CarAvatar));
+        }
+
+        ImageSource avatar;
+        public ImageSource Avatar
+        {
+            get => this.avatar;
+            set
+            {
+                this.avatar = value;
+                OnPropertyChanged("Avatar");
+            }
         }
         public async void ButtonRespond()
         {   
@@ -81,7 +93,7 @@ namespace TaxiStartApp.Models.Park
                 grid2Visible = value;
                 OnPropertyChanged();
             }
-        }
+        }        
         string glyph = "&#xe802;";
         public int Id { get; set; }
         public string  ParkGuid { get; set; }
@@ -127,9 +139,9 @@ namespace TaxiStartApp.Models.Park
             set
             {
                 carAvatar = value;
-                OnPropertyChanged();
+                OnPropertyChanged("CarAvatar");
             }
-        }        
+        }
         public string AvatarPath => ParkAddress?.ToLower() + ".jpg";
 
 

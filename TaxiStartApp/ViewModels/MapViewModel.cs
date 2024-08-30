@@ -2,7 +2,6 @@
 using TaxiStartApp.Common.Data.Park;
 using TaxiStartApp.Models;
 using TaxiStartApp.Models.Park;
-using TaxiStartApp.Services;
 
 namespace TaxiStartApp.ViewModels
 {
@@ -12,7 +11,7 @@ namespace TaxiStartApp.ViewModels
         int lastLoadedIndex = 1;
         int sourceSize = 0;
         int loadBatchSize = 2;
-        private IDataService _dataService;
+
         private List<ContactTaxiPark> _taxiParkData;
         public List<ContactTaxiPark> TaxiParkData
         {
@@ -45,8 +44,7 @@ namespace TaxiStartApp.ViewModels
         public MapViewModel()
         {
             TaxiParkData = new List<ContactTaxiPark>();
-            LoadDataAsync();
-            _dataService = DependencyService.Get<IDataService>();
+            LoadDataAsync();            
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
         }
         bool isLoading;

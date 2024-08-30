@@ -6,6 +6,7 @@
              xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             
              xmlns:local1="clr-namespace:TaxiStartApp.Models.Park"
              x:Class= "TaxiStartApp.Views.MapPage">
     <ContentPage.Content>
@@ -20,7 +21,7 @@
                                    IsLoadMoreEnabled="True" 
                                    LoadMoreCommand="{Binding LoadMoreCommand}"  
                                    IsScrollBarVisible="False"
-                                   HeightRequest="180" 
+                                   HeightRequest="160" 
                                    Orientation="Horizontal"
                                    TapCommand="{Binding OpenBlogCommand}"
                Margin="10,20">
@@ -28,16 +29,24 @@
                 <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type local1:ContactTaxiPark}">
                         <Border StrokeShape="RoundRectangle 20"
-                                Margin="5"  
+                                Margin="6"  
                                 BackgroundColor="{StaticResource Gray650}">
-                            <VerticalStackLayout Margin="0,0,0,0">                              
+                            <VerticalStackLayout Margin="0,0,0,0">
+                                <Grid>
+                                    <dxc:DXImage Margin="0,0,10,0" HeightRequest="60" Source="{Binding Avatar, Mode=OneWay}" WidthRequest="60">
+                                        <dxc:DXImage.Clip>
+                                            <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
+                                        </dxc:DXImage.Clip>
+                                    </dxc:DXImage>
+                                </Grid>
+
                                 <Grid ColumnDefinitions="Auto,*,Auto" >
                                     <Label Grid.Column="0"
-                                   Margin="16,25,16,5"
-                                   FontAttributes="Bold" Text="{Binding ParkTrun.ParkName}" 
-                                   TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
-                                   FontSize="18" 
-                                   MaxLines="3" LineBreakMode="WordWrap"/>
+                                           Margin="16,15,16,5"
+                                           FontAttributes="Bold" Text="{Binding ParkTrun.ParkName}" 
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
+                                           FontSize="18" 
+                                           MaxLines="3" LineBreakMode="WordWrap"/>
 
                                     <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}" Margin="0,25,16,0" >
                                         <dxc:SimpleButton 
@@ -83,21 +92,21 @@
                                        FontSize="18" 
                                        MaxLines="3" 
                                        LineBreakMode="WordWrap" 
-                                       Margin="16,0,16,10"/>
-                                <Grid ColumnDefinitions="Auto" Margin="16,0,16,5">
+                                       Margin="16,0,10,10"/>
+                                <Grid ColumnDefinitions="Auto" Margin="16,0,10,5">
                                     <Label Grid.Column="0" Text="{Binding ParkTrun.ParkAddress}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
                                 </Grid>
                                 <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
                                     <Label Grid.Column="0" Text="Количество свободных машин " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
                                     <Border Grid.Column="1"
-                                        BackgroundColor="#8F000000"
-                                        HorizontalOptions="Start"                                                
-                                        VerticalOptions="End"        
-                                        StrokeShape="RoundRectangle 15">
+                                            BackgroundColor="#8F000000"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="End"
+                                            StrokeShape="RoundRectangle 15">
                                         <Label Text="{Binding ParkTrun.CountCars, StringFormat='{0:N0}'}" 
-                                           FontAttributes="Bold"
-                                           TextColor="White"
-                                           Padding="12,4"/>
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               Padding="12,4"/>
                                     </Border>
                                 </Grid>                               
                             </VerticalStackLayout>
