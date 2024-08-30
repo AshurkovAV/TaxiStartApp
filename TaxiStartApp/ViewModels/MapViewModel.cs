@@ -11,8 +11,7 @@ namespace TaxiStartApp.ViewModels
         public const string ViewName = "MapPage";
         int lastLoadedIndex = 1;
         int sourceSize = 0;
-        int loadBatchSize = 3;
-        private IDataService _dataService;
+        int loadBatchSize = 2;
         private List<ContactTaxiPark> _taxiParkData;
         public List<ContactTaxiPark> TaxiParkData
         {
@@ -45,8 +44,7 @@ namespace TaxiStartApp.ViewModels
         public MapViewModel()
         {
             TaxiParkData = new List<ContactTaxiPark>();
-            LoadDataAsync();
-            _dataService = DependencyService.Get<IDataService>();
+            LoadDataAsync();            
             LoadMoreCommand = new Command(LoadMore, CanLoadMore);
         }
         bool isLoading;
