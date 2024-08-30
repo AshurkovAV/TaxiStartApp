@@ -25,7 +25,7 @@ namespace TaxiStartApp.Views
     function init(){
       let myMap = new ymaps.Map(""map"", {
         center: [55.863459, 37.702032],
-        zoom: 10
+        zoom: 13
       });
       
 	
