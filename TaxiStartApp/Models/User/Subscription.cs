@@ -1,4 +1,5 @@
-﻿using DevExpress.Maui.Controls;
+﻿using Core.Extensions;
+using DevExpress.Maui.Controls;
 using JobTaxi.Entity.Dto.User;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,7 @@ namespace TaxiStartApp.Models.User
         {
             get
             {
-                if (Filter.IsPush)
+                if (Filter.IsPush.IsNotNull())
                 {
                     textPush = "Уведомления включены";
                 }
@@ -130,7 +131,7 @@ namespace TaxiStartApp.Models.User
                 if (data == true)
                 {
                     Filter.IsPush = !(bool)Filter.IsPush;
-                    if (Filter.IsPush)
+                    if (Filter.IsPush.IsNotNull())
                     {
                         TextPush = "Уведомления включены";
                     }

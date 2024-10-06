@@ -29,8 +29,7 @@ namespace TaxiStartApp.ViewModels.Profil
 
         public SettingsViewModel()
         {
-            var httpClientTs = DependencyService.Get<IHttpClientTs>();
-            _httpClientTs = httpClientTs;
+            _httpClientTs = DependencyService.Get<IHttpClientTs>();             
             
             Blacklist.CollectionChanged += OnBlacklistCollectionChanged;
         }      
@@ -44,17 +43,15 @@ namespace TaxiStartApp.ViewModels.Profil
             Telefon       = Constant.yandexProfil.defaultPhone;
             VibrationMode = "Default";
             var avat = await Task.WhenAll(Run());
-            Avatar = ImageSource.FromStream(() => avat.Last());
-            
+            Avatar = ImageSource.FromStream(() => avat.Last());            
         }
-
 
         async Task<Stream> Run()
         {
             Stream avat = null;            
             await Task.Run(async () =>
             {
-               avat = await _httpClientTs.GetAvat();
+                avat = await _httpClientTs.GetAvat();
                 DealersLoading = false;
             });
             return avat;

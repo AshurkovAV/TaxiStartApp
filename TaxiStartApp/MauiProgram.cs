@@ -1,16 +1,10 @@
-﻿using Android.Service.QuickSettings;
-using Autofac;
-using DataCore.Cache;
-using DataCore.Data.Nsi;
+﻿using DataCore.Cache;
 using DataCore.Http;
-using DataCore.Nsi;
 using DataCore.Service;
 using DevExpress.Maui;
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Controls.Internal;
-using JobTaxi.Entity.Models;
 using TaxiStartApp.Common;
-using TaxiStartApp.Common.Bot;
 using TaxiStartApp.Services;
 using TaxiStartApp.ViewModels;
 using TaxiStartApp.Views;
@@ -67,7 +61,12 @@ namespace TaxiStartApp
             DevExpress.Maui.Editors.Initializer.Init();
             try
             {
-                BotInfo.BotInfoTo($"Приложение запущено {DateTime.Now} \n" + InfoDevice.GetInfo() + "\n");
+                var device_id = Android.Provider.Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+                Constant.MainDisplayWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+                Constant.MainDisplayHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
+
+                Constant.DeviceId = device_id;
+                // BotInfo.BotInfoTo($"Приложение запущено {DateTime.Now} \n" + InfoDevice.GetInfo() + "\n");
             }
             catch { }
             

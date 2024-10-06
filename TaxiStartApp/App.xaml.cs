@@ -22,8 +22,7 @@ namespace TaxiStartApp
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IFileHelper, FileHelper>();
             DependencyService.Register<IHttpClientTs, HttpClientTs>();
-            DependencyService.Register<IDataService, DataService>();           
-
+            DependencyService.Register<IDataService, DataService>(); 
 
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
@@ -45,7 +44,7 @@ namespace TaxiStartApp
         {
             Exception e = (Exception)args.ExceptionObject;
             Console.WriteLine("MyHandler caught : " + e.Message);
-            BotInfo.BotInfoTo($"SMS {DateTime.Now} \n" + e?.Message + "\n");
+          //  BotInfo.BotInfoTo($"SMS {DateTime.Now} \n" + e?.Message + "\n");
         }
         
         private void CurrentDomain_FirstChanceException(object sender, FirstChanceExceptionEventArgs e)

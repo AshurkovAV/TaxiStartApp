@@ -32,21 +32,21 @@ namespace TaxiStartApp.Views
 	  
 	  var myPlacemark = new ymaps.Placemark([55.863459, 37.702032], null,{	  
 	iconLayout: 'default#image',
-	iconImageHref: ""https://таксиработааренда.рф/images/icon_ya1.png"",
+	iconImageHref: ""https://api.таксиработааренда.рф/images/icon_ya1.png"",
 	iconImageSize: [40, 40],
 	iconImageOffset: [-15, -44]
 });
 
 var myPlacemark3 = new ymaps.Placemark([55.963459, 37.762032], null,{	  
 	iconLayout: 'default#image',
-	iconImageHref: ""https://таксиработааренда.рф/images/icon_ya1.png"",
+	iconImageHref: ""https://api.таксиработааренда.рф/images/icon_ya1.png"",
 	iconImageSize: [40, 40],
 	iconImageOffset: [-15, -44]
 });
 	  
 var myPlacemark4 = new ymaps.Placemark([55.663459, 37.462032], null,{	  
 	iconLayout: 'default#image',
-	iconImageHref: ""https://таксиработааренда.рф/images/icon_ya1.png"",
+	iconImageHref: ""https://api.таксиработааренда.рф/images/icon_ya1.png"",
 	iconImageSize: [40, 40],
 	iconImageOffset: [-15, -44]
 });     
@@ -65,7 +65,7 @@ $@"<body>
 </body>
 
 </html>
-                ]]>
+                
                       ";
             web.Source = htmlSource;
            

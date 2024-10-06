@@ -32,83 +32,87 @@
                                 Margin="6"  
                                 BackgroundColor="{StaticResource Gray650}">
                             <VerticalStackLayout Margin="0,0,0,0">
-                                <Grid>
-                                    <dxc:DXImage Margin="0,0,10,0" HeightRequest="60" Source="{Binding Avatar, Mode=OneWay}" WidthRequest="60">
-                                        <dxc:DXImage.Clip>
-                                            <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
-                                        </dxc:DXImage.Clip>
-                                    </dxc:DXImage>
-                                </Grid>
+                                <Grid ColumnDefinitions="4*, Auto">                                    
+                                        
+                                        <dxc:DXImage Grid.Column="0" HeightRequest="120" WidthRequest="100"  Margin="0,0,0,0" Source="{Binding Avatar, Mode=OneWay}" >
+                                            <dxc:DXImage.Clip>
+                                            <EllipseGeometry Center="60,60" RadiusX="40" RadiusY="40" />
+                                            </dxc:DXImage.Clip>
+                                        </dxc:DXImage>
+                                      
 
-                                <Grid ColumnDefinitions="Auto,*,Auto" >
-                                    <Label Grid.Column="0"
+                                    <Grid RowDefinitions="auto,auto,auto,auto" Grid.Column="1">
+                                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" >
+                                            <Label Grid.Column="0"
                                            Margin="16,15,16,5"
                                            FontAttributes="Bold" Text="{Binding ParkTrun.ParkName}" 
                                            TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
                                            FontSize="18" 
                                            MaxLines="3" LineBreakMode="WordWrap"/>
 
-                                    <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}" Margin="0,25,16,0" >
-                                        <dxc:SimpleButton 
+                                            <Grid Grid.Column="2"  IsVisible="{Binding Grid1Visible, Mode=OneWay}" Margin="0,25,16,0" >
+                                                <dxc:SimpleButton 
                                             Padding="1"
                                             BackgroundColor="Transparent" 
                                             WidthRequest="40"
                                             VerticalOptions="Center"
                                             Command="{Binding LikeCommand, Mode=OneWay}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <FontImageSource
+                                                    <Image>
+                                                        <Image.Source>
+                                                            <FontImageSource
                                                         FontFamily="Filter"
                                                         Glyph="&#xe802;"
                                                         Size="25"
                                                         Color="{StaticResource Gray200}"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </dxc:SimpleButton>
-                                       
-                                    </Grid>
-                                    <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible,Mode=OneWay}" Margin="0,25,16,0" >
-                                        <dxc:SimpleButton 
+                                                        </Image.Source>
+                                                    </Image>
+                                                </dxc:SimpleButton>
+
+                                            </Grid>
+                                            <Grid Grid.Column="2" IsVisible="{Binding Grid2Visible,Mode=OneWay}" Margin="0,25,16,0" >
+                                                <dxc:SimpleButton 
                                             Padding="1"
                                             BackgroundColor="Transparent" 
                                             WidthRequest="40"
                                             VerticalOptions="Center"
                                             Command="{Binding LikeEmpCommand, Mode=OneWay}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <FontImageSource 
+                                                    <Image>
+                                                        <Image.Source>
+                                                            <FontImageSource 
                                                         FontFamily="Filter"
                                                         Glyph="&#xe803;"
                                                         Size="25"
                                                         Color="#ce2029"/>
-                                                </Image.Source>
-                                            </Image>
-                                        </dxc:SimpleButton>
-                                    </Grid>
-                                </Grid>
-                                <Label Grid.Column="1"
+                                                        </Image.Source>
+                                                    </Image>
+                                                </dxc:SimpleButton>
+                                            </Grid>
+                                        </Grid>
+                                        <Label Grid.Row="1" Grid.Column="1"
                                        Text="{Binding ParkTrun.ParkPhone}" 
                                        TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" 
                                        FontSize="18" 
                                        MaxLines="3" 
                                        LineBreakMode="WordWrap" 
                                        Margin="16,0,10,10"/>
-                                <Grid ColumnDefinitions="Auto" Margin="16,0,10,5">
-                                    <Label Grid.Column="0" Text="{Binding ParkTrun.ParkAddress}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
-                                </Grid>
-                                <Grid ColumnDefinitions="Auto, *" Margin="16,0,16,5">
-                                    <Label Grid.Column="0" Text="Количество свободных машин " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
-                                    <Border Grid.Column="1"
+                                        <Grid Grid.Row="2" ColumnDefinitions="Auto" Margin="16,0,10,5">
+                                            <Label Grid.Column="0" Text="{Binding ParkTrun.ParkAddress}" VerticalOptions="Center" TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" Margin="0,0,0,0" />
+                                        </Grid>
+                                        <Grid Grid.Row="3" ColumnDefinitions="Auto, *" Margin="16,0,16,5">
+                                            <Label Grid.Column="0" Text="Количество свободных машин " TextColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray300}}" VerticalOptions="Center"/>
+                                            <Border Grid.Column="1"
                                             BackgroundColor="#8F000000"
                                             HorizontalOptions="Start"
                                             VerticalOptions="End"
                                             StrokeShape="RoundRectangle 15">
-                                        <Label Text="{Binding ParkTrun.CountCars, StringFormat='{0:N0}'}" 
+                                                <Label Text="{Binding ParkTrun.CountCars, StringFormat='{0:N0}'}" 
                                                FontAttributes="Bold"
                                                TextColor="White"
                                                Padding="12,4"/>
-                                    </Border>
-                                </Grid>                               
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>

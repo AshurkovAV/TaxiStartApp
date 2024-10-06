@@ -4,6 +4,7 @@ using Microsoft.Maui.ApplicationModel.Communication;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using TaxiStartApp.Common.Interface;
 using TaxiStartApp.Services;
 
 namespace TaxiStartApp.Models.Park
@@ -15,6 +16,7 @@ namespace TaxiStartApp.Models.Park
         public ICommand LikeEmpCommand { get; set; }
         public ICommand ButtonRespondCommand { get; set; }
         private IDataService _dataService;
+        private IHttpClientTs _httpClientTs;
 
         public ContactTaxiPark(ParkTruncated parkTruncated)
         {
@@ -22,11 +24,23 @@ namespace TaxiStartApp.Models.Park
             ParkName = parkTruncated.ParkName;
             ParkGuid = parkTruncated.ParkGuid;           
             ParkTrun = parkTruncated;
+            _httpClientTs = DependencyService.Get<IHttpClientTs>();
             _dataService = DependencyService.Get<IDataService>();
             LikeCommand = new Command(Like1);
             LikeEmpCommand = new Command(Like2);
             ButtonRespondCommand = new Command(ButtonRespond);
-            Avatar = ImageSource.FromStream(() => new MemoryStream(ParkTrun.CarAvatar));
+            
+            Avatar = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Encoding.ASCII.GetString(ParkTrun.CarAvatar))));
+        }
+        async Task<Stream> Run()
+        {
+            Stream avat = null;
+            await Task.Run(async () =>
+            {
+                avat = await _httpClientTs.GetAvat();
+                //DealersLoading = false;
+            });
+            return avat;
         }
 
         ImageSource avatar;
